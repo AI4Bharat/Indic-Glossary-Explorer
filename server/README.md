@@ -75,7 +75,7 @@ To create a new secret key, run the following commands (within the virtual envir
 
 ```bash
 # Open a Python shell
-python backend/manage.py shell
+python manage.py shell
 
 >> from django.core.management.utils import get_random_secret_key
 >> get_random_secret_key()

@@ -1,0 +1,11 @@
+[
+  {
+    "srcLanguage": "en",
+    "tgtLanguage": "hi",
+    "srcText": "Appellant",
+    "tgtText": "अपीलकर्ता",
+    "domain" : "legal",
+    "collectionSource" : "Anuvaad",
+    "level" : "w"
+  }
+]

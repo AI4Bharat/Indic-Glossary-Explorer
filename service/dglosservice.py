@@ -28,7 +28,7 @@ class DGlosService:
             glossary = []
             for glossary_entry in data["glossary"]:
                 audit = {"createdTime": eval(str(time.time()).replace('.', '')[0:13]), "glossaryId": str(uuid.uuid4())}
-                glossary_entry["audit"], = audit
+                glossary_entry["audit"] = audit
                 glossary.append(glossary_entry)
             log.info(f"{req_id} | Pushing to the backup store...")
             dglos_repo.insert_bulk(glossary)
@@ -48,7 +48,7 @@ class DGlosService:
         try:
             f = api_request.files['glossaryFile']
             data_xls = pd.read_excel(f)
-            data["glossary"] = data_xls.to_json()
+            data["glossary"] = data_xls.to_dict(orient='records')
             upload_successful = self.create(data)
             if upload_successful:
                 if upload_successful["status"] == "Success":

@@ -1,6 +1,5 @@
 import logging
 import time
-
 import uuid
 from flask import Flask, jsonify, request
 from logging.config import dictConfig
@@ -8,49 +7,45 @@ from config.dglosconfigs import context_path, x_key
 from service.dglosservice import DGlosService
 from utils.dglosvalidator import DGlosValidator
 from flask_cors import CORS
-
 dglos_app = Flask(__name__)
 cors = CORS(dglos_app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
-
 log = logging.getLogger('file')
-
-
 @dglos_app.route(context_path + '/ping')
 def index():
     return jsonify(
         status=True,
         message='Welcome to the DMU Glossary Server!'
     )
-
-
 # REST endpoint for login
 @dglos_app.route(context_path + '/v1/glossary/create', methods=["POST"])
 def create():
     dglos_service, validator = DGlosService(), DGlosValidator()
     data = request.get_json()
     data = add_headers(data, request, "userId")
+    validation_response = validator.validate_glossary(data)
     try:
+        if validation_response != None:
+            raise Exception(validation_response)
         response = dglos_service.create(data)
         return jsonify(response), 200
     except Exception as e:
         log.exception("Something went wrong: " + str(e), e)
-        return {"status": "FAILED", "message": "Something went wrong"}, 400
-
-
+        return {"status": "FAILED", "message": "ERROR: "+str(e)}, 400
 # REST endpoint for login
 @dglos_app.route(context_path + '/v1/glossary/file/upload', methods=["POST"])
 def upload():
     dglos_service, validator = DGlosService(), DGlosValidator()
     data = request.get_json()
     data = add_headers(data, request, "userId")
+    # validator_response = validator.validate_filetype(request.files['glossaryFile'])
     try:
+        # if validator_response != None:
+        #    raise Exception(validator_response)
         response = dglos_service.upload_file(request, data)
         return jsonify(response), 200
     except Exception as e:
         log.exception("Something went wrong: " + str(e), e)
-        return {"status": "FAILED", "message": "Something went wrong"}, 400
-
-
+        return {"status": "FAILED", "message": "Something went wrong. "+str(e)}, 400
 # REST endpoint for logout
 @dglos_app.route(context_path + '/v1/sentence/phrases/search', methods=["GET"])
 def search_phrases_for_sentence():
@@ -63,8 +58,6 @@ def search_phrases_for_sentence():
     except Exception as e:
         log.exception("Something went wrong: " + str(e), e)
         return {"status": "FAILED", "message": "Something went wrong"}, 400
-
-
 # Fetches required headers from the request and adds it to the body.
 def add_headers(data, api_request, user_id):
     if not data:
@@ -81,8 +74,6 @@ def add_headers(data, api_request, user_id):
         headers["token"] = api_headers['X-Token']
     data["metadata"] = headers
     return data
-
-
 # Log config
 dictConfig({
     'version': 1,
@@ -114,4 +105,4 @@ dictConfig({
         'level': 'DEBUG',
         'handlers': ['info', 'console']
     }
-})
+}) 

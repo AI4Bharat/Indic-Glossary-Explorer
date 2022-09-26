@@ -1,18 +1,42 @@
 import json
 import logging
-
 from repository.dglosrepo import DGlosRepo
 from service.dglosservice import DGlosService
 from .dglosutils import DGlosUtils
-from config.dglosconfigs import x_key
-
+from config.dglosconfigs import x_key,glossary_keys,levels,allowed_file_types
 log = logging.getLogger('file')
 dds_repo, dds_service, utils = DGlosRepo(), DGlosService(), DGlosUtils()
-
-
 class DGlosValidator:
     def __init__(self):
         pass
+    def validate_glossary(self,data):
+        if 'metadata' not in data.keys():
+            return "Metadata unavailable"
+        if 'requestId' not in data['metadata'].keys():
+            return "Request ID unavailable"
+        if 'glossary' not in data.keys():
+            return "Glossary unavailable"
+        if len(data['glossary']) == 0:
+            return "Glossary data is empty"
+        for glos in data['glossary']: #for each dictionary of glossary data
+            for glos_key in glossary_keys: #Check whether all keys required are present
+                if not glos_key in glos:
+                    return "{key} not found in glossary".format(key=glos_key)
+            if(glos['srcLanguage'] == glos['tgtLanguage']):
+                return "Source and target languages cannot be the same"
+            if not glos['level'] in levels:
+                return "Level unavailable"
+        return None
+    # def validate_filetype(self,filename):
+    #     # if 'files' not in data.keys():
+    #     #     return "No file data provided"
+    #     # if "glossaryFile" not in data['files'].keys():
+    #     #     return "No glossary file provided"
+    #     # filename = data['files']['glossaryFile']
+    #     extension = filename.split('.')[-1]
+    #     if extension not in allowed_file_types:
+    #         return "Filetype {} is not allowed".format(extension)
+    #     return None
 
     def validate_x_key(self, ip_req):
         log.info("Validating the X Key.........")
@@ -20,7 +44,6 @@ class DGlosValidator:
             return {"status": "Invalid Access", "message": "Signup Request Failed!"}
         if ip_req["metadata"]["xKey"] != x_key:
             return {"status": "Invalid Access", "message": "Signup Request Failed!"}
-
     def validate_signup(self, user_signup_req):
         try:
             log.info("Validating the Signup request.........")
@@ -34,7 +57,6 @@ class DGlosValidator:
         except Exception as e:
             log.exception(f"Exception in upload validation: {e}", e)
             return {"status": "VALIDATION_FAILED", "message": "mandatory fields missing."}
-
     def validate_upload_req(self, api_request, data):
         try:
             if dds_service.is_system_busy():
@@ -53,7 +75,6 @@ class DGlosValidator:
         except Exception as e:
             log.exception(f"Exception in upload validation: {e}", e)
             return {"status": "VALIDATION_FAILED", "message": "metadata, zipFile, agreement are mandatory"}
-
     def validate_login_req(self, api_request):
         try:
             log.info("Validating the Login request.........")
@@ -65,7 +86,6 @@ class DGlosValidator:
         except Exception as e:
             log.exception(f"Exception in login validation: {e}", e)
             return {"status": "VALIDATION_FAILED", "message": "mandatory fields missing."}
-
     def validate_delete_req(self, data):
         try:
             log.info("Validating the Delete Uploads request.........")
@@ -74,7 +94,6 @@ class DGlosValidator:
         except Exception as e:
             log.exception(f"Exception in login validation: {e}", e)
             return {"status": "VALIDATION_FAILED", "message": "mandatory fields missing."}
-
     def validate_terms_and_cond(self, data):
         list_of_tc_keys = utils.get_t_and_c()[1]
         try:
@@ -94,7 +113,6 @@ class DGlosValidator:
         except Exception as e:
             log.exception(f"Exception in login validation: {e}", e)
             return {"status": "VALIDATION_FAILED", "message": "mandatory fields missing."}
-
     def validate_tc_del_req(self, tc_del_req):
         try:
             log.info("Validating the TC Delete request.........")
@@ -104,7 +122,6 @@ class DGlosValidator:
         except Exception as e:
             log.exception(f"Exception in upload validation: {e}", e)
             return {"status": "VALIDATION_FAILED", "message": "mandatory fields missing."}
-
     def validate_users_del(self, users_del_req):
         try:
             log.info("Validating the Users Delete request.........")

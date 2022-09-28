@@ -37,10 +37,10 @@ def upload():
     dglos_service, validator = DGlosService(), DGlosValidator()
     data = request.get_json()
     data = add_headers(data, request, "userId")
-    # validator_response = validator.validate_filetype(request.files['glossaryFile'])
+    validator_response = validator.validate_filetype(request.files['glossaryFile'].filename)
     try:
-        # if validator_response != None:
-        #    raise Exception(validator_response)
+        if validator_response != None:
+           raise Exception(validator_response)
         response = dglos_service.upload_file(request, data)
         return jsonify(response), 200
     except Exception as e:

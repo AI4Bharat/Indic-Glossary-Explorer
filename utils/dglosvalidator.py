@@ -27,16 +27,16 @@ class DGlosValidator:
             if not glos['level'] in levels:
                 return "Level unavailable"
         return None
-    # def validate_filetype(self,filename):
-    #     # if 'files' not in data.keys():
-    #     #     return "No file data provided"
-    #     # if "glossaryFile" not in data['files'].keys():
-    #     #     return "No glossary file provided"
-    #     # filename = data['files']['glossaryFile']
-    #     extension = filename.split('.')[-1]
-    #     if extension not in allowed_file_types:
-    #         return "Filetype {} is not allowed".format(extension)
-    #     return None
+    def validate_filetype(self,filename):
+        # if 'files' not in data.keys():
+        #     return "No file data provided"
+        # if "glossaryFile" not in data['files'].keys():
+        #     return "No glossary file provided"
+        # filename = data['files']['glossaryFile']
+        extension = filename.split('.')[-1]
+        if extension not in allowed_file_types:
+            return "Filetype {} is not allowed".format(extension)
+        return None
 
     def validate_x_key(self, ip_req):
         log.info("Validating the X Key.........")

@@ -76,7 +76,7 @@ class DGlosRepo:
         try:
             es = self.get_es_client()
             index_obj = self.add_timestamp_field(index_obj)
-            es.index(index=base_index, id=index_obj["audit"]["glosssaryId"], body=index_obj)
+            es.index(index=base_index, id=index_obj["audit"]["glossaryId"], body=index_obj)
         except Exception as e:
             log.exception("Indexing FAILED", e)
 

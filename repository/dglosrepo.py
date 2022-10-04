@@ -85,7 +85,7 @@ class DGlosRepo:
         result = []
         try:
             es = self.get_es_client()
-            resp = es.search(index=base_index, query={"match_all": query})
+            resp = es.search(index=base_index, query={"match":query})
             hits = resp['hits']['total']['value']
             log.info(f"Got {hits} Hits!")
             if hits > 0:

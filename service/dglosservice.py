@@ -1,9 +1,11 @@
+from dis import dis
 import logging
 import time
 import uuid
 
 import pandas as pd
 from flask_restful import reqparse
+from config.dglosconfigs import discarded_response_data
 
 from utils.dglosutils import DGlosUtils
 from repository.dglosrepo import DGlosRepo
@@ -28,7 +30,7 @@ class DGlosService:
             glossary = []
             for glossary_entry in data["glossary"]:
                 audit = {"createdTime": eval(str(time.time()).replace('.', '')[0:13]), "glossaryId": str(uuid.uuid4())}
-                glossary_entry["audit"], = audit
+                glossary_entry["audit"] = audit
                 glossary.append(glossary_entry)
             log.info(f"{req_id} | Pushing to the backup store...")
             dglos_repo.insert_bulk(glossary)
@@ -47,8 +49,12 @@ class DGlosService:
         log.info(f"{req_id} | Uploading Glossary File...")
         try:
             f = api_request.files['glossaryFile']
+            g= api_request.files['glossaryFile'].filename
+            # extension = g.split('.')[-1]
+            # if extension == 'xlsx' or extension == 'xls':
             data_xls = pd.read_excel(f)
-            data["glossary"] = data_xls.to_json()
+            # sep='\t'
+            data["glossary"] = data_xls.to_dict(orient='records')
             upload_successful = self.create(data)
             if upload_successful:
                 if upload_successful["status"] == "Success":
@@ -60,13 +66,22 @@ class DGlosService:
             return {"status": "FAILED", "message": "Glossary File Upload FAILED!"}
 
     def search_glossary(self, data):
+        log.info(f"the data is {data}")
         req_id, result = data["metadata"]["requestId"], []
-        for sentence in data['sentences']:
-            log.info(f"{req_id} | Searching Glossary for phrases in: {sentence}")
-            glossary_phrases = self.glossary_phrase_search(sentence)
+        # source=data["srcLanguage"]
+        # target=data["tgtLanguage"]
+        for input in data['inputs']:
+            log.info(f"{req_id} | Searching Glossary for phrases in: {input}")
+            glossary_phrases = self.glossary_phrase_search(input)
+            for i in range(0,len(glossary_phrases)):
+                for key in discarded_response_data:
+                    del glossary_phrases[i][key]
+
             if glossary_phrases:
-                log.info(f"{req_id} | sentence: {sentence} | compute_details: {glossary_phrases[1]}")
-            result.append({"sentence": sentence, "glossaryPhrases": glossary_phrases})
+                log.info(f"{req_id} | sentence: {input} | compute_details: {glossary_phrases[1]}")
+                
+            result.append({"input": input, "glossaryPhrases": glossary_phrases})
+            log.info(f"the result  is {result}")
         return result
 
     # Searches for all glossary phrases of a fixed length within a given sentence
@@ -109,8 +124,8 @@ class DGlosService:
                     i = 1
         except Exception as e:
             log.exception(f"Exception while computing phrases: {e}", e)
-        res_dict = {"computed": computed, "found": glos_count}
-        return glossary_phrases, res_dict
+        # res_dict = {"computed": computed, "found": glos_count}
+        return glossary_phrases
 
     def search_from_store(self, data):
         query = {}

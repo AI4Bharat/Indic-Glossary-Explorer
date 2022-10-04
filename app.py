@@ -10,7 +10,7 @@ log = logging.getLogger('file')
 
 
 if __name__ == '__main__':
-    dglos_app.run(host=app_host, port=eval(str(app_port)), threaded=True)
+    dglos_app.run(host=app_host, port=eval(str(app_port)), threaded=True,debug=True)
 
 # Log config
 dictConfig({

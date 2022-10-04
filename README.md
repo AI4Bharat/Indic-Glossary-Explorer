@@ -1,3 +1,97 @@
-# Indic Glossary
+# Glossary-Service
 
-Repository to store backend server and webscraper scripts for Indic Glossary.
+
+## Overview
+**`Glossary-service`** In general terms, glossary is defined as a list of terms in a special domain or area of usage, with accompanying definitions. In the translation context, glossary can be defined as a pair which is associated with a field of knowledge, source being in one language and the target being in another language.
+
+Ex : {Appellant, अपीलकर्ता } can be a pair under the en-hi glossary for the judicial domain. 
+
+Such glossary helps the Translation/Annotations systems to make effective translation based on the context and domain.
+
+
+
+## General Requirements
+* Any create glossary request should follow the json schema
+```
+
+  {
+    "srcLanguage": "en",
+    "tgtLanguage": "hi",
+    "srcText": "Appellant",
+    "tgtText": "अपीलकर्ता",
+    "domain" : "legal",
+    "collectionSource" : "Anuvaad",
+    "level" : "w"
+  }
+
+
+```
+*    Bulk upload takes a file of type xls/xlsx/csv/tsv
+
+
+
+
+# API Specs
+
+## Context path
+`/glossary-service`
+
+## Endpoints
+* Create glossary   `/v1/glossary/create`
+
+  This api takes list of json objects as input to store them in the db
+
+* Glossary file upload `/v1/glossary/file/upload`
+
+  This api takes a file of type Xls/Xlsx/Csv/tsv to uplaod glossaries in bulk into the db
+
+* Search glossary  `/v1/sentence/phrases/search`
+
+  This api takes in a list of Phrases/sentences as input to retrive all the possible glossaries from the db 
+
+
+## Github Code-base
+
+  [Github Link](https://github.com/AI4Bharat/Glossary-App/tree/master)
+   
+## Installing / Getting started
+A quick intro on how to get started with running the glossary application on your machine
+
+### Setting up Dev
+
+Here's a brief intro about what a developer must do in order to start developing
+the project further:
+
+```shell
+git clone https://github.com/AI4Bharat/Glossary-App.git
+cd Glossary-App/
+
+```
+# Code Run
+Start elastic search server by running the following commond in the elastic search directory on your local machine
+
+
+```
+bin\elasticsearch.bat   
+
+```
+Make sure our are in the project directory and run the following command
+
+```
+
+Python app.py 
+
+```
+
+# Postman collection 
+ 
+
+
+[LINK](https://www.getpostman.com/collections/94ca8435caf774b778d5)
+
+
+
+## Glossary-service Architecture
+<p align="center">
+  <img src="https://github.com/AI4Bharat/Glossary-App/tree/master/docs/Glossary-service.png"  width="800" height="250">
+</p>

@@ -1,0 +1,152 @@
+openapi: 3.0.1
+info:
+  title: Glossary-service
+  description: A python based microservice to create/search glossaries.
+  contact:
+    name: Abhishek Suga
+    email: abhishek.suga@tarento.com
+  version: 1.0.0
+servers:
+- url: /glossary-service
+paths:
+  /v1/glossary/create:
+    post:
+      tags:
+      - Create
+      summary: REST API to create glossaries.
+      description: This API accepts list of JSON objects.
+      requestBody:
+        description: Request format accepted by this API.
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/createRequest'
+        required: true
+      responses:
+        202:
+          description: On successful Upload of glossaries created.
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/createResponse'
+      x-codegen-request-body-name: request
+  /v1/glossary/file/upload:
+    post:
+      tags:
+      - Upload
+      summary: REST API to upload Glossary files.
+      description: This API accepts glossary file of xls/xlsx/csv/tsv format.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - glossaryFile
+              properties:
+                glossaryFile:
+                  type: string
+                  description: Request format accepted by this API.
+                  format: binary
+        required: true
+      responses:
+        200:
+          description: On successful uplaod of glossary file.
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/createResponse'
+  /v1/sentence/phrases/search:
+    post:
+      tags:
+      - Search
+      summary: REST API to retrive all the possible glossaries from the ES store.
+      description: This API accepts List of input sentences/phrases to give all the
+        available glossaries in response .
+      requestBody:
+        description: Request format accepted by this API.
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/searchRequest'
+        required: true
+      responses:
+        200:
+          description: Either an empty or a non-empty array of glossary JSONs.
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/searchResponse'
+                
+      x-codegen-request-body-name: request
+components:
+  schemas:
+    createRequest:
+      type: object
+      properties:
+        glossary:
+          type: array
+          items:
+            $ref: '#/components/schemas/glossary_create'
+    glossary_create:
+      type: object
+      properties:
+        srcLanguage:
+          type: string
+        tgtLanguage:
+          type: string
+        srcText:
+          type: string
+        tgtText:
+          type: string
+        domain:
+          type: string
+        collectionSource:
+          type: string
+        level:
+          type: string
+    createResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: On successful creation of glossary.
+        status:
+          type: string
+          description: On successful creation of glossary.
+    searchRequest:
+      type: object
+      properties:
+        inputs:
+          type: array
+          description: File to be uploaded.
+          items:
+            type: string
+    searchResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          glossaryphrases:
+            type: array
+            description: list of glossaries available.
+            items:
+              $ref: '#/components/schemas/glossarylist'
+          input:
+            type: string
+    glossarylist:
+      type: object
+      properties:
+        collectionsSource:
+          type: string
+        domain:
+          type: string
+        level:
+          type: string
+        srcLang:
+          type: string
+        srctext:
+          type: string
+        tgtLanguage:
+          type: string
+        tgttxt:
+          type: string

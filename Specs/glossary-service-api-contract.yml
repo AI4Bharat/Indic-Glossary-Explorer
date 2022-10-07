@@ -86,8 +86,8 @@ components:
         glossary:
           type: array
           items:
-            $ref: '#/components/schemas/glossary_create'
-    glossary_create:
+            $ref: '#/components/schemas/glossaryCreate'
+    glossaryCreate:
       type: object
       properties:
         srcLanguage:
@@ -126,17 +126,17 @@ components:
       items:
         type: object
         properties:
-          glossaryphrases:
+          glossaryPhrases:
             type: array
             description: list of glossaries available.
             items:
-              $ref: '#/components/schemas/glossarylist'
+              $ref: '#/components/schemas/glossaryList'
           input:
             type: string
-    glossarylist:
+    glossaryList:
       type: object
       properties:
-        collectionsSource:
+        collectionSource:
           type: string
         domain:
           type: string
@@ -144,9 +144,9 @@ components:
           type: string
         srcLang:
           type: string
-        srctext:
+        srcText:
           type: string
         tgtLanguage:
           type: string
-        tgttxt:
+        tgtTxt:
           type: string

@@ -44,7 +44,7 @@ paths:
               - glossaryFile
               properties:
                 glossaryFile:
-                  type: string
+                  type: array
                   description: Request format accepted by this API.
                   format: binary
         required: true

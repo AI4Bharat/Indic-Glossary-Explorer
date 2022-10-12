@@ -9,6 +9,54 @@ info:
 servers:
 - url: /glossary-service
 paths:
+  /v1/signup:
+    post:
+      tags:
+      - Signup
+      summary: REST API for signup.
+      description: This API accepts user details.
+      requestBody:
+        description: Request format accepted by this API.
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/signupRequest'
+        required: true
+      responses:
+        202:
+          description: On successful signup.
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/signupResponse'
+      x-codegen-request-body-name: request
+
+
+
+
+  /v1/login:
+    post:
+      tags:
+      - Login
+      summary: REST API for login.
+      description: This API accepts login credentials.
+      requestBody:
+        description: Request format accepted by this API.
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/loginRequest'
+        required: true
+      responses:
+        202:
+          description: On successful login.
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/loginResponse'
+      x-codegen-request-body-name: request
+
+
   /v1/glossary/create:
     post:
       tags:
@@ -80,6 +128,48 @@ paths:
       x-codegen-request-body-name: request
 components:
   schemas:
+    signupRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password: 
+          type: string
+      
+    signupResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        status: 
+          type: string  
+  
+  
+  
+
+    loginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password: 
+          type: string
+      
+    loginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user: 
+          type: object
+          description: user details.
+          items:
+            $ref: '#/components/schemas/userDetails'
+
+
+
+
+  
     createRequest:
       type: object
       properties:
@@ -148,5 +238,15 @@ components:
           type: string
         tgtLanguage:
           type: string
-        tgtTxt:
+        tgtText:
           type: string
+          
+    userDetails:
+        type: object
+        properties:
+          email:
+            type: string
+          userId:
+            type: string
+          username:
+            type: string

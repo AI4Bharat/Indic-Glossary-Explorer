@@ -5,6 +5,7 @@ from flask import Flask, jsonify, request
 from logging.config import dictConfig
 from config.dglosconfigs import context_path, x_key
 from service.dglosservice import DGlosService
+from service.userservice import UserService
 from utils.dglosvalidator import DGlosValidator
 from flask_cors import CORS
 dglos_app = Flask(__name__)
@@ -16,7 +17,43 @@ def index():
         status=True,
         message='Welcome to the DMU Glossary Server!'
     )
+
+
+@dglos_app.route(context_path + '/v1/signup', methods=["POST"])
+def signup():
+    dds_service, user_service, validator = DGlosService(), UserService(), DGlosValidator()
+    data = request.get_json()
+    data = add_headers(data, request, "userId")
+    try:
+        validated = validator.validate_signup(data)
+        if validated:
+            return jsonify(validated), 400
+        response = user_service.signup(data)
+        return jsonify(response), 200
+    except Exception as e:
+        log.exception("Something went wrong: " + str(e), e)
+        return {"status": "FAILED", "message": "Something went wrong"}, 400
+
 # REST endpoint for login
+@dglos_app.route(context_path + '/v1/login', methods=["POST"])
+def login():
+    user_service, validator = UserService(), DGlosValidator()
+    data = request.get_json()
+    try:
+        validation_res = validator.validate_login_req(request)
+        if validation_res:
+            return jsonify(validation_res), 400
+        response = user_service.login(data)
+        log.info(response)
+        if not response:
+            return {"status": "FAILED", "message": "Something went wrong"}, 400
+        if 'status' in response.keys():
+            return jsonify(response), 400
+        return jsonify(response), 200
+    except Exception as e:
+        log.exception("Something went wrong: " + str(e), e)
+        return {"status": "FAILED", "message": "Something went wrong"}, 400
+
 @dglos_app.route(context_path + '/v1/glossary/create', methods=["POST"])
 def create():
     dglos_service, validator = DGlosService(), DGlosValidator()

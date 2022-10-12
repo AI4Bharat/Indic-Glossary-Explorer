@@ -9,10 +9,12 @@ from config.dglosconfigs import discarded_response_data
 
 from utils.dglosutils import DGlosUtils
 from repository.dglosrepo import DGlosRepo
+from repository.userrepo import UserRepo
 from config.dglosconfigs import phrase_length_in_words
 
 dds_utils = DGlosUtils()
 dglos_repo = DGlosRepo()
+user_repo = UserRepo()
 
 parser = reqparse.RequestParser(bundle_errors=True)
 log = logging.getLogger('file')

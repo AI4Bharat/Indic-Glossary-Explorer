@@ -2,9 +2,15 @@ import { makeStyles } from "@mui/styles";
 
 const GlobalStyles = makeStyles({
   container: {
-    maxWidth: "1272px",
+    maxWidth: "1440px",
     width: "100%",
-    margin: "-20px auto",
+    marginTop: "100px",
+    alignSelf: "center",
+    border: "0.2px solid rgba(0,0,0,0.3)",
+    borderRadius: 10,
+    minHeight: window.innerHeight*0.8,
+    padding: 20,
+    textAlign: "center"
     // background: theme.palette.background.default,
     // fontFamily: theme.typography.fontFamily,
   },

@@ -176,6 +176,7 @@ import {
             <Button 
                 fullWidth 
                 // onClick={createToken} 
+                onClick={()=>navigate("/view-glossary")}
                 label={"Login"} 
             />
           </Grid>

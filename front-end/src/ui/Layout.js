@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {  ThemeProvider,  } from "@mui/material";
 import themeDefault from './theme/theme'
@@ -8,14 +8,15 @@ import GlobalStyles from "./styles/LayoutStyles";
 // import BackButton from "./pages/component/common/BackButton";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { translate } from "../config/localisation";
-// const Header = React.lazy(() => import("./pages/component/common/Header"));
+// import Header from "./pages/component/common/Header";
+const Header = React.lazy(() => import("./pages/component/common/Header"));
 
 
 const Layout= (props) => {
   const { type, index, userRoles, component,Backbutton, backPressNavigationPath } = props;
   const [show, setShow] = useState(false);
   const [popUp, setPopup] = useState(true);
-  const apiStatus = useSelector((state) => state.apiStatus);
+//   const apiStatus = useSelector((state) => state.apiStatus);
 
   const classes = GlobalStyles();
   let navigate = useNavigate();
@@ -49,11 +50,11 @@ const Layout= (props) => {
       className={classes.root}
       >
         <Suspense fallback={<div>Loading....</div>}>
-          {/* <Header
-            type={type}
-            index={index}
-            className={classes.headerContainer}
-          /> */}
+          <Header
+            // type={type}
+            // index={index}
+            // className={classes.headerContainer}
+          />
         </Suspense>
         <div 
         className={classes.container}

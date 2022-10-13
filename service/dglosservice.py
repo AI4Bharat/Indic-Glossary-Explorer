@@ -38,6 +38,7 @@ class DGlosService:
             dglos_repo.insert_bulk(glossary)
             log.info(f"{req_id} | Pushing to ES...")
             for glos in glossary:
+                del glos["_id"]
                 dglos_repo.index_basic_to_es(glos)
             log.info(f"{req_id} | Upload Complete!")
             return {"status": "Success", "message": "Glossary Uploaded!"}

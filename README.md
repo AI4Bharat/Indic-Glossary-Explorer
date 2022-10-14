@@ -1,16 +1,16 @@
-# Glossary-Service
+# Indic Glossary Explorer
 
 
 ## Overview
-**`Glossary-service`** In general terms, glossary is defined as a list of terms in a special domain or area of usage, with accompanying definitions. In the translation context, glossary can be defined as a pair which is associated with a field of knowledge, source being in one language and the target being in another language.
+In general terms, glossary is defined as a list of terms in a special domain or area of usage, with accompanying definitions. In the translation context, glossary can be defined as a pair which is associated with a field of knowledge, source being in one language and the target being in another language.
 
-Ex : {Appellant, अपीलकर्ता } can be a pair under the en-hi glossary for the judicial domain. 
+Ex : `{Appellant, अपीलकर्ता}` can be a pair under the en-hi glossary for the judicial domain. 
 
 Such glossary helps the Translation/Annotations systems to make effective translation based on the context and domain.
 
 
 
-## Glossary-service Architecture
+## Architecture
 <p align="center">
   <img src="https://github.com/AI4Bharat/Glossary-App/blob/master/docs/Glossary-service.png?raw=true"  width="800" height="350">
 </p>
@@ -19,7 +19,6 @@ Such glossary helps the Translation/Annotations systems to make effective transl
 ## General Requirements
 * Any create glossary request should follow the json schema
 ```
-
   {
     "srcLanguage": "en",
     "tgtLanguage": "hi",
@@ -29,8 +28,6 @@ Such glossary helps the Translation/Annotations systems to make effective transl
     "collectionSource" : "Anuvaad",
     "level" : "w"
   }
-
-
 ```
 *    Bulk upload takes a file of type xls/xlsx/csv/tsv
 
@@ -40,7 +37,7 @@ Such glossary helps the Translation/Annotations systems to make effective transl
 # API Specs
 
 ## Context path
-`/glossary-service`
+`/glossary-explorer`
 
 
 ## Endpoints
@@ -89,6 +86,6 @@ Python app.py
 ```
 
 # API Specifications
-[`SwaggerHub Link`](https://app.swaggerhub.com/apis/ai4bharat-iitm/glossary-service/1.0.0)
+[`SwaggerHub Link`](https://app.swaggerhub.com/apis/ai4bharat-iitm/indic-glossary-explorer/1.0.0)
 
 

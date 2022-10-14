@@ -87,5 +87,3 @@ Python app.py
 
 # API Specifications
 [`SwaggerHub Link`](https://app.swaggerhub.com/apis/ai4bharat-iitm/indic-glossary-explorer/1.0.0)
-
-

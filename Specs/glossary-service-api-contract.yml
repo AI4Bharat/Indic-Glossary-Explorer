@@ -1,13 +1,13 @@
 openapi: 3.0.1
 info:
-  title: Glossary-service
+  title: Glossary-explorer
   description: A python based microservice to create/search glossaries.
   contact:
     name: Abhishek Suga
     email: abhishek.suga@tarento.com
   version: 1.0.0
 servers:
-- url: /glossary-service
+- url: /glossary-explorer
 paths:
   /v1/signup:
     post:

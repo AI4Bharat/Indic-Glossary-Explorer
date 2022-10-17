@@ -1,9 +1,9 @@
 import logging
 import time
 import uuid
-from flask import Flask, jsonify, request
+from flask import Flask, json, jsonify, request
 from logging.config import dictConfig
-from config.dglosconfigs import context_path, x_key
+from config.dglosconfigs import context_path, x_key,supported_languages,supported_domains
 from service.dglosservice import DGlosService
 from service.userservice import UserService
 from utils.dglosvalidator import DGlosValidator
@@ -18,6 +18,23 @@ def index():
         message='Welcome to the DMU Glossary Server!'
     )
 
+@dglos_app.route(context_path + '/v1/lang', methods=['GET'])
+def dropdown_lang():
+    supported_languages = []
+    with open(supported_languages, 'r') as f:
+        data = json.load(f)
+        for lang in data['languages']:
+            supported_languages.append(lang['label'])
+    return supported_languages
+
+@dglos_app.route(context_path + '/v1/domain', methods=['GET'])
+def dropdown_lang():
+    supported_domains = []
+    with open(supported_domains, 'r') as f:
+        data = json.load(f)
+        for dom in data['domains']:
+            supported_domains.append(dom['label'])
+    return supported_domains
 
 @dglos_app.route(context_path + '/v1/signup', methods=["POST"])
 def signup():

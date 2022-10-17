@@ -1,6 +1,7 @@
 import logging
 import time
 import uuid
+import json
 from flask import Flask, json, jsonify, request
 from logging.config import dictConfig
 from config.dglosconfigs import context_path, x_key,supported_languages,supported_domains

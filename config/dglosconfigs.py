@@ -8,6 +8,7 @@ db = os.environ.get('DMU_GLOS_DB', "dmu-glossary")
 user_collection = os.environ.get('DMU_GLOS_USER_COL', "users")
 dglos_collection = os.environ.get('DMU_GLOS_GLOSSARY_COL', "glossary")
 es_url = os.environ.get('DMU_GLOS_ES_URL', 'http://127.0.0.1:9200')
+
 base_index = os.environ.get('DMU_GLOS_BASE_INDEX', 'glossary-base-index')
 session_collection = os.environ.get('DMU_GLOS_GLOSSARY_COL', "sessions")
 session_timeout_in_ms = os.environ.get('DMU_DUS_SESSION_TIMEOUT_IN_MS', 86400000)
@@ -21,4 +22,5 @@ if isinstance(max_file_size_in_mb, str):
     max_file_size_in_mb = eval(max_file_size_in_mb)
 phrase_length_in_words = os.environ.get('DMU_GLOS_PHRASE_LENGTH_IN_WORDS', 100)
 discarded_response_data=["@timestamp","audit"]
-
+supported_languages = 'models/domains.json'
+supported_domains= 'models/languages.json'

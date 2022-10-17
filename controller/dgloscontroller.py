@@ -28,7 +28,8 @@ def dropdown_lang():
     return supported_languages
 
 @dglos_app.route(context_path + '/v1/domain', methods=['GET'])
-def dropdown_domains():
+
+def dropdown_domain():
     supported_domains = []
     with open(supported_domains, 'r') as f:
         data = json.load(f)

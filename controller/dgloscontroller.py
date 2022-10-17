@@ -23,8 +23,7 @@ def dropdown_lang():
     supported_languages = []
     with open(supported_languages, 'r') as f:
         data = json.load(f)
-        for lang in data['languages']:
-            supported_languages.append(lang['label'])
+        supported_languages.append(data)
     return supported_languages
 
 @dglos_app.route(context_path + '/v1/domain', methods=['GET'])
@@ -32,8 +31,7 @@ def dropdown_lang():
     supported_domains = []
     with open(supported_domains, 'r') as f:
         data = json.load(f)
-        for dom in data['domains']:
-            supported_domains.append(dom['label'])
+        supported_domains.append(data)
     return supported_domains
 
 @dglos_app.route(context_path + '/v1/signup', methods=["POST"])

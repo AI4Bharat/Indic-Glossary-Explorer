@@ -5,10 +5,13 @@ import CustomButton from '../../component/common/Button';
 import OutlinedTextField from '../../component/common/OutlinedTextField';
 import { useDispatch, useSelector } from "react-redux";
 import APITransport from "../../../../redux/actions/apitransport/apitransport";
+import ViewGlossary from '../../component/SearchAndViewGlossary/ViewGlossary';
 
 const SearchAndViewGlossary = (props) => {
     const dispatch = useDispatch();
     const [text, setText] = useState("");
+
+    const glossaryData = useSelector((state)=>state.searchGlossary);
 
     const handleTextChange = (e) => {
         setText(e.target.value);    
@@ -19,8 +22,15 @@ const SearchAndViewGlossary = (props) => {
         dispatch(APITransport(apiObj));
     }
 
+    const onReset = () => {
+        setText("");
+        const apiObj = new searchGlossary("");
+        dispatch(APITransport(apiObj));
+    }
+
     return(
-        <Grid 
+        <div>
+             <Grid 
             container
             flexDirection="row"
             justifyContent="center"
@@ -41,7 +51,21 @@ const SearchAndViewGlossary = (props) => {
                     marginLeft: 2
                 }}
             />
+            {
+                glossaryData && <CustomButton 
+                label="Reset"
+                onClick={onReset}
+                sx={{
+                    padding: 4,
+                    borderRadius: 2,
+                    marginLeft: 2
+                }}
+            />
+            }
         </Grid>
+            {glossaryData && <ViewGlossary glossaryData={glossaryData[0].glossaryPhrases} inputText={glossaryData[0].input} />}
+        </div>
+       
     )
 }
 

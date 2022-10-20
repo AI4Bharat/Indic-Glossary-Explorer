@@ -1,3 +1,4 @@
+
 import logging
 import time
 import uuid
@@ -21,20 +22,15 @@ def index():
 
 @dglos_app.route(context_path + '/v1/lang', methods=['GET'])
 def dropdown_lang():
-    supported_languages = []
     with open(supported_languages, 'r') as f:
         data = json.load(f)
-        supported_languages.append(data)
-    return supported_languages
+    return jsonify(data), 200
 
 @dglos_app.route(context_path + '/v1/domain', methods=['GET'])
-
 def dropdown_domain():
-    supported_domains = []
     with open(supported_domains, 'r') as f:
         data = json.load(f)
-        supported_domains.append(data)
-    return supported_domains
+    return jsonify(data), 200
 
 @dglos_app.route(context_path + '/v1/signup', methods=["POST"])
 def signup():

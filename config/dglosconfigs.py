@@ -22,5 +22,5 @@ if isinstance(max_file_size_in_mb, str):
     max_file_size_in_mb = eval(max_file_size_in_mb)
 phrase_length_in_words = os.environ.get('DMU_GLOS_PHRASE_LENGTH_IN_WORDS', 100)
 discarded_response_data=["@timestamp","audit"]
-supported_languages = 'models/domains.json'
-supported_domains= 'models/languages.json'
+supported_languages = 'models/languages.json'
+supported_domains= 'models/domains.json'

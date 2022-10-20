@@ -38,10 +38,11 @@ export default function AppInfo() {
                         variant={"h2"}
                         className={classes.title}
                         sx={{
-                            marginTop : 10
+                            marginTop : 10,
+                            width: "98%"
                         }}
                         // onClick={routeChange}
-                    >Glossary Service</Typography>
+                    >{translate("label.appName")}</Typography>
                 </Grid>
                 <Hidden only="xs">
                     <Typography 

@@ -14,7 +14,10 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import PersonIcon from '@mui/icons-material/Person';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import headerStyle from "../../../styles/header";
+import { useSelector } from 'react-redux';
+import { translate } from "../../../../config/localisation";
 
 
 const Header = () => {
@@ -25,6 +28,12 @@ const Header = () => {
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const userData = useSelector((state)=>state.userLoginDetails.data);
+
+    React.useEffect(()=>{
+        console.log("userData --- ", userData);
+    }, [userData])
 
     const getActiveRoute = (id) => {
         return location.pathname === id
@@ -50,13 +59,8 @@ const Header = () => {
         navigate(id);
     }
 
-    const settings = [{
-        name: "Logout",
-        onClick: () => { onLogoutClick() }
-    }];
-
     const onLogoutClick = () => {
-        handleCloseUserMenu();
+        localStorage.clear();
         navigate("/"); 
     }
 
@@ -94,7 +98,7 @@ const Header = () => {
                             width={"50rem"}
                             height={"50rem"}
                         />
-                        <Typography variant='h5' sx={{color: "#000000", marginLeft: 2}}>Glossary Service</Typography>
+                        <Typography variant='h5' sx={{color: "#000000", marginLeft: 2}}>{translate("label.appName")}</Typography>
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -168,43 +172,11 @@ const Header = () => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar>
-                                    <PersonIcon />
-                                </Avatar>
+                        <Tooltip title="Log out">
+                            <IconButton onClick={onLogoutClick} sx={{ p: 0 }}>
+                                    <ExitToAppIcon />
                             </IconButton>
                         </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'center',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'center',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting.name} onClick={setting.onClick}>
-                                    <Typography 
-                                        textAlign="center" 
-                                        variant='subtitle2' 
-                                        sx={{
-                                            fontFamily: "Roboto",
-                                            fontSize: "0.827rem",
-                                            fontWeight: "600"
-                                        }}
-                                    >{setting.name}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
                     </Box>
                 </Toolbar>
             </Container>

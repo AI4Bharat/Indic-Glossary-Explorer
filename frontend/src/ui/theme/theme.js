@@ -132,6 +132,35 @@ const themeDefault = createTheme({
         },
       },
     },
+    MuiDropzoneArea: {
+      styleOverrides: {
+        root: {
+        paddingTop: '5%',
+        top: "auto",
+        width: '98%', 
+        minHeight: '220px',
+        height: "45%",
+        borderColor: '#2C2799',
+        backgroundColor: '#F5F9FA',
+        border: '1px dashed #2C2799',
+        fontColor: '#2C2799',
+        marginTop: "3%",
+        marginLeft: '1%',
+        "& svg": { color: '#2C2799',marginTop:'-20px' },
+        "& p": {
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          fontSize: "17px",
+          paddingTop:'-50px',
+          color: '#2C2799',
+
+        }
+      },
+      }
+      
+
+    },
     MUIDataTablePagination: {
       styleOverrides: {
         backgroundColor: "#fff",

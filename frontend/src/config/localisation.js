@@ -7,6 +7,7 @@ const localisation = {
       "button.clear" : "Clear",
       "button.Filter" : "Filter",
       "button.Apply" : "Apply",
+      "label.appName": "Indic Glossary Explorer",
       "label.filter.status" : "Status",
       "label.filter.column": "Select Columns",
       "button.cancel" : "Cancel",

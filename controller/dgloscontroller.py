@@ -97,7 +97,7 @@ def upload():
         log.exception("Something went wrong: " + str(e), e)
         return {"status": "FAILED", "message": "Something went wrong. "+str(e)}, 400
 # REST endpoint for logout
-@dglos_app.route(context_path + '/v1/sentence/phrases/search', methods=["GET"])
+@dglos_app.route(context_path + '/v1/sentence/phrases/search', methods=["POST","GET"])
 def search_phrases_for_sentence():
     dglos_service, validator = DGlosService(), DGlosValidator()
     data = request.get_json()

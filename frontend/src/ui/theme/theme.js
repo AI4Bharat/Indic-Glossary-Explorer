@@ -262,6 +262,9 @@ const themeDefault = createTheme({
     },
     MuiTableCell: {
       styleOverrides: {
+        root:{
+          textAlign: "center"
+        },
         head: {
           padding: ".6rem .5rem .6rem 1.5rem",
           backgroundColor: "#F8F8FA !important",
@@ -269,6 +272,7 @@ const themeDefault = createTheme({
           letterSpacing: "0.74",
           fontWeight: "bold",
           minHeight: "700px",
+          textAlign: "center"
         },
       },
     },

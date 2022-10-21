@@ -11,6 +11,7 @@ import FileUploadStyles from '../../../styles/fileUpload';
 import uploadGlossary from '../../../../redux/actions/api/uploadGlossary/uploadGlossary';
 import { useDispatch, useSelector } from 'react-redux';
 import APITransport from "../../../../redux/actions/apitransport/apitransport";
+import axios from 'axios';
 
 
 const UploadBulkGlossary = (props) => {
@@ -23,33 +24,51 @@ const UploadBulkGlossary = (props) => {
     variant: "success",
   });
 
-  const uploadStatus = useSelector((state)=>state.uploadGlossary);
-  const apiStatus = useSelector((state)=>state.apiStatus);
+  // const uploadStatus = useSelector((state)=>state.uploadGlossary);
+  // const apiStatus = useSelector((state)=>state.apiStatus);
 
-  useEffect(()=>{
-    if(apiStatus.error && apiStatus.message){
-      setSnackbarInfo({
-        open: true,
-        message: apiStatus.message,
-        variant: "error",
-      })
-    }
-  }, [apiStatus]);
+  // useEffect(()=>{
+  //   if(apiStatus.error && apiStatus.message){
+  //     setSnackbarInfo({
+  //       open: true,
+  //       message: apiStatus.message,
+  //       variant: "error",
+  //     })
+  //   }
+  // }, [apiStatus]);
 
-  useEffect(()=>{
-    if(uploadStatus.status && uploadStatus.message){
-      setSnackbarInfo({
-        open: true,
-        message: uploadStatus.message,
-        variant: "success",
-      })
-    }
-  },[uploadStatus])
+  // useEffect(()=>{
+  //   if(uploadStatus.status && uploadStatus.message){
+  //     setSnackbarInfo({
+  //       open: true,
+  //       message: uploadStatus.message,
+  //       variant: "success",
+  //     })
+  //   }
+  // },[uploadStatus])
 
   const onUploadClick = () => {
     const apiObj = new uploadGlossary(file);
-    dispatch(APITransport(apiObj));
-    setFile(null)
+    axios.post(apiObj.endpoint, apiObj.getBody(), apiObj.getHeaders())
+      .then(response => {
+        console.log("response --- ", response);
+        if (response.status == 200) {
+          setFile(null)
+          setSnackbarInfo({
+            open: true,
+            message: response.data.message,
+            variant: "success",
+          })
+        }
+      }).catch(err => {
+        console.log("err --- ", err);
+        setSnackbarInfo({
+          open: true,
+          message: err.response.data.message,
+          variant: "error",
+        })
+      })
+    // dispatch(APITransport(apiObj));
   }
 
   const handleAddFile = (file) => {
@@ -104,7 +123,7 @@ const UploadBulkGlossary = (props) => {
 
       <CustomButton
         label="Upload File"
-        disabled = {!file}
+        disabled={!file}
         onClick={onUploadClick}
         sx={{
           width: "460px",

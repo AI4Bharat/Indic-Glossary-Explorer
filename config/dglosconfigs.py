@@ -8,7 +8,6 @@ db = os.environ.get('DMU_GLOS_DB', "dmu-glossary")
 user_collection = os.environ.get('DMU_GLOS_USER_COL', "users")
 dglos_collection = os.environ.get('DMU_GLOS_GLOSSARY_COL', "glossary")
 es_url = os.environ.get('DMU_GLOS_ES_URL', 'http://127.0.0.1:9200')
-
 base_index = os.environ.get('DMU_GLOS_BASE_INDEX', 'glossary-base-index')
 session_collection = os.environ.get('DMU_GLOS_GLOSSARY_COL', "sessions")
 session_timeout_in_ms = os.environ.get('DMU_DUS_SESSION_TIMEOUT_IN_MS', 86400000)

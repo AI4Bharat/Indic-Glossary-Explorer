@@ -11,10 +11,6 @@ import themeDefault from '../../../theme/theme'
 export default function AppInfo() {
     let navigate = useNavigate();
     const classes = LoginStyle();
-    // const routeChange = () =>{ 
-    //     let path = `dashboard`; 
-    //     navigate(path);
-    //   }
     return (
         <div>
             <Grid container sx={{

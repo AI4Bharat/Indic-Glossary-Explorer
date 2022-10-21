@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import searchGlossary from '../../../../redux/actions/api/SearchGlossary/SearchGlossary';
 import CustomButton from '../../component/common/Button';
 import OutlinedTextField from '../../component/common/OutlinedTextField';
@@ -10,6 +10,7 @@ import ViewGlossary from '../../component/SearchAndViewGlossary/ViewGlossary';
 const SearchAndViewGlossary = (props) => {
     const dispatch = useDispatch();
     const [text, setText] = useState("");
+    const [showGlossaryResultTable, setShowGlossaryResultTable] = useState(false);
 
     const glossaryData = useSelector((state)=>state.searchGlossary);
 
@@ -22,10 +23,15 @@ const SearchAndViewGlossary = (props) => {
         dispatch(APITransport(apiObj));
     }
 
+    useEffect(()=>{
+        setShowGlossaryResultTable(true);
+    }, [glossaryData])
+
     const onReset = () => {
         setText("");
-        const apiObj = new searchGlossary("");
-        dispatch(APITransport(apiObj));
+        // const apiObj = new searchGlossary("");
+        // dispatch(APITransport(apiObj));
+        setShowGlossaryResultTable(false);
     }
 
     return(
@@ -63,7 +69,7 @@ const SearchAndViewGlossary = (props) => {
             />
             }
         </Grid>
-            {glossaryData && glossaryData.length > 0 && <ViewGlossary glossaryData={glossaryData[0]?.glossaryPhrases} inputText={glossaryData[0]?.input} />}
+            {showGlossaryResultTable && glossaryData && glossaryData.length > 0 && <ViewGlossary glossaryData={glossaryData[0]?.glossaryPhrases} inputText={glossaryData[0]?.input} />}
         </div>
        
     )

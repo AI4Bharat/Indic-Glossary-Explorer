@@ -81,7 +81,7 @@ class DGlosService:
                     del glossary_phrases[i][key]
 
             if glossary_phrases:
-                log.info(f"{req_id} | sentence: {input} | compute_details: {glossary_phrases[1]}")
+                log.info(f"{req_id} | sentence: {input} | compute_details: {glossary_phrases}")
                 
             result.append({"input": input, "glossaryPhrases": glossary_phrases})
             log.info(f"the result  is {result}")

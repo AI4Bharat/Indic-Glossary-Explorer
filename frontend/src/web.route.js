@@ -33,7 +33,7 @@ const App = () => {
   };
 
   return (
-    <Router>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route
@@ -45,7 +45,7 @@ const App = () => {
           element={ProtectedRouteWrapper(<Layout component={<UploadGlossary />} Backbutton={true} />)}
         />
       </Routes>
-    </Router>
+    </HashRouter>
   );
 };
 

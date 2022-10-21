@@ -63,7 +63,7 @@ const SearchAndViewGlossary = (props) => {
             />
             }
         </Grid>
-            {glossaryData && <ViewGlossary glossaryData={glossaryData[0].glossaryPhrases} inputText={glossaryData[0].input} />}
+            {glossaryData && glossaryData.length > 0 && <ViewGlossary glossaryData={glossaryData[0]?.glossaryPhrases} inputText={glossaryData[0]?.input} />}
         </div>
        
     )

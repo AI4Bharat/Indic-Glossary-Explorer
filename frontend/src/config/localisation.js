@@ -2,7 +2,8 @@ const localisation = {
     enterEmailId: "Enter your Email ID*",
     enterPassword: "Enter your Password*",
     "label.appInfo":
-      "Platform to Add/View/Update/Delete Glossary for all AI4Bharat Tools. Like - ULCA, ANUVAAD, SHOONYA ...",
+    "Glossary-Explorer is a web application that can be used to search for glossary/dictionary terms in Indian languages for corresponding English terms, across many domains.",
+      // "Platform to Add/View/Update/Delete Glossary for all AI4Bharat Tools. Like - ULCA, ANUVAAD, SHOONYA ...",
       "button.clearAll" : "Clear All",
       "button.clear" : "Clear",
       "button.Filter" : "Filter",

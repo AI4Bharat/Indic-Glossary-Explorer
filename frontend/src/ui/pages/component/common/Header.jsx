@@ -18,20 +18,23 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import headerStyle from "../../../styles/header";
 import { useSelector } from 'react-redux';
 import { translate } from "../../../../config/localisation";
+import CustomButton from './Button';
 
 
-const Header = () => {
+const Header = (props) => {
 
     const navigate = useNavigate();
     const location = useLocation();
     const classes = headerStyle();
 
+    const { publicHeader } = props;
+
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-    const userData = useSelector((state)=>state.userLoginDetails.data);
+    const userData = useSelector((state) => state.userLoginDetails.data);
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
         console.log("userData --- ", userData);
     }, [userData])
 
@@ -39,7 +42,14 @@ const Header = () => {
         return location.pathname === id
     }
 
-    const pages = [
+    const pages = publicHeader ? [
+        {
+            name: "View Glossary",
+            onClick: () => onHeaderMenuClick("/"),
+            id: "/",
+            isActive: () => getActiveRoute("/")
+        }
+    ] : [
         {
             name: "View Glossary",
             onClick: () => onHeaderMenuClick("/view-glossary"),
@@ -61,7 +71,7 @@ const Header = () => {
 
     const onLogoutClick = () => {
         localStorage.clear();
-        navigate("/"); 
+        navigate("/user/login");
     }
 
     const handleOpenNavMenu = (event) => {
@@ -78,6 +88,23 @@ const Header = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const renderAuthLinkButton = () => {
+        console.log("publicHeader --- ", publicHeader);
+        if (!publicHeader) {
+            return <Tooltip title="Log out">
+                <IconButton onClick={onLogoutClick} sx={{ p: 0 }}>
+                    <ExitToAppIcon />
+                </IconButton>
+            </Tooltip>
+        } else {
+            return <CustomButton
+                label={"Login"}
+                onClick={()=>navigate('/user/login')}
+                sx={{borderRadius: 2}}
+            />
+        }
+    }
 
     return (
         <AppBar position="fixed"
@@ -98,7 +125,7 @@ const Header = () => {
                             width={"50rem"}
                             height={"50rem"}
                         />
-                        <Typography variant='h5' sx={{color: "#000000", marginLeft: 2}}>{translate("label.appName")}</Typography>
+                        <Typography variant='h5' sx={{ color: "#000000", marginLeft: 2 }}>{translate("label.appName")}</Typography>
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -159,24 +186,22 @@ const Header = () => {
                     </Typography>
                     <Box sx={{ flexGrow: 1, placeContent: "center", display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
-                            <NavLink
-                                to={page.id}
-                                className={({ isActive }) =>
-                                    isActive ? classes.highlightedMenu : classes.headerMenu
-                                }
-                                activeClassName={classes.highlightedMenu}
-                            >
-                                {page.name}
-                            </NavLink>
+                           
+                                <NavLink
+                                    hidden={page.hidden}
+                                    to={page.id}
+                                    className={({ isActive }) =>
+                                        isActive ? classes.highlightedMenu : classes.headerMenu
+                                    }
+                                    activeClassName={classes.highlightedMenu}
+                                >
+                                    {page.name}
+                                </NavLink>
                         ))}
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Log out">
-                            <IconButton onClick={onLogoutClick} sx={{ p: 0 }}>
-                                    <ExitToAppIcon />
-                            </IconButton>
-                        </Tooltip>
+                        {renderAuthLinkButton()}
                     </Box>
                 </Toolbar>
             </Container>

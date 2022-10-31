@@ -53,10 +53,13 @@ class DGlosService:
         try:
             f = api_request.files['glossaryFile']
             g= api_request.files['glossaryFile'].filename
-            # extension = g.split('.')[-1]
-            # if extension == 'xlsx' or extension == 'xls':
-            data_xls = pd.read_excel(f)
-            # sep='\t'
+            extension = g.split('.')[-1]
+            if extension in ['xlsx','xls'] :
+                data_xls = pd.read_excel(f)
+            elif extension == 'csv' :
+                data_xls = pd.read_csv(f,encoding= 'utf-8')
+            elif extension == 'tsv' :
+                data_xls = pd.read_csv(f,encoding= 'utf-8',sep='\t')
             data["glossary"] = data_xls.to_dict(orient='records')
             upload_successful = self.create(data)
             if upload_successful:

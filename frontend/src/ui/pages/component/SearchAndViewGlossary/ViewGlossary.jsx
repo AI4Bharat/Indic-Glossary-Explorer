@@ -95,6 +95,16 @@ const ViewGlossary = (props) => {
             }
         },
         {
+            name: "level_code",
+            label: "Level Code",
+            options: {
+                filter: false,
+                sort: false,
+                align : "center",
+                display: 'none'
+            }
+        },
+        {
             name: "level",
             label: "Level",
             options: {
@@ -121,7 +131,8 @@ const ViewGlossary = (props) => {
             el.tgtLanguage,
             el.domain,
             el.collectionSource,
-            el.level
+            el.level,
+            glossaryLevel.filter((level)=>level.key == el.level)[0].name
         ]
     }) : []
 

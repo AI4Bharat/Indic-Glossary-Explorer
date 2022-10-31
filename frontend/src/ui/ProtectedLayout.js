@@ -51,6 +51,7 @@ const Layout= (props) => {
       >
         <Suspense fallback={<div>Loading....</div>}>
           <Header
+            publicHeader={false}
             // type={type}
             // index={index}
             // className={classes.headerContainer}

@@ -111,12 +111,12 @@ const UploadBulkGlossary = (props) => {
           showPreviewsInDropzone
           // key= {this.state.key}
           dropZoneClass={classes.dropZoneArea}
-          acceptedFiles={[".xls", ".xlsx"]}
+          acceptedFiles={[".xls", ".xlsx",".csv",".tsv"]}
           onChange={handleAddFile}
           filesLimit={1}
           // clearOnUnmount = {this.state.cleared}
           maxFileSize={200000000}
-          dropzoneText={"Please Add / Drop xls / xlsx document here"}
+          dropzoneText={"Please Add / Drop xls / xlsx / csv /tsv document here"}
           onDelete={handleRemoveFile}
         />
       </Grid>

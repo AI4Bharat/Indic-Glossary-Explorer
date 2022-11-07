@@ -9,10 +9,12 @@ from config.dglosconfigs import discarded_response_data
 
 from utils.dglosutils import DGlosUtils
 from repository.dglosrepo import DGlosRepo
+from repository.userrepo import UserRepo
 from config.dglosconfigs import phrase_length_in_words
 
 dds_utils = DGlosUtils()
 dglos_repo = DGlosRepo()
+user_repo = UserRepo()
 
 parser = reqparse.RequestParser(bundle_errors=True)
 log = logging.getLogger('file')
@@ -36,6 +38,7 @@ class DGlosService:
             dglos_repo.insert_bulk(glossary)
             log.info(f"{req_id} | Pushing to ES...")
             for glos in glossary:
+                del glos["_id"]
                 dglos_repo.index_basic_to_es(glos)
             log.info(f"{req_id} | Upload Complete!")
             return {"status": "Success", "message": "Glossary Uploaded!"}
@@ -50,10 +53,13 @@ class DGlosService:
         try:
             f = api_request.files['glossaryFile']
             g= api_request.files['glossaryFile'].filename
-            # extension = g.split('.')[-1]
-            # if extension == 'xlsx' or extension == 'xls':
-            data_xls = pd.read_excel(f)
-            # sep='\t'
+            extension = g.split('.')[-1]
+            if extension in ['xlsx','xls'] :
+                data_xls = pd.read_excel(f)
+            elif extension == 'csv' :
+                data_xls = pd.read_csv(f,encoding= 'utf-8')
+            elif extension == 'tsv' :
+                data_xls = pd.read_csv(f,encoding= 'utf-8',sep='\t')
             data["glossary"] = data_xls.to_dict(orient='records')
             upload_successful = self.create(data)
             if upload_successful:
@@ -78,7 +84,7 @@ class DGlosService:
                     del glossary_phrases[i][key]
 
             if glossary_phrases:
-                log.info(f"{req_id} | sentence: {input} | compute_details: {glossary_phrases[1]}")
+                log.info(f"{req_id} | sentence: {input} | compute_details: {glossary_phrases}")
                 
             result.append({"input": input, "glossaryPhrases": glossary_phrases})
             log.info(f"the result  is {result}")

@@ -110,7 +110,7 @@ const AddIndividualGlossary = (props) => {
                     })
                 }
             }).catch(err => {
-                console.log("err --- ", err);
+                console.log("err -- ", err);
                 setSnackbarInfo({
                     open: true,
                     message: err.response.data.message,

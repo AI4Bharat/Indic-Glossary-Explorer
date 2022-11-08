@@ -38,6 +38,13 @@ class DGlosValidator:
             return "Filetype {} is not allowed".format(extension)
         return None
 
+    def validate_search(self,data):
+        if 'inputs' not in data.keys():
+            return "No input provided"
+        if "tgtLanguage" not in data.keys():
+            return "Target language is manadatory"
+
+
     def validate_x_key(self, ip_req):
         log.info("Validating the X Key.........")
         if "xKey" not in ip_req["metadata"].keys():

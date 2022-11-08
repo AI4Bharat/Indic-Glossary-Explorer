@@ -19,6 +19,8 @@ import headerStyle from "../../../styles/header";
 import { useSelector } from 'react-redux';
 import { translate } from "../../../../config/localisation";
 import CustomButton from './Button';
+import { Grid, Icon } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 
 const Header = (props) => {
@@ -71,6 +73,7 @@ const Header = (props) => {
 
     const onLogoutClick = () => {
         localStorage.clear();
+        handleCloseUserMenu();
         navigate("/user/login");
     }
 
@@ -92,16 +95,61 @@ const Header = (props) => {
     const renderAuthLinkButton = () => {
         console.log("publicHeader --- ", publicHeader);
         if (!publicHeader) {
-            return <Tooltip title="Log out">
-                <IconButton onClick={onLogoutClick} sx={{ p: 0 }}>
-                    <ExitToAppIcon />
-                </IconButton>
-            </Tooltip>
+            // return <Tooltip title="Log out">
+            //     <IconButton onClick={onLogoutClick} sx={{ p: 0 }}>
+            //         <ExitToAppIcon />
+            //     </IconButton>
+            // </Tooltip>
+            return (
+                <>
+                    <IconButton
+                        onClick={handleOpenUserMenu}
+                        size="large"
+                        sx={{ borderRadius: 2, padding: 1 }}
+                        aria-controls={anchorElUser ? 'account-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={anchorElUser ? 'true' : undefined}
+                    >
+                        <Avatar sx={{}}>{JSON.parse(localStorage.getItem("userDetails"))?.username?.split("")[0]}</Avatar>
+                        <Typography variant='body1' sx={{ marginLeft: 1, marginRight: 1, color: "rgb(39, 30, 79)" }}>
+                            {JSON.parse(localStorage.getItem("userDetails"))?.username}
+                        </Typography>
+                        <KeyboardArrowDownIcon />
+                    </IconButton>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorElUser}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                        }}
+                        open={Boolean(anchorElUser)}
+                        onClose={handleCloseUserMenu}
+                        sx={{
+                            // display: { xs: 'block', md: 'block' },
+                        }}
+                    >
+                        <Grid
+                            sx={{ padding: 0.5 }}
+                        >
+                            <IconButton onClick={onLogoutClick} sx={{ p: 1, width: '100%', justifyContent: 'start' }}>
+                                {/* <ExitToAppIcon /> */}
+                                <Typography variant='button' sx={{ marginLeft: 1 }}>Logout</Typography>
+                            </IconButton>
+                        </Grid>
+                    </Menu>
+                </>
+            )
         } else {
             return <CustomButton
                 label={"Login"}
-                onClick={()=>navigate('/user/login')}
-                sx={{borderRadius: 2}}
+                onClick={() => navigate('/user/login')}
+                sx={{ borderRadius: 2 }}
             />
         }
     }
@@ -113,7 +161,7 @@ const Header = (props) => {
             }}
         >
             <Container maxWidth="xl">
-                <Toolbar>
+                <Toolbar className={classes.toolbar}>
                     <Box
                         sx={{
                             display: { xs: 'none', md: 'flex' },
@@ -140,6 +188,11 @@ const Header = (props) => {
                         >
                             <MenuIcon />
                         </IconButton>
+                        <img
+                            src={"ai4bharat1.png"}
+                            width={"50rem"}
+                            height={"50rem"}
+                        />
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
@@ -165,7 +218,7 @@ const Header = (props) => {
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                    {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                     <Typography
                         variant="h5"
                         noWrap
@@ -183,20 +236,20 @@ const Header = (props) => {
                         }}
                     >
                         LOGO
-                    </Typography>
+                    </Typography> */}
                     <Box sx={{ flexGrow: 1, placeContent: "center", display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
-                           
-                                <NavLink
-                                    hidden={page.hidden}
-                                    to={page.id}
-                                    className={({ isActive }) =>
-                                        isActive ? classes.highlightedMenu : classes.headerMenu
-                                    }
-                                    activeClassName={classes.highlightedMenu}
-                                >
-                                    {page.name}
-                                </NavLink>
+
+                            <NavLink
+                                hidden={page.hidden}
+                                to={page.id}
+                                className={({ isActive }) =>
+                                    isActive ? classes.highlightedMenu : classes.headerMenu
+                                }
+                                activeClassName={classes.highlightedMenu}
+                            >
+                                {page.name}
+                            </NavLink>
                         ))}
                     </Box>
 

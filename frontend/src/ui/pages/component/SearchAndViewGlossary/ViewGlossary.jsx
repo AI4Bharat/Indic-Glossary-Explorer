@@ -46,7 +46,9 @@ const ViewGlossary = (props) => {
             options: {
                 filter: false,
                 sort: false,
-                align : "center"
+                align : "left",
+                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
+                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
             }
         },
         {
@@ -55,7 +57,9 @@ const ViewGlossary = (props) => {
             options: {
                 filter: false,
                 sort: false,
-                align : "center"
+                align : "left",
+                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
+                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
             }
         },
         {
@@ -64,7 +68,9 @@ const ViewGlossary = (props) => {
             options: {
                 filter: false,
                 sort: false,
-                align : "center"
+                align : "center",
+                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
+                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
             }
         },
         {
@@ -73,7 +79,9 @@ const ViewGlossary = (props) => {
             options: {
                 filter: false,
                 sort: false,
-                align : "center"
+                align : "center",
+                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
+                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
             }
         },
         {
@@ -82,7 +90,9 @@ const ViewGlossary = (props) => {
             options: {
                 filter: false,
                 sort: false,
-                align : "center"
+                align : "center",
+                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
+                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
             }
         },
         {
@@ -91,7 +101,9 @@ const ViewGlossary = (props) => {
             options: {
                 filter: false,
                 sort: false,
-                align : "center"
+                align : "center",
+                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
+                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
             }
         },
         {
@@ -101,7 +113,9 @@ const ViewGlossary = (props) => {
                 filter: false,
                 sort: false,
                 align : "center",
-                display: 'none'
+                display: 'none',
+                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
+                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
             }
         },
         {
@@ -110,7 +124,9 @@ const ViewGlossary = (props) => {
             options: {
                 filter: false,
                 sort: false,
-                align : "center"
+                align : "center",
+                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
+                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
             }
         },
         // {

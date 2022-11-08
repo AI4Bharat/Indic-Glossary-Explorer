@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useState } from "react";
 
 // import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {  ThemeProvider,  } from "@mui/material";
+import {  Card, Grid, ThemeProvider,  } from "@mui/material";
 import themeDefault from './theme/theme'
 import GlobalStyles from "./styles/LayoutStyles";
 // import BackButton from "./pages/component/common/BackButton";
@@ -57,7 +57,15 @@ const Layout= (props) => {
             // className={classes.headerContainer}
           />
         </Suspense>
-        <div 
+        <Grid
+                container
+                direction='row'
+                justifyContent='center'
+                alignItems='center'
+            >
+
+
+        <Card 
         className={classes.container}
         >
           {/* {renderSpinner()}
@@ -66,10 +74,12 @@ const Layout= (props) => {
            < BackButton startIcon={<  ArrowBackIcon />} sx={{ color:"white" ,   mb:2  }} backPressNavigationPath={backPressNavigationPath ? backPressNavigationPath : ""} label={translate("label.backToPreviousPage")}/>
            } */}
           <Suspense fallback={<div>Loading....</div>}>
-            {component}
+            <div style={{margin: "30px"}}>
+              {component}
+            </div>
           </Suspense>
-        </div>
-       
+        </Card>
+       </Grid>
       </div>
   );
 }

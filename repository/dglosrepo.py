@@ -85,10 +85,14 @@ class DGlosRepo:
 
     # Method to search from elasticsearch.
     def search_basic_from_es(self, query):
+        log.info(f"the query is {query} ")
         result = []
+        query_dict = {"bool":{"must":[]}}
+        for key in query.keys():
+            query_dict['bool']['must'].append({"match":{str(key): query[key]}})
         try:
             es = self.get_es_client()
-            resp = es.search(index=base_index, query={"match":query})
+            resp = es.search(index=base_index, query=query_dict)
             hits = resp['hits']['total']['value']
             log.info(f"Got {hits} Hits!")
             if hits > 0:

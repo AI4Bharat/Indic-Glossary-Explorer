@@ -111,6 +111,14 @@ const themeDefault = createTheme({
     },
   },
   components: {
+    MuiPopover: {
+      styleOverrides: {
+        root: {
+          background: "rgba(0,0,0,0.1)",
+          // backdropFilter: "blur(10px) !important",
+        },
+      },
+    },
     MuiTableRow: {
       styleOverrides: {
         root: {

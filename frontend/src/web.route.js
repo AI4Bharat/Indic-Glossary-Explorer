@@ -6,7 +6,7 @@ import {
   Route,
   Routes,
   useRoutes,
-  redirect
+  redirect,
 } from "react-router-dom";
 import Login from "./ui/pages/container/UserManagement/Login";
 
@@ -19,6 +19,7 @@ import UploadGlossary from "./ui/pages/container/UploadGlossary/UploadGlossary";
 import SearchAndViewGlossary from "./ui/pages/container/SearchAndViewGlossary/SearchAndViewGlossary";
 
 import { authenticateUser } from "./utils/utils";
+import browserhistory from "./web.history";
 
 
 
@@ -26,7 +27,9 @@ const App = () => {
   const ProtectedRoute = ({ user, children }) => {
     console.log("authenticateUser() ---- ", authenticateUser())
     if (!authenticateUser()) {
-      return redirect('/user/login');
+      
+      return <Navigate to="/" replace />;
+      // browserhistory.replace('/#/');
     }
     return children;
   };

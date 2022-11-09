@@ -78,7 +78,7 @@ class DGlosService:
         # target=data["tgtLanguage"]
         for input in data['inputs']:
             log.info(f"{req_id} | Searching Glossary for phrases in: {input}")
-            glossary_phrases = self.glossary_phrase_search(input)
+            glossary_phrases = self.glossary_phrase_search(input,data['tgtLanguage'],data['domain'])
             for i in range(0,len(glossary_phrases)):
                 for key in discarded_response_data:
                     del glossary_phrases[i][key]
@@ -92,7 +92,8 @@ class DGlosService:
 
     # Searches for all glossary phrases of a fixed length within a given sentence
     # Uses a custom implementation of the sliding window search algorithm.
-    def glossary_phrase_search(self, sentence):
+    def glossary_phrase_search(self, sentence, lang,domain):
+        # del data['inputs']
         glossary_phrases = []
         hopping_pivot, sliding_pivot, i = 0, len(sentence), 1
         computed, glos_count = 0, 0
@@ -105,8 +106,9 @@ class DGlosService:
                     if phrase.endswith(".") or phrase.endswith(","):
                         short = phrase.rstrip('.,')
                         suffix_phrase_list.append(short)
+                    
                     for phrase in suffix_phrase_list:
-                        result = self.search_from_es_store({"srcText": phrase})
+                        result = self.search_from_es_store({"srcText": phrase,"tgtLanguage":lang,"domain":domain})
                         computed += 1
                         if result:
                             glossary_phrases.extend(result)
@@ -150,7 +152,7 @@ class DGlosService:
             query["srcText"] = data["srcText"]
         if 'domain' in data.keys():
             query["domain"] = data["domain"]
-        if 'collectionSource' in data.keys():
-            query["collectionSource"] = data["collectionSource"]
+        if 'tgtLanguage' in data.keys():
+            query["tgtLanguage"] = data["tgtLanguage"]
         result = dglos_repo.search_basic_from_es(query)
         return result

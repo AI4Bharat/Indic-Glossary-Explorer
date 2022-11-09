@@ -95,19 +95,23 @@ def upload():
         return jsonify(response), 200
     except Exception as e:
         log.exception("Something went wrong: " + str(e), e)
-        return {"status": "FAILED", "message": "Something went wrong. "+str(e)}, 400
+        return {"status": "FAILED", "message": "Something went wrong."+ str(e)}, 400
 # REST endpoint for logout
 @dglos_app.route(context_path + '/v1/sentence/phrases/search', methods=["POST","GET"])
 def search_phrases_for_sentence():
     dglos_service, validator = DGlosService(), DGlosValidator()
     data = request.get_json()
+    log.info(f"data is {data}")
     data = add_headers(data, request, "userId")
+    validation_response = validator.validate_search(data)
     try:
+        if validation_response != None:
+            raise Exception(validation_response)
         response = dglos_service.search_glossary(data)
         return jsonify(response), 200
     except Exception as e:
         log.exception("Something went wrong: " + str(e), e)
-        return {"status": "FAILED", "message": "Something went wrong"}, 400
+        return {"status": "FAILED", "message": "Something went wrong"+ str(e)}, 400
 # Fetches required headers from the request and adds it to the body.
 def add_headers(data, api_request, user_id):
     if not data:

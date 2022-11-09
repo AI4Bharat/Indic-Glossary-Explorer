@@ -9,6 +9,21 @@ export default function (state = {}, action) {
               return el
             }
           })
+
+          modifiedData.sort((a, b) => {
+            const labelA = a.label.toUpperCase(); // ignore upper and lowercase
+            const labelB = b.label.toUpperCase(); // ignore upper and lowercase
+            if (labelA < labelB) {
+              return -1;
+            }
+            if (labelA > labelB) {
+              return 1;
+            }
+          
+            // names must be equal
+            return 0;
+          });
+
             return modifiedData;
 
         default:

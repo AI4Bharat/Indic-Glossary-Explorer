@@ -6,10 +6,12 @@
  import constants from "../../../constants";
  
  export default class searchGlossary extends API {
-   constructor(searchText="", timeout = 2000) {
+   constructor(searchText="", tgtLanguage="", domain="", timeout = 2000) {
      super("POST", timeout, false);
      this.type = constants.SEARCH_GLOSSARY;
      this.searchText = searchText;
+     this.tgtLanguage = tgtLanguage;
+     this.domain = domain;
      this.endpoint = `${super.apiEndPoint()}${ENDPOINTS.searchGlossary}`;
    }
  
@@ -27,7 +29,9 @@
  
    getBody() {
     const data = {
-        inputs:[this.searchText],
+        inputs: [this.searchText],
+        tgtLanguage: this.tgtLanguage,
+        domain: this.domain
     }
      return JSON.stringify(data);
    }

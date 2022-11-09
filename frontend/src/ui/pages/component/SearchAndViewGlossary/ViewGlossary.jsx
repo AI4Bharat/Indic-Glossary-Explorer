@@ -5,6 +5,14 @@ import React, { useState } from 'react';
 import MUIDataTable from "mui-datatables";
 import glossaryLevel from '../../../../config/glossaryLevel';
 
+const cellHeaderPropStyle = {
+    style: {justifyContent: 'center', textAlign: "left", padding: "16px" }
+}
+
+const cellPropStyle = {
+    style: {justifyContent: 'center', textAlign: "left" }
+}
+
 const ViewGlossary = (props) => {
 
     const { glossaryData, inputText } = props;
@@ -47,8 +55,8 @@ const ViewGlossary = (props) => {
                 filter: false,
                 sort: false,
                 align : "left",
-                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
-                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
+                setCellHeaderProps: () => (cellHeaderPropStyle),
+                setCellProps: () => (cellPropStyle)
             }
         },
         {
@@ -58,8 +66,8 @@ const ViewGlossary = (props) => {
                 filter: false,
                 sort: false,
                 align : "left",
-                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
-                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
+                setCellHeaderProps: () => (cellHeaderPropStyle),
+                setCellProps: () => (cellPropStyle)
             }
         },
         {
@@ -69,8 +77,8 @@ const ViewGlossary = (props) => {
                 filter: false,
                 sort: false,
                 align : "center",
-                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
-                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
+                setCellHeaderProps: () => (cellHeaderPropStyle),
+                setCellProps: () => (cellPropStyle)
             }
         },
         {
@@ -80,8 +88,8 @@ const ViewGlossary = (props) => {
                 filter: false,
                 sort: false,
                 align : "center",
-                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
-                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
+                setCellHeaderProps: () => (cellHeaderPropStyle),
+                setCellProps: () => (cellPropStyle)
             }
         },
         {
@@ -91,8 +99,8 @@ const ViewGlossary = (props) => {
                 filter: false,
                 sort: false,
                 align : "center",
-                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
-                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
+                setCellHeaderProps: () => (cellHeaderPropStyle),
+                setCellProps: () => (cellPropStyle)
             }
         },
         {
@@ -102,8 +110,8 @@ const ViewGlossary = (props) => {
                 filter: false,
                 sort: false,
                 align : "center",
-                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
-                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
+                setCellHeaderProps: () => (cellHeaderPropStyle),
+                setCellProps: () => (cellPropStyle)
             }
         },
         {
@@ -114,8 +122,8 @@ const ViewGlossary = (props) => {
                 sort: false,
                 align : "center",
                 display: 'none',
-                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
-                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
+                setCellHeaderProps: () => (cellHeaderPropStyle),
+                setCellProps: () => (cellPropStyle)
             }
         },
         {
@@ -125,8 +133,8 @@ const ViewGlossary = (props) => {
                 filter: false,
                 sort: false,
                 align : "center",
-                setCellHeaderProps: () => ({ style: {justifyContent: 'center', textAlign: "left", padding: "16px" }}),
-                setCellProps: () => ({ style: {justifyContent: 'center', textAlign: "left" }})
+                setCellHeaderProps: () => (cellHeaderPropStyle),
+                setCellProps: () => (cellPropStyle)
             }
         },
         // {

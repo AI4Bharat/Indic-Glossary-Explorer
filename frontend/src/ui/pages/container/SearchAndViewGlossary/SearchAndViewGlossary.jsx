@@ -100,6 +100,8 @@ const SearchAndViewGlossary = (props) => {
 
     const onReset = () => {
         setText("");
+        setSelectedTargetLang("");
+        setDomain("");
         // const apiObj = new searchGlossary("");
         // dispatch(APITransport(apiObj));
         setShowGlossaryResultTable(false);

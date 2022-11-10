@@ -3,6 +3,7 @@ import logging
 import time
 import uuid
 
+
 import pandas as pd
 from flask_restful import reqparse
 from config.dglosconfigs import discarded_response_data
@@ -71,14 +72,14 @@ class DGlosService:
             log.exception("File upload failed!", e)
             return {"status": "FAILED", "message": "Glossary File Upload FAILED!"}
 
-    def search_glossary(self, data):
+    def search_glossary(self, data,search_query_dict):
         log.info(f"the data is {data}")
         req_id, result = data["metadata"]["requestId"], []
         # source=data["srcLanguage"]
         # target=data["tgtLanguage"]
         for input in data['inputs']:
             log.info(f"{req_id} | Searching Glossary for phrases in: {input}")
-            glossary_phrases = self.glossary_phrase_search(input,data['tgtLanguage'],data['domain'])
+            glossary_phrases = self.glossary_phrase_search(input,search_query_dict)
             for i in range(0,len(glossary_phrases)):
                 for key in discarded_response_data:
                     del glossary_phrases[i][key]
@@ -92,7 +93,7 @@ class DGlosService:
 
     # Searches for all glossary phrases of a fixed length within a given sentence
     # Uses a custom implementation of the sliding window search algorithm.
-    def glossary_phrase_search(self, sentence, lang,domain):
+    def glossary_phrase_search(self, sentence, search_query_dict):
         # del data['inputs']
         glossary_phrases = []
         hopping_pivot, sliding_pivot, i = 0, len(sentence), 1
@@ -106,9 +107,9 @@ class DGlosService:
                     if phrase.endswith(".") or phrase.endswith(","):
                         short = phrase.rstrip('.,')
                         suffix_phrase_list.append(short)
-                    
                     for phrase in suffix_phrase_list:
-                        result = self.search_from_es_store({"srcText": phrase,"tgtLanguage":lang,"domain":domain})
+                        search_query_dict['srcText'] = phrase
+                        result = self.search_from_es_store(search_query_dict)
                         computed += 1
                         if result:
                             glossary_phrases.extend(result)
@@ -146,13 +147,13 @@ class DGlosService:
         result = dglos_repo.search_db(query, {"_id": False}, None, None)
         return result
 
-    def search_from_es_store(self, data):
-        query = {}
-        if 'srcText' in data.keys():
-            query["srcText"] = data["srcText"]
-        if 'domain' in data.keys():
-            query["domain"] = data["domain"]
-        if 'tgtLanguage' in data.keys():
-            query["tgtLanguage"] = data["tgtLanguage"]
-        result = dglos_repo.search_basic_from_es(query)
+    def search_from_es_store(self, search_query_dict):
+        # query = {}
+        # if 'srcText' in data.keys():
+        #     query["srcText"] = data["srcText"]
+        # if 'domain' in data.keys():
+        #     query["domain"] = data["domain"]
+        # if 'tgtLanguage' in data.keys():
+        #     query["tgtLanguage"] = data["tgtLanguage"]
+        result = dglos_repo.search_basic_from_es(search_query_dict)
         return result

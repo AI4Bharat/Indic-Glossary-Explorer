@@ -102,12 +102,14 @@ def search_phrases_for_sentence():
     dglos_service, validator = DGlosService(), DGlosValidator()
     data = request.get_json()
     log.info(f"data is {data}")
+    search_query_dict = data.copy()
+    del search_query_dict['inputs']       
     data = add_headers(data, request, "userId")
     validation_response = validator.validate_search(data)
     try:
         if validation_response != None:
             raise Exception(validation_response)
-        response = dglos_service.search_glossary(data)
+        response = dglos_service.search_glossary(data,search_query_dict)
         return jsonify(response), 200
     except Exception as e:
         log.exception("Something went wrong: " + str(e), e)

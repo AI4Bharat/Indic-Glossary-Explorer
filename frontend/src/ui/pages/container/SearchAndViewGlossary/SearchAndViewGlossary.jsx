@@ -100,6 +100,8 @@ const SearchAndViewGlossary = (props) => {
 
     const onReset = () => {
         setText("");
+        setSelectedTargetLang("");
+        setDomain("");
         // const apiObj = new searchGlossary("");
         // dispatch(APITransport(apiObj));
         setShowGlossaryResultTable(false);
@@ -195,7 +197,7 @@ const SearchAndViewGlossary = (props) => {
                 spacing={2}
             >
                 <Grid item
-                    sx={{ padding: 0, width: !showGlossaryResultTable ? '100%' : '50%' }}
+                    sx={{ padding: 0, width: (selectedTargetLang || domain || text) ? '50%' : '100%' }}
                 >
                     <CustomButton
                         label="Search"
@@ -210,7 +212,7 @@ const SearchAndViewGlossary = (props) => {
                 </Grid>
 
                 {
-                    showGlossaryResultTable && <Grid item
+                    (selectedTargetLang || domain || text) && <Grid item
                         sx={{ padding: 0, width: '50%' }}
                     ><CustomButton
                             label="Reset"

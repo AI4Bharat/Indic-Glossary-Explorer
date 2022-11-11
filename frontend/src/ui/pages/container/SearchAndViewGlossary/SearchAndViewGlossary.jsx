@@ -50,25 +50,25 @@ const SearchAndViewGlossary = (props) => {
 
     const onSubmit = () => {
 
-        if(!selectedTargetLang){
+        if (!selectedTargetLang) {
             return setSnackbarInfo({
                 open: true,
                 message: "Target language missing!",
                 variant: "error"
             })
-        } else if(!text){
+        } else if (!text) {
             return setSnackbarInfo({
                 open: true,
                 message: "Enter sentence to search!",
                 variant: "error"
             })
         } else {
-            const apiObj = new searchGlossary(text, selectedTargetLang, domain );
+            const apiObj = new searchGlossary(text, selectedTargetLang, domain);
             dispatch(APITransport(apiObj));
             setShowMessage(true)
         }
 
-        
+
     }
 
     useEffect(() => {
@@ -131,50 +131,65 @@ const SearchAndViewGlossary = (props) => {
                 spacing={2}
             >
                 <Grid item
-                    sx={{ padding: 0, width: '50%' }}
+                    sx={{ padding: 0, width: '25%' }}
                 >
-                    <FormControl sx={{width: '100%'}}>
-                    <InputLabel id="demo-simple-select-helper-label" required>Target Language</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
-                        value={selectedTargetLang}
-                        label="Target Language"
-                        onChange={handleTrgLangChange}
-                        sx={{
-                            textAlign: "left"
-                        }}
-                    >
-                        {allLanguages && allLanguages.length > 0 && allLanguages.map((el, i) => {
-                            return <MenuItem value={el.code}>{el.label}</MenuItem>
-                        })}
-                    </Select>
-                </FormControl>
+                    <FormControl sx={{ width: '100%' }}>
+                        <InputLabel id="demo-simple-select-helper-label" required>Target Language</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-helper-label"
+                            id="demo-simple-select-helper"
+                            value={selectedTargetLang}
+                            label="Target Language"
+                            onChange={handleTrgLangChange}
+                            sx={{
+                                textAlign: "left"
+                            }}
+                        >
+                            {allLanguages && allLanguages.length > 0 && allLanguages.map((el, i) => {
+                                return <MenuItem value={el.code}>{el.label}</MenuItem>
+                            })}
+                        </Select>
+                    </FormControl>
                 </Grid>
                 <Grid item
                     sx={{ padding: 0, width: '50%' }}
                 >
-                    <FormControl sx={{width: '100%'}}>
-                    <InputLabel id="demo-simple-select-helper-label">Domain</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
-                        value={domain}
-                        label="Domain"
-                        onChange={handleDomainChange}
-                        sx={{
-                            textAlign: "left"
-                        }}
-                    >
-                        {allDomains && allDomains.length > 0 && allDomains.map((el, i) => {
-                            return <MenuItem value={el.code}>{el.label}</MenuItem>
-                        })}
-                    </Select>
-                </FormControl>
+                    <FormControl sx={{ width: '100%' }}>
+                        <OutlinedTextField
+                            labelId="demo-simple-select-helper-label"
+                            id="demo-simple-select-helper"
+                            placeholder="Search term..."
+                            onChange={handleTextChange}
+                            value={text}
+                            fullWidth
+                        />
+                    </FormControl>
+
+                </Grid>
+                <Grid item
+                    sx={{ padding: 0, width: '25%' }}
+                >
+                    <FormControl sx={{ width: '100%' }}>
+                        <InputLabel id="demo-simple-select-helper-label">Domain (Optional)</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-helper-label"
+                            id="demo-simple-select-helper"
+                            value={domain}
+                            label="Domain (Optional)"
+                            onChange={handleDomainChange}
+                            sx={{
+                                textAlign: "left"
+                            }}
+                        >
+                            {allDomains && allDomains.length > 0 && allDomains.map((el, i) => {
+                                return <MenuItem value={el.code}>{el.label}</MenuItem>
+                            })}
+                        </Select>
+                    </FormControl>
                 </Grid>
                 
             </Grid>
-            <Grid
+            {/* <Grid
                 container
                 flexDirection="row"
                 justifyContent="center"
@@ -187,7 +202,7 @@ const SearchAndViewGlossary = (props) => {
                     value={text}
                     fullWidth
                 />
-            </Grid>
+            </Grid> */}
             <Grid
                 container
                 flexDirection="row"

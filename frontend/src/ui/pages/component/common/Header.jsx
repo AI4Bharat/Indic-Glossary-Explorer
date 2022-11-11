@@ -45,12 +45,12 @@ const Header = (props) => {
     }
 
     const pages = publicHeader ? [
-        {
-            name: "View Glossary",
-            onClick: () => onHeaderMenuClick("/"),
-            id: "/",
-            isActive: () => getActiveRoute("/")
-        }
+        // {
+        //     name: "View Glossary",
+        //     onClick: () => onHeaderMenuClick("/"),
+        //     id: "/",
+        //     isActive: () => getActiveRoute("/")
+        // }
     ] : [
         {
             name: "View Glossary",
@@ -149,7 +149,8 @@ const Header = (props) => {
             return <CustomButton
                 label={"Login"}
                 onClick={() => navigate('/user/login')}
-                sx={{ borderRadius: 2 }}
+                sx={{ borderRadius: 2, padding: 3.5, fontSize: '1rem' }}
+                size="large"
             />
         }
     }
@@ -211,7 +212,7 @@ const Header = (props) => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
+                            {pages?.map((page) => (
                                 <MenuItem key={page.name} onClick={() => page.onClick()}>
                                     <Typography textAlign="center">{page.name}</Typography>
                                 </MenuItem>
@@ -238,7 +239,7 @@ const Header = (props) => {
                         LOGO
                     </Typography> */}
                     <Box sx={{ flexGrow: 1, placeContent: "center", display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                        {pages?.map((page) => (
 
                             <NavLink
                                 hidden={page.hidden}

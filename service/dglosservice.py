@@ -12,6 +12,7 @@ from utils.dglosutils import DGlosUtils
 from repository.dglosrepo import DGlosRepo
 from repository.userrepo import UserRepo
 from config.dglosconfigs import phrase_length_in_words
+from utils.dglosvalidator import DGlosValidator
 
 dds_utils = DGlosUtils()
 dglos_repo = DGlosRepo()
@@ -49,6 +50,7 @@ class DGlosService:
 
     def upload_file(self, api_request, data):
         # validate
+        validator =  DGlosValidator()
         req_id = data["metadata"]["requestId"]
         log.info(f"{req_id} | Uploading Glossary File...")
         try:
@@ -62,6 +64,15 @@ class DGlosService:
             elif extension == 'tsv' :
                 data_xls = pd.read_csv(f,encoding= 'utf-8',sep='\t')
             data["glossary"] = data_xls.to_dict(orient='records')
+
+            validation_response = validator.validate_glossary(data)
+            try:
+                if validation_response != None:
+                    raise Exception(validation_response)
+            except Exception as e:
+                log.exception("Something went wrong in uploaded file: " + str(e), e)
+                return {"status": "FAILED", "message": "ERROR: "+str(e)}, 400
+            
             upload_successful = self.create(data)
             if upload_successful:
                 if upload_successful["status"] == "Success":

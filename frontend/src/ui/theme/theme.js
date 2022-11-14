@@ -271,7 +271,10 @@ const themeDefault = createTheme({
     MuiTableCell: {
       styleOverrides: {
         root:{
-          textAlign: "center"
+          textAlign: "center", 
+        },
+        body: {
+          fontSize: "1rem"
         },
         head: {
           padding: ".6rem .5rem .6rem 1.5rem",

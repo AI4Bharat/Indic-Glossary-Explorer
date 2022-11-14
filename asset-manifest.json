@@ -1,18 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.e6c13ad2.css",
-    "main.js": "/static/js/main.924b49e8.js",
+    "main.css": "/static/css/main.51a643ae.css",
+    "main.js": "/static/js/main.0854f163.js",
     "static/js/692.48c1eacd.chunk.js": "/static/js/692.48c1eacd.chunk.js",
     "static/js/787.22edae46.chunk.js": "/static/js/787.22edae46.chunk.js",
+    "static/media/landingCardRightSideImage.png": "/static/media/landingCardRightSideImage.18f7c23aad650d1b5c0f.png",
     "static/media/logo.svg": "/static/media/logo.2968ade084e575085d672ccac19c6b74.svg",
     "index.html": "/index.html",
-    "main.e6c13ad2.css.map": "/static/css/main.e6c13ad2.css.map",
-    "main.924b49e8.js.map": "/static/js/main.924b49e8.js.map",
+    "main.51a643ae.css.map": "/static/css/main.51a643ae.css.map",
+    "main.0854f163.js.map": "/static/js/main.0854f163.js.map",
     "692.48c1eacd.chunk.js.map": "/static/js/692.48c1eacd.chunk.js.map",
     "787.22edae46.chunk.js.map": "/static/js/787.22edae46.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e6c13ad2.css",
-    "static/js/main.924b49e8.js"
+    "static/css/main.51a643ae.css",
+    "static/js/main.0854f163.js"
   ]
 }

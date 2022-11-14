@@ -22,7 +22,7 @@ const IntroductionCard = () => {
                     <div className="h1 text-black mt-4 mb-4">Indic Glossary Explorer</div>
                     <p className="ft-20"><b>Indic Glossary Explorer</b> is an <b>open source</b> service to store and explore relevant Indic glossary which are domain specific. 
                         The service also provides the capabities for glossary contribution (individual/batch).</p>
-                    <a className="demo-btn" onClick={onDemoClick}>Try Demo</a>
+                    {/* <a className="demo-btn" onClick={onDemoClick}>Try Demo</a> */}
                     <a className="demo-btn" target="_blank" href="https://github.com/AI4Bharat/Indic-Glossary-Explorer">Codebase</a>
                     <a className="demo-btn" target="_blank" href="https://github.com/AI4Bharat/Indic-Glossary-Explorer/wiki">Tutorial</a>
                     <a className="demo-btn" href="#">Introduction Video</a>

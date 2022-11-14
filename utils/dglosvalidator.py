@@ -1,11 +1,11 @@
 import json
 import logging
 from repository.dglosrepo import DGlosRepo
-from service.dglosservice import DGlosService
+# from service.dglosservice import DGlosService
 from .dglosutils import DGlosUtils
 from config.dglosconfigs import x_key,glossary_keys,levels,allowed_file_types
 log = logging.getLogger('file')
-dds_repo, dds_service, utils = DGlosRepo(), DGlosService(), DGlosUtils()
+dds_repo, utils = DGlosRepo(), DGlosUtils()
 class DGlosValidator:
     def __init__(self):
         pass

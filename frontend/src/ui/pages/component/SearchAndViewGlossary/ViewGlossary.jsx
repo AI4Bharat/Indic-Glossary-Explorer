@@ -70,28 +70,28 @@ const ViewGlossary = (props) => {
                 setCellProps: () => (cellPropStyle)
             }
         },
-        {
-            name: "srcLanguage",
-            label: "Source Language",
-            options: {
-                filter: false,
-                sort: false,
-                align : "center",
-                setCellHeaderProps: () => (cellHeaderPropStyle),
-                setCellProps: () => (cellPropStyle)
-            }
-        },
-        {
-            name: "tgtLanguage",
-            label: "Target Language",
-            options: {
-                filter: false,
-                sort: false,
-                align : "center",
-                setCellHeaderProps: () => (cellHeaderPropStyle),
-                setCellProps: () => (cellPropStyle)
-            }
-        },
+        // {
+        //     name: "srcLanguage",
+        //     label: "Source Language",
+        //     options: {
+        //         filter: false,
+        //         sort: false,
+        //         align : "center",
+        //         setCellHeaderProps: () => (cellHeaderPropStyle),
+        //         setCellProps: () => (cellPropStyle)
+        //     }
+        // },
+        // {
+        //     name: "tgtLanguage",
+        //     label: "Target Language",
+        //     options: {
+        //         filter: false,
+        //         sort: false,
+        //         align : "center",
+        //         setCellHeaderProps: () => (cellHeaderPropStyle),
+        //         setCellProps: () => (cellPropStyle)
+        //     }
+        // },
         {
             name: "domain",
             label: "Domain",
@@ -151,8 +151,8 @@ const ViewGlossary = (props) => {
         return [
             el.srcText,
             el.tgtText,
-            el.srcLanguage,
-            el.tgtLanguage,
+            // el.srcLanguage,
+            // el.tgtLanguage,
             el.domain,
             el.collectionSource,
             el.level,

@@ -149,7 +149,7 @@ const Header = (props) => {
             return <CustomButton
                 label={"Login"}
                 onClick={() => navigate('/user/login')}
-                sx={{ borderRadius: 2, padding: 3.5, fontSize: '1rem' }}
+                sx={{ borderRadius: 2, padding: 3, fontSize: '1rem' }}
                 size="large"
             />
         }

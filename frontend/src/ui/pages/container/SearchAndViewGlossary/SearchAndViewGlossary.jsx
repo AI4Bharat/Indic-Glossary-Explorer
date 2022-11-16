@@ -11,6 +11,7 @@ import getLanguages from '../../../../redux/actions/api/getLanguages/getLanguage
 import getDomains from '../../../../redux/actions/api/getDomains/getDomains';
 
 const SearchAndViewGlossary = (props) => {
+    const {showTableInside} = props;
     const dispatch = useDispatch();
     const [text, setText] = useState("");
     const [selectedTargetLang, setSelectedTargetLang] = useState('');
@@ -105,6 +106,8 @@ const SearchAndViewGlossary = (props) => {
         // const apiObj = new searchGlossary("");
         // dispatch(APITransport(apiObj));
         setShowGlossaryResultTable(false);
+        const apiObj = new searchGlossary("", selectedTargetLang, domain);
+        dispatch(APITransport(apiObj));
     }
 
     const renderSnackBar = () => {
@@ -142,7 +145,8 @@ const SearchAndViewGlossary = (props) => {
                             label="Target Language"
                             onChange={handleTrgLangChange}
                             sx={{
-                                textAlign: "left"
+                                textAlign: "left",
+                                backgroundColor: "#ffffff"  
                             }}
                         >
                             {allLanguages && allLanguages.length > 0 && allLanguages.map((el, i) => {
@@ -162,6 +166,9 @@ const SearchAndViewGlossary = (props) => {
                             onChange={handleTextChange}
                             value={text}
                             fullWidth
+                            sx={{
+                                backgroundColor: "#ffffff"
+                            }}
                         />
                     </FormControl>
 
@@ -178,7 +185,8 @@ const SearchAndViewGlossary = (props) => {
                             label="Domain (Optional)"
                             onChange={handleDomainChange}
                             sx={{
-                                textAlign: "left"
+                                textAlign: "left",
+                                backgroundColor: "#ffffff"
                             }}
                         >
                             {allDomains && allDomains.length > 0 && allDomains.map((el, i) => {
@@ -189,26 +197,12 @@ const SearchAndViewGlossary = (props) => {
                 </Grid>
                 
             </Grid>
-            {/* <Grid
-                container
-                flexDirection="row"
-                justifyContent="center"
-                alignItems="center"
-                sx={{ marginTop: 4 }}
-            >
-                <OutlinedTextField
-                    placeholder="Search..."
-                    onChange={handleTextChange}
-                    value={text}
-                    fullWidth
-                />
-            </Grid> */}
             <Grid
                 container
                 flexDirection="row"
                 justifyContent="center"
                 alignItems="center"
-                sx={{ marginTop: 2 }}
+                sx={{ marginTop: showTableInside ? 2 : 0.5 }}
                 spacing={2}
             >
                 <Grid item
@@ -241,7 +235,7 @@ const SearchAndViewGlossary = (props) => {
                         /></Grid>
                 }
             </Grid>
-            {showGlossaryResultTable && glossaryData && glossaryData.length > 0 && <ViewGlossary glossaryData={glossaryData[0]?.glossaryPhrases} inputText={glossaryData[0]?.input} />}
+            {showTableInside && showGlossaryResultTable && glossaryData && glossaryData.length > 0 && <ViewGlossary glossaryData={glossaryData[0]?.glossaryPhrases} inputText={glossaryData[0]?.input} />}
             {renderSnackBar()}
         </div>
 

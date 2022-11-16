@@ -33,6 +33,7 @@ const Header = (props) => {
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElHelp, setAnchorElHelp] = React.useState(null);
 
     const userData = useSelector((state) => state.userLoginDetails.data);
 
@@ -66,6 +67,29 @@ const Header = (props) => {
         }
     ];
 
+    const helpMenuArr = [
+        {
+            id: "Codebase",
+            name: "Codebase",
+            onclick: ()=> window.open("https://github.com/AI4Bharat/Indic-Glossary-Explorer")
+        },
+        {
+            id: "Tutorial",
+            name: "Tutorial",
+            onclick: ()=> window.open("https://github.com/AI4Bharat/Indic-Glossary-Explorer/wiki")
+        },
+        {
+            id: "Introduction Video",
+            name: "Introduction Video",
+            onclick: ()=> window.open("#")
+        },
+        {
+            id: "API Specs",
+            name: "API Specs",
+            onclick: ()=> window.open("https://app.swaggerhub.com/apis/ai4bharat-iitm/indic-glossary-explorer/1.0.0")
+        },
+    ]
+
     const onHeaderMenuClick = (id) => {
         handleCloseNavMenu();
         navigate(id);
@@ -76,6 +100,14 @@ const Header = (props) => {
         handleCloseUserMenu();
         navigate("/user/login");
     }
+
+    const handleOpenHelpMenu = (event) => {
+        setAnchorElHelp(event.currentTarget);
+    }
+
+    const handleCloseHelpMenu = () => {
+        setAnchorElHelp(null);
+    };
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -91,6 +123,60 @@ const Header = (props) => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const onHelpMenuClick = (callback) => {
+        callback();
+        handleCloseHelpMenu();
+    }
+
+    const renderHelpButton = () => {
+        return (
+            <>
+                <CustomButton
+                    label={"Help"}
+                    onClick={handleOpenHelpMenu}
+                    sx={{ borderRadius: 2, padding: 3, fontSize: '1rem', marginRight: 2 }}
+                    size="large"
+                    aria-controls={anchorElHelp ? 'account-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={anchorElHelp ? 'true' : undefined}
+                />
+                <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorElHelp}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                    open={Boolean(anchorElHelp)}
+                    onClose={handleCloseHelpMenu}
+                    sx={{
+                        // display: { xs: 'block', md: 'block' },
+                    }}
+                >
+                    <Grid
+                        sx={{ padding: 0.5 }}
+                    >
+                        {
+                            helpMenuArr.map((menu, index) => {
+                                return (
+                                    <IconButton key={menu.id} onClick={()=>onHelpMenuClick(menu.onclick)} sx={{ p: 1, width: '100%', justifyContent: 'start' }}>
+                                        {/* <ExitToAppIcon /> */}
+                                        <Typography variant='button' sx={{ marginLeft: 1 }}>{menu.name}</Typography>
+                                    </IconButton>
+                                )
+                            })
+                        }
+                    </Grid>
+                </Menu>
+            </>
+        )
+    }
 
     const renderAuthLinkButton = () => {
         console.log("publicHeader --- ", publicHeader);
@@ -243,6 +329,7 @@ const Header = (props) => {
 
                             <NavLink
                                 hidden={page.hidden}
+                                key={page.name}
                                 to={page.id}
                                 className={({ isActive }) =>
                                     isActive ? classes.highlightedMenu : classes.headerMenu
@@ -255,6 +342,7 @@ const Header = (props) => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
+                        {renderHelpButton()}
                         {renderAuthLinkButton()}
                     </Box>
                 </Toolbar>

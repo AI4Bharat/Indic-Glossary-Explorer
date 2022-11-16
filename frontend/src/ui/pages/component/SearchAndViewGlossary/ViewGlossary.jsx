@@ -15,7 +15,7 @@ const cellPropStyle = {
 
 const ViewGlossary = (props) => {
 
-    const { glossaryData, inputText } = props;
+    const { glossaryData, inputText, publicLayout } = props;
 
     console.log("glossaryData --- ", glossaryData);
 
@@ -163,7 +163,7 @@ const ViewGlossary = (props) => {
     return (
         <Grid 
             sx={{
-                marginTop: 10
+                marginTop: publicLayout ? 2 : 10
             }}
         >
              <MUIDataTable

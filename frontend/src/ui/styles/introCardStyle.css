@@ -3,12 +3,16 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    padding-bottom: 10px;
     /* margin-top: 1rem; */
   }
 
   /* .about {
     display: none;
   } */
+#bannerUlcaImg{
+    height: 300px;
+}
 
   .text-black {
     color: #3A3A3A;

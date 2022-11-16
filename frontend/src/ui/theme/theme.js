@@ -117,6 +117,9 @@ const themeDefault = createTheme({
           background: "rgba(0,0,0,0.1)",
           // backdropFilter: "blur(10px) !important",
         },
+        paper: {
+          height: 450
+        }
       },
     },
     MuiTableRow: {

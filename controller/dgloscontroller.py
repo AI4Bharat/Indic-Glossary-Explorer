@@ -1,5 +1,7 @@
 
 import logging
+from unittest import result
+from repository.dglosrepo import DGlosRepo
 import time
 import uuid
 import json
@@ -10,6 +12,9 @@ from service.dglosservice import DGlosService
 from service.userservice import UserService
 from utils.dglosvalidator import DGlosValidator
 from flask_cors import CORS
+from bson.json_util import dumps, loads
+
+
 dglos_app = Flask(__name__)
 cors = CORS(dglos_app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 log = logging.getLogger('file')
@@ -114,6 +119,9 @@ def search_phrases_for_sentence():
     except Exception as e:
         log.exception("Something went wrong: " + str(e), e)
         return {"status": "FAILED", "message": "Something went wrong"+ str(e)}, 400
+
+
+
 # Fetches required headers from the request and adds it to the body.
 def add_headers(data, api_request, user_id):
     if not data:
@@ -162,3 +170,32 @@ dictConfig({
         'handlers': ['info', 'console']
     }
 }) 
+
+
+@dglos_app.route(context_path + '/v1/count', methods=["GET"])
+def data_count(): 
+    count=DGlosRepo()
+    domain=count.count_from_db('domain')
+    collection_source = count.count_from_db('collectionSource')
+    domain_list=list(domain)
+    collection_source_list=list(collection_source)
+    domains = []
+    collection_sources=[]
+    total_count_domain = 0
+    total_count_collectionSource=0
+    for item in domain_list:
+        diction = item['_id']
+        diction['count'] = item['count']
+        domains.append(diction)
+        total_count_domain += item['count']
+    domain_count = {'domains':domains,"totalCount":total_count_domain}
+    for item in collection_source_list:
+        diction = item['_id']
+        diction['count'] = item['count']
+        collection_sources.append(diction)
+        total_count_collectionSource += item['count']
+    collectionSource_count={'CollectionSources':collection_sources,"totalCount":total_count_collectionSource}
+    result = [domain_count,collectionSource_count]
+
+    return  jsonify(result),200
+

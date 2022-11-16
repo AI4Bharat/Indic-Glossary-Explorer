@@ -2,7 +2,7 @@ from dis import dis
 import logging
 import time
 import uuid
-
+import hashlib
 
 import pandas as pd
 from flask_restful import reqparse
@@ -47,6 +47,20 @@ class DGlosService:
         except Exception as e:
             log.exception("Glossary upload failed!", e)
             return {"status": "FAILED", "message": "Glossary Upload FAILED!"}
+
+
+    # def create_hash(self, data):
+    #     source = data["srcText"]
+    #     target= data["tgtText"]
+    #     s_Lang = data["srcLang"]
+    #     t_Lang = data ["tgtLang"]
+    #     src_hash=str(hashlib.sha256(source.encode('utf-16')).hexdigest())
+    #     tgt_hash=str(hashlib.sha256(target.encode('utf-16')).hexdigest())
+    #     s_hash = (hashlib.sha256(s_Lang.encode('utf-16')).hexdigest())
+    #     t_hash = (hashlib.sha256(t_Lang.encode('utf-16')).hexdigest())
+    #     hash_id=  src_hash+tgt_hash+s_hash+t_hash
+    #     return (hash_id)
+
 
     def upload_file(self, api_request, data):
         # validate

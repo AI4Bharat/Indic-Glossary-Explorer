@@ -107,3 +107,11 @@ class DGlosRepo:
         epoch_short = eval(str(time.time()).replace('.', '')[0:10])
         index_obj["@timestamp"] = datetime.fromtimestamp(epoch_short).isoformat()
         return index_obj
+
+    def count_from_db(self,column):
+        col = self.get_mongodb_connection()
+        value = "$"+column
+        count =col.aggregate([
+                    {"$group" : {"_id":{column:value}, "count":{"$sum":1}}}
+                    ])
+        return count

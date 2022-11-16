@@ -66,7 +66,7 @@ const Layout = (props) => {
         alignItems='center'
       >
         <Card
-          className={classes.container}
+          className={classes.publicContainer}
         >
           {/* {renderSpinner()}
           {renderError()} */}
@@ -74,10 +74,10 @@ const Layout = (props) => {
            < BackButton startIcon={<  ArrowBackIcon />} sx={{ color:"white" ,   mb:2  }} backPressNavigationPath={backPressNavigationPath ? backPressNavigationPath : ""} label={translate("label.backToPreviousPage")}/>
            } */}
           <Suspense fallback={<div>Loading....</div>}>
-            <div style={{ margin: "30px" }}>
-              <IntroductionCard />
-              <div id="main-component">
-                {component}
+            <div style={{ marginLeft: "10px", marginRight: "10px" }}>
+              <IntroductionCard searchComponent={component} />
+              <div className={classes.mainComponent}>
+                {/* {component} */}
               </div>
             </div>
           </Suspense>

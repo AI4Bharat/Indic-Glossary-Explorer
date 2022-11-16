@@ -44,12 +44,12 @@ const App = () => {
         {/* <Route path="/" element={<Login />} /> */}
         <Route
           path="/"
-          element={<PublicLayout component={<SearchAndViewGlossary />} Backbutton={true} />}
+          element={<PublicLayout component={<SearchAndViewGlossary showTableInside={false} />} Backbutton={true} />}
         />
         <Route path="/user/login" element={<Login />} />
         <Route
           path="/view-glossary"
-          element={ProtectedRouteWrapper(<Layout component={<SearchAndViewGlossary />} Backbutton={true} />)}
+          element={ProtectedRouteWrapper(<Layout component={<SearchAndViewGlossary showTableInside={true} />} Backbutton={true} />)}
         />
         <Route
           path="/add-glossary"

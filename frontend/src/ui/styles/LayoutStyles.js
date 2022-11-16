@@ -4,7 +4,7 @@ const GlobalStyles = makeStyles({
   container: {
     maxWidth: "1272px",
     width: "100%",
-    marginTop: "100px",
+    marginTop: "90px",
     marginBottom: "100px",
     alignSelf: "center",
     // border: "0.2px solid rgba(0,0,0,0.3)",
@@ -14,6 +14,25 @@ const GlobalStyles = makeStyles({
     textAlign: "center"
     // background: theme.palette.background.default,
     // fontFamily: theme.typography.fontFamily,
+  },
+
+  publicContainer: {
+    maxWidth: "1272px",
+    width: "100%",
+    marginTop: "75px",
+    marginBottom: "100px",
+    alignSelf: "center",
+    // border: "0.2px solid rgba(0,0,0,0.3)",
+    borderRadius: 10,
+    minHeight: window.innerHeight*0.8,
+    // padding: 20,
+    textAlign: "center"
+    // background: theme.palette.background.default,
+    // fontFamily: theme.typography.fontFamily,
+  },
+
+  mainComponent: {
+    padding: 10
   },
 
   headerContainer: {

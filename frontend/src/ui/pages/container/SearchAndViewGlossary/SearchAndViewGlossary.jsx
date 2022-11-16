@@ -24,6 +24,8 @@ const SearchAndViewGlossary = (props) => {
         variant: "success",
     });
 
+    const [isPressed, setIsPressed] = useState(false);
+
     const glossaryData = useSelector((state) => state.searchGlossary);
     const allLanguages = useSelector((state) => state.getAllLanguages);
     const allDomains = useSelector((state) => state.getAllDomains);
@@ -36,6 +38,28 @@ const SearchAndViewGlossary = (props) => {
         dispatch(APITransport(domainApiObj));
 
     }, []);
+
+    const keyPress = (e) => {
+        if (e.code === "Enter") {
+          if (!isPressed) {
+            setIsPressed(true);
+            onSubmit();
+          }
+        }
+      };
+    
+      const keyRelease = () => {
+        setIsPressed(false);
+      };
+
+    useEffect(() => {
+        window.addEventListener("keydown", keyPress);
+        window.addEventListener("keyup", keyRelease);
+        return () => {
+          window.removeEventListener("keydown", keyPress);
+          window.removeEventListener("keyup", keyRelease);
+        }
+      }, [keyPress, keyRelease]);
 
     const handleTextChange = (e) => {
         setText(e.target.value);
@@ -146,7 +170,7 @@ const SearchAndViewGlossary = (props) => {
                             onChange={handleTrgLangChange}
                             sx={{
                                 textAlign: "left",
-                                backgroundColor: "#ffffff"  
+                                backgroundColor: "#ffffff" 
                             }}
                         >
                             {allLanguages && allLanguages.length > 0 && allLanguages.map((el, i) => {

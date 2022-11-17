@@ -118,7 +118,8 @@ const themeDefault = createTheme({
           // backdropFilter: "blur(10px) !important",
         },
         paper: {
-          height: 450
+          maxHeight: 450,
+          maxWidth: "min-content"
         }
       },
     },

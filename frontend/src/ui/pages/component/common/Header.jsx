@@ -197,7 +197,7 @@ const Header = (props) => {
                         aria-expanded={anchorElUser ? 'true' : undefined}
                     >
                         <Avatar sx={{}}>{JSON.parse(localStorage.getItem("userDetails"))?.username?.split("")[0]}</Avatar>
-                        <Typography variant='body1' sx={{ marginLeft: 1, marginRight: 1, color: "rgb(39, 30, 79)" }}>
+                        <Typography variant='body1' sx={{ display: {md: "inline", xs:"none"}, marginLeft: 1, marginRight: 1, color: "rgb(39, 30, 79)" }}>
                             {JSON.parse(localStorage.getItem("userDetails"))?.username}
                         </Typography>
                         <KeyboardArrowDownIcon />
@@ -256,14 +256,14 @@ const Header = (props) => {
                         }}
                     >
                         <img
-                            src={"ai4bharat1.png"}
-                            width={"50rem"}
-                            height={"50rem"}
+                            src={"transparent-glossary-explorer-logo.png"}
+                            width={"70rem"}
+                            height={"70rem"}
                         />
-                        <Typography variant='h5' sx={{ color: "#000000", marginLeft: 2 }}>{translate("label.appName")}</Typography>
+                        {/* <Typography variant='h5' sx={{ color: "#000000", marginLeft: 2 }}>{translate("label.appName")}</Typography> */}
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
+                        {!publicHeader && <IconButton
                             size="large"
                             aria-label="account of current user"
                             aria-controls="menu-appbar"
@@ -274,9 +274,9 @@ const Header = (props) => {
                             }}
                         >
                             <MenuIcon />
-                        </IconButton>
+                        </IconButton>}
                         <img
-                            src={"ai4bharat1.png"}
+                            src={"transparent-glossary-explorer-logo.png"}
                             width={"50rem"}
                             height={"50rem"}
                         />

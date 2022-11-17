@@ -24,7 +24,7 @@ const IntroductionCard = (props) => {
             <div className="row align-items-center justify-content-center">
                 <div className="col-md-6">
                     <div className="h1 text-black mt-4 mb-4">Indic Glossary Explorer</div>
-                    <p className="ft-20"><b>Indic Glossary Explorer</b> is an <b>open source</b> service to store and explore relevant Indic glossary which are domain specific. 
+                    <p className="ft-20">An <b>open source</b> service to store and explore relevant Indic glossary which are domain specific. 
                         The service also provides the capabities for glossary contribution (individual/batch).</p>
                 </div>
                 <div className="col-md-5">

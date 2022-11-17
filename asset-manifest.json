@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/static/css/main.763b4baf.css",
-    "main.js": "/static/js/main.24edf8ae.js",
-    "static/js/692.35f22301.chunk.js": "/static/js/692.35f22301.chunk.js",
+    "main.js": "/static/js/main.df4577bd.js",
+    "static/js/692.3cc6711e.chunk.js": "/static/js/692.3cc6711e.chunk.js",
     "static/js/787.22edae46.chunk.js": "/static/js/787.22edae46.chunk.js",
     "static/media/landingCardRightSideImage.png": "/static/media/landingCardRightSideImage.18f7c23aad650d1b5c0f.png",
     "static/media/logo.svg": "/static/media/logo.2968ade084e575085d672ccac19c6b74.svg",
     "index.html": "/index.html",
     "main.763b4baf.css.map": "/static/css/main.763b4baf.css.map",
-    "main.24edf8ae.js.map": "/static/js/main.24edf8ae.js.map",
-    "692.35f22301.chunk.js.map": "/static/js/692.35f22301.chunk.js.map",
+    "main.df4577bd.js.map": "/static/js/main.df4577bd.js.map",
+    "692.3cc6711e.chunk.js.map": "/static/js/692.3cc6711e.chunk.js.map",
     "787.22edae46.chunk.js.map": "/static/js/787.22edae46.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.763b4baf.css",
-    "static/js/main.24edf8ae.js"
+    "static/js/main.df4577bd.js"
   ]
 }

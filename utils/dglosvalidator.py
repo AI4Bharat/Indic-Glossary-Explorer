@@ -1,5 +1,7 @@
 import json
 import logging
+
+
 from repository.dglosrepo import DGlosRepo
 # from service.dglosservice import DGlosService
 from .dglosutils import DGlosUtils
@@ -22,6 +24,16 @@ class DGlosValidator:
             for glos_key in glossary_keys: #Check whether all keys required are present
                 if not glos_key in glos:
                     return "{key} not found in glossary".format(key=glos_key)
+            # if len(glos['srcText']) == 0:
+            #     return "srcText can't be empty"
+            if glos['srcText'].isspace() or len(glos['srcText'])==0:
+                return "srcText can't be empty"
+            if glos['tgtText'].isspace() or len(glos['tgtText'])==0:
+                return "tgtText can't be empty"
+            if glos['srcLanguage'].isspace() or len(glos['srcLanguage'])==0 :
+                return "srcLanguage can't be empty"
+            if glos['tgtLanguage'].isspace() or len(glos['tgtLanguage'])==0:
+                return "tgtLanguage can't be empty"
             if(glos['srcLanguage'] == glos['tgtLanguage']):
                 return "Source and target languages cannot be the same"
             if not glos['level'] in levels:

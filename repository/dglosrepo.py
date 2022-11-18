@@ -92,7 +92,7 @@ class DGlosRepo:
             query_dict['bool']['must'].append({"match":{str(key): query[key]}})
         try:
             es = self.get_es_client()
-            resp = es.search(index=base_index, query=query_dict)
+            resp = es.search(index=base_index, size=1000,query=query_dict)
             hits = resp['hits']['total']['value']
             log.info(f"Got {hits} Hits!")
             if hits > 0:

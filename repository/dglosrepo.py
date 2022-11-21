@@ -115,3 +115,14 @@ class DGlosRepo:
                     {"$group" : {"_id":{column:value}, "count":{"$sum":1}}}
                     ])
         return count
+
+    def count_by_lang(self,srcLanguage,tgtLanguage):
+        col = self.get_mongodb_connection()
+        src_value="$"+ srcLanguage
+        tgt_value="$"+ tgtLanguage
+        count =col.aggregate([
+                    {"$group" : {"_id":{"srcLanguage":src_value,"tgtLanguage":tgt_value}, "count":{"$sum":1}}}
+                    ])
+        # county=list(count)
+        log.info(f"the lang is {count}")
+        return count

@@ -5,6 +5,7 @@ import addGlossary from './uploadGlossary/addGlossary';
 import searchGlossary from './searchGlossary/searchGlossary';
 import getAllLanguages from './getLanguages/getLanguages';
 import getAllDomains from './getDomains/getDomains';
+import getDomainAndCollectionSourceData from './DomainAndCollectionSource/DomainAndCollectionSource';
 
 const index = {
     apiStatus,
@@ -13,7 +14,8 @@ const index = {
     addGlossary,
     searchGlossary,
     getAllLanguages,
-    getAllDomains
+    getAllDomains,
+    getDomainAndCollectionSourceData,
 };
 
 export default index;

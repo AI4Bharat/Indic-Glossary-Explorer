@@ -1,5 +1,5 @@
 import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useEffect, useRef, useState } from 'react';
 import searchGlossary from '../../../../redux/actions/api/SearchGlossary/SearchGlossary';
 import CustomButton from '../../component/common/Button';
 import OutlinedTextField from '../../component/common/OutlinedTextField';
@@ -24,6 +24,9 @@ const SearchAndViewGlossary = (props) => {
         variant: "success",
     });
 
+    const [isSearchInputActive, setIsSearchInputActive] = useState(false);
+    const searchInputRef = useRef(null);
+
     const [isPressed, setIsPressed] = useState(false);
 
     const glossaryData = useSelector((state) => state.searchGlossary);
@@ -41,7 +44,7 @@ const SearchAndViewGlossary = (props) => {
 
     const keyPress = (e) => {
         if (e.code === "Enter") {
-          if (!isPressed) {
+          if (!isPressed && isSearchInputActive) {
             setIsPressed(true);
             onSubmit();
           }
@@ -74,7 +77,8 @@ const SearchAndViewGlossary = (props) => {
     }
 
     const onSubmit = () => {
-
+        setIsSearchInputActive(false);
+        searchInputRef.current.blur();
         if (!selectedTargetLang) {
             return setSnackbarInfo({
                 open: true,
@@ -188,6 +192,9 @@ const SearchAndViewGlossary = (props) => {
                             id="demo-simple-select-helper"
                             placeholder="Search term..."
                             onChange={handleTextChange}
+                            onFocus={()=>setIsSearchInputActive(true)}
+                            onBlur={()=>setIsSearchInputActive(false)}
+                            inputRef={searchInputRef}
                             value={text}
                             fullWidth
                             sx={{

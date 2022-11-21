@@ -15,7 +15,7 @@ const Header = React.lazy(() => import("./pages/component/common/Header"));
 
 
 const Layout = (props) => {
-  const { type, index, userRoles, component, Backbutton, backPressNavigationPath } = props;
+  const { type, index, userRoles, component, belowIntroCardComponent, Backbutton, backPressNavigationPath } = props;
   const [show, setShow] = useState(false);
   const [popUp, setPopup] = useState(true);
   //   const apiStatus = useSelector((state) => state.apiStatus);
@@ -75,7 +75,7 @@ const Layout = (props) => {
            } */}
           <Suspense fallback={<div>Loading....</div>}>
             <div style={{ marginLeft: "10px", marginRight: "10px" }}>
-              <IntroductionCard searchComponent={component} />
+              <IntroductionCard searchComponent={component} belowIntroCardComponent = {belowIntroCardComponent} />
               <div className={classes.mainComponent}>
                 {/* {component} */}
               </div>

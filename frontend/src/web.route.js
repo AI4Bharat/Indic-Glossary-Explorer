@@ -20,6 +20,7 @@ import SearchAndViewGlossary from "./ui/pages/container/SearchAndViewGlossary/Se
 
 import { authenticateUser } from "./utils/utils";
 import browserhistory from "./web.history";
+import Analytics from "./ui/pages/container/Analytics/Analytics";
 
 
 
@@ -46,6 +47,10 @@ const App = () => {
           path="/"
           element={<PublicLayout component={<SearchAndViewGlossary showTableInside={false} />} Backbutton={true} />}
         />
+        <Route
+          path="/public-analytics"
+          element={<PublicLayout belowIntroCardComponent={<Analytics />} Backbutton={true} />}
+        />
         <Route path="/user/login" element={<Login />} />
         <Route
           path="/view-glossary"
@@ -54,6 +59,10 @@ const App = () => {
         <Route
           path="/add-glossary"
           element={ProtectedRouteWrapper(<Layout component={<UploadGlossary />} Backbutton={true} />)}
+        />
+        <Route
+          path="/analytics"
+          element={ProtectedRouteWrapper(<Layout component={<Analytics />} Backbutton={true} />)}
         />
         <Route path="*" element={<h1>page not found 404</h1>} />
       </Routes>

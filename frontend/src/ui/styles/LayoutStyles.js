@@ -19,7 +19,7 @@ const GlobalStyles = makeStyles({
   publicContainer: {
     maxWidth: "1272px",
     width: "100%",
-    marginTop: "75px",
+    marginTop: "90px",
     marginBottom: "100px",
     alignSelf: "center",
     // border: "0.2px solid rgba(0,0,0,0.3)",

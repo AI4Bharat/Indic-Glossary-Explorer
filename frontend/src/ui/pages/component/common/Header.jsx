@@ -46,12 +46,18 @@ const Header = (props) => {
     }
 
     const pages = publicHeader ? [
-        // {
-        //     name: "View Glossary",
-        //     onClick: () => onHeaderMenuClick("/"),
-        //     id: "/",
-        //     isActive: () => getActiveRoute("/")
-        // }
+        {
+            name: "View Glossary",
+            onClick: () => onHeaderMenuClick("/"),
+            id: "/",
+            isActive: () => getActiveRoute("/")
+        },
+        {
+            name: "Analytics",
+            onClick: () => onHeaderMenuClick("/public-analytics"),
+            id: "/public-analytics",
+            isActive: () => getActiveRoute("/public-analytics")
+        }
     ] : [
         {
             name: "View Glossary",
@@ -64,6 +70,12 @@ const Header = (props) => {
             onClick: () => onHeaderMenuClick("/add-glossary"),
             id: "/add-glossary",
             isActive: () => getActiveRoute("/add-glossary")
+        },
+        {
+            name: "Analytics",
+            onClick: () => onHeaderMenuClick("/analytics"),
+            id: "/analytics",
+            isActive: () => getActiveRoute("/analytics")
         }
     ];
 
@@ -328,6 +340,7 @@ const Header = (props) => {
                         {pages?.map((page) => (
 
                             <NavLink
+                                end
                                 hidden={page.hidden}
                                 key={page.name}
                                 to={page.id}

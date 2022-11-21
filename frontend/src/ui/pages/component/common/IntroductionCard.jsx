@@ -8,7 +8,7 @@ import ViewGlossary from '../SearchAndViewGlossary/ViewGlossary';
 
 const IntroductionCard = (props) => {
 
-    const {searchComponent} = props;
+    const {searchComponent, belowIntroCardComponent} = props;
 
     const glossaryData = useSelector((state) => state.searchGlossary);
 
@@ -34,6 +34,7 @@ const IntroductionCard = (props) => {
             {searchComponent}
         </div>
         {glossaryData[0]?.glossaryPhrases.length > 0 && <ViewGlossary glossaryData={glossaryData[0]?.glossaryPhrases} inputText={glossaryData[0]?.input} publicLayout={true} />}
+        {belowIntroCardComponent}
     </section>
     )
 };

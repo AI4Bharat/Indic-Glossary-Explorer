@@ -93,7 +93,7 @@ const Header = (props) => {
         {
             id: "Introduction Video",
             name: "Introduction Video",
-            onclick: ()=> window.open("#")
+            onclick: ()=> window.open("https://www.youtube.com/watch?v=MPtezE6KDvk")
         },
         {
             id: "API Specs",
@@ -210,7 +210,7 @@ const Header = (props) => {
                     >
                         <Avatar sx={{}}>{JSON.parse(localStorage.getItem("userDetails"))?.username?.split("")[0]}</Avatar>
                         <Typography variant='body1' sx={{ display: {md: "inline", xs:"none"}, marginLeft: 1, marginRight: 1, color: "rgb(39, 30, 79)" }}>
-                            {JSON.parse(localStorage.getItem("userDetails"))?.username}
+                            {JSON.parse(localStorage.getItem("userDetails"))?.user?.split(" ")[0]}
                         </Typography>
                         <KeyboardArrowDownIcon />
                     </IconButton>

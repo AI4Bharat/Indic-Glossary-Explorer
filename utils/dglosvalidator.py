@@ -24,8 +24,6 @@ class DGlosValidator:
             for glos_key in glossary_keys: #Check whether all keys required are present
                 if not glos_key in glos:
                     return "{key} not found in glossary".format(key=glos_key)
-            # if len(glos['srcText']) == 0:
-            #     return "srcText can't be empty"
             if glos['srcText'].isspace() or len(glos['srcText'])==0:
                 return "srcText can't be empty"
             if glos['tgtText'].isspace() or len(glos['tgtText'])==0:

@@ -199,3 +199,21 @@ def data_count():
 
     return  jsonify(result),200
 
+@dglos_app.route(context_path + '/v1/lang_count', methods=["GET"])
+def lang_count(): 
+    # data =request.get_json()
+    # langcode=data['srcLanguage']
+    # tgtLanguage=data['tgtLanguage']
+    count=DGlosRepo()
+    lang=count.count_by_lang('srcLanguage','tgtLanguage')
+    lang_list=list(lang)
+    lang_pair=[]
+    lang_count=0
+    for item in lang_list:
+        diction = item['_id']
+        diction['count'] = item['count']
+        lang_pair.append(diction)
+        lang_count += item['count']
+    count_by_lang={'languages':lang_pair,"totalCount":lang_count}
+    result = [count_by_lang]
+    return jsonify(result),200

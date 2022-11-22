@@ -18,6 +18,7 @@ import {
     Tooltip,
     Label,
   } from "recharts";
+import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
 //   import FetchModelChartAPI from "../../../redux/actions/api/ULCA/FetchModelChart";
   import ChartStyles from "../../../styles/ChartStyles";
   // import APITransport from "../../../redux/actions/apitransport/apitransport";
@@ -149,7 +150,7 @@ import {
                 Total Count
               </Typography>
               <Typography style={{ fontSize: "1.125rem", fontWeight: "400" }}>
-                {sourceData?.totalCount}
+                {getCommaSaparatedNumber(sourceData?.totalCount)}
               </Typography>
             </Box>
           </Box>

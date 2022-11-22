@@ -175,7 +175,7 @@ import {
                 maxBarSize={100}
               >
                 <XAxis
-                  dataKey="language"
+                  dataKey="tgtLanguage"
                   textAnchor={"end"}
                   tick={<CustomizedAxisTick />}
                   height={130}

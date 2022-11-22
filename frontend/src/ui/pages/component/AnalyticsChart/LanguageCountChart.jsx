@@ -49,7 +49,7 @@ import {
     const [selectedTypeName, setSelectedTypeName] = useState("");
     const [axisValue, setAxisValue] = useState({
       yAxis: "Count",
-      xAxis: "Domain",
+      xAxis: "Language",
     });
   
     // const chartData = useSelector((state) => state.getModels.data);

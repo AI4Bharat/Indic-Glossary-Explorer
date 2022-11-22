@@ -39,10 +39,13 @@ const Analytics = () => {
   }
 
   useEffect(()=>{
+    LanguageChartData[0]?.languages?.sort((a, b) => b.count - a.count);
+    chartData[0]?.domains?.sort((a, b) => b.count - a.count);
+    chartData[1]?.CollectionSources?.sort((a, b) => b.count - a.count);
     setLangCountData(LanguageChartData[0]);
     setDomainChartData(chartData[0]);
     setCollectionSourceChartData(chartData[1]);
-  }, [chartData])
+  }, [chartData, LanguageChartData])
 
   return (
     <>

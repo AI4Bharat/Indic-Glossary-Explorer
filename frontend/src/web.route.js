@@ -45,11 +45,11 @@ const App = () => {
         {/* <Route path="/" element={<Login />} /> */}
         <Route
           path="/"
-          element={<PublicLayout component={<SearchAndViewGlossary showTableInside={false} />} Backbutton={true} />}
+          element={<PublicLayout showIntroBanner={true} component={<SearchAndViewGlossary showTableInside={false} />} Backbutton={true} />}
         />
         <Route
           path="/public-analytics"
-          element={<PublicLayout belowIntroCardComponent={<Analytics />} Backbutton={true} />}
+          element={<PublicLayout showIntroBanner={false} belowIntroCardComponent={<Analytics />} Backbutton={true} />}
         />
         <Route path="/user/login" element={<Login />} />
         <Route

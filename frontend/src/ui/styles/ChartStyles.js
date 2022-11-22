@@ -12,7 +12,7 @@ const ChartStyles = makeStyles({
 
   heading: {
     textAlign: "center",
-    marginBottom: "25px",
+    marginBottom: "35px !important",
     color: "#3A3A3A",
     fontSize: "2.5rem",
     fontWeight: 400,

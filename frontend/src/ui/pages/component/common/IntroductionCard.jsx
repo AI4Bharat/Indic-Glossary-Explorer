@@ -8,7 +8,7 @@ import ViewGlossary from '../SearchAndViewGlossary/ViewGlossary';
 
 const IntroductionCard = (props) => {
 
-    const {searchComponent, belowIntroCardComponent} = props;
+    const {searchComponent, belowIntroCardComponent, showIntroBanner} = props;
 
     const glossaryData = useSelector((state) => state.searchGlossary);
 
@@ -20,7 +20,7 @@ const IntroductionCard = (props) => {
 
     return(
         <section className="section about">
-        <div className="container-fluid section-bg">
+        {showIntroBanner && <div className="container-fluid section-bg">
             <div className="row align-items-center justify-content-center">
                 <div className="col-md-6">
                     <div className="h1 text-black mt-4 mb-4">Indic Glossary Explorer</div>
@@ -32,7 +32,7 @@ const IntroductionCard = (props) => {
                 </div>
             </div>
             {searchComponent}
-        </div>
+        </div>}
         {glossaryData[0]?.glossaryPhrases.length > 0 && <ViewGlossary glossaryData={glossaryData[0]?.glossaryPhrases} inputText={glossaryData[0]?.input} publicLayout={true} />}
         {belowIntroCardComponent}
     </section>

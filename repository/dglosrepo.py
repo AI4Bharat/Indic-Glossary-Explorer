@@ -123,6 +123,4 @@ class DGlosRepo:
         count =col.aggregate([{"$match":{"srcLanguage":langcode}},
                     {"$group" : {"_id":{"srcLanguage":src_value,"tgtLanguage":tgt_value}, "count":{"$sum":1}}}
                     ])
-        # county=list(count)
-        log.info(f"the lang is {count}")
         return count

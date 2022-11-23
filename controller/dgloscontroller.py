@@ -199,7 +199,7 @@ def data_count():
 
     return  jsonify(result),200
 
-@dglos_app.route(context_path + '/v1/lang_count', methods=["GET"])
+@dglos_app.route(context_path + '/v1/lang_count', methods=["POST"])
 def lang_count(): 
     data =request.get_json()
     langcode=data['srcLanguage']

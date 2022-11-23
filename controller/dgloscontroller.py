@@ -208,9 +208,18 @@ def lang_count():
     lang_list=list(lang)
     lang_pair=[]
     lang_count=0
+    with open(supported_languages, 'r') as f:
+        data = json.load(f)
     for item in lang_list:
+        language_code = item['_id']['tgtLanguage']
+        lang_full_name = ' '
+        for i in data['languages']:
+            if i['code'] == language_code:
+                lang_full_name=i['label']
+                break
         diction = item['_id']
         diction['count'] = item['count']
+        diction['label'] = lang_full_name
         lang_pair.append(diction)
         lang_count += item['count']
     count_by_lang={'languages':lang_pair,"totalCount":lang_count}

@@ -100,8 +100,6 @@ class DGlosService:
     def search_glossary(self, data,search_query_dict):
         log.info(f"the data is {data}")
         req_id, result = data["metadata"]["requestId"], []
-        # source=data["srcLanguage"]
-        # target=data["tgtLanguage"]
         for input in data['inputs']:
             log.info(f"{req_id} | Searching Glossary for phrases in: {input}")
             glossary_phrases = self.glossary_phrase_search(input,search_query_dict)
@@ -119,7 +117,6 @@ class DGlosService:
     # Searches for all glossary phrases of a fixed length within a given sentence
     # Uses a custom implementation of the sliding window search algorithm.
     def glossary_phrase_search(self, sentence, search_query_dict):
-        # del data['inputs']
         glossary_phrases = []
         hopping_pivot, sliding_pivot, i = 0, len(sentence), 1
         computed, glos_count = 0, 0

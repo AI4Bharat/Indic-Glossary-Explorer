@@ -201,11 +201,10 @@ def data_count():
 
 @dglos_app.route(context_path + '/v1/lang_count', methods=["GET"])
 def lang_count(): 
-    # data =request.get_json()
-    # langcode=data['srcLanguage']
-    # tgtLanguage=data['tgtLanguage']
+    data =request.get_json()
+    langcode=data['srcLanguage']
     count=DGlosRepo()
-    lang=count.count_by_lang('srcLanguage','tgtLanguage')
+    lang=count.count_by_lang('srcLanguage','tgtLanguage',langcode)
     lang_list=list(lang)
     lang_pair=[]
     lang_count=0

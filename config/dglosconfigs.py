@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-db_cluster = os.environ.get('MONGO_CLUSTER_URL', 'mongodb+srv://sriharimn:Harikane@cluster0.1frkl.mongodb.net/')
+db_cluster = os.environ.get('MONGO_CLUSTER_URL', '')
 app_host = os.environ.get('DGLOS_APP_HOST', 'localhost')
 app_port = os.environ.get('DGLOS_APP_PORT', 5001)
 context_path = os.environ.get('DMU_GLOS_CONTEXT_PATH', '/glossary-explorer')

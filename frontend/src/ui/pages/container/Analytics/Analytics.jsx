@@ -6,6 +6,7 @@ import CollectionSourceChart from "../../component/AnalyticsChart/CollectionSour
 import FetchDomainAndCollectionSourceData from "../../../../redux/actions/api/DomainAndCollectionSource/DomainAndCollectionSource";
 import FetchLanguageCountData from "../../../../redux/actions/api/getLanguageCount/LanguageCount";
 import LanguageCountChart from "../../component/AnalyticsChart/LanguageCountChart";
+import getLanguages from "../../../../redux/actions/api/getLanguages/getLanguages";
 
 
 const Analytics = () => {
@@ -14,6 +15,8 @@ const Analytics = () => {
   const [langCountData, setLangCountData] = useState();
   const [domainChartData, setDomainChartData] = useState();
   const [collectionSourceChartData, setCollectionSourceChartData] = useState(); 
+  const [loadingLanguageChart, setLoadingLanguageChart] = useState(true)
+  const [loadingChart, setLoadingChart] = useState(true)
 
   const LanguageChartData = useSelector(state=>state.getIndicGlossaryExplorerLanguageCountData.data);
   const chartData = useSelector(state=>state.getDomainAndCollectionSourceData.data);
@@ -24,17 +27,37 @@ const Analytics = () => {
 //   },[])
 
   useEffect(()=>{
+    setLoadingChart(true);
+    setLoadingLanguageChart(true);
+    fetchAllLanguages();
     fetchLanguageCountChartData();
     fetchDomainCollectionChartData();   
   },[])
+
+  useEffect(()=>{
+    if(langCountData){
+      setLoadingLanguageChart(false)
+    }
+
+    if(domainChartData || collectionSourceChartData){
+      setLoadingChart(false);
+    }
+
+  },[langCountData, domainChartData, collectionSourceChartData])
+
+  const fetchAllLanguages = () => {
+    const langApiObj = new getLanguages();
+    dispatch(APITransport(langApiObj));
+  }
 
   const fetchDomainCollectionChartData = () => {
     let apiObj = new FetchDomainAndCollectionSourceData();
     dispatch(APITransport(apiObj))
   }
 
-  const fetchLanguageCountChartData = () => {
-    let apiObj = new FetchLanguageCountData();
+  const fetchLanguageCountChartData = (srcLanguage) => {
+    setLoadingLanguageChart(true);
+    let apiObj = new FetchLanguageCountData(srcLanguage);
     dispatch(APITransport(apiObj))
   }
 
@@ -49,9 +72,9 @@ const Analytics = () => {
 
   return (
     <>
-    {langCountData && <LanguageCountChart sourceData = {langCountData} />}
-      {domainChartData && <DomainChart sourceData = {domainChartData} />}
-      {collectionSourceChartData && <CollectionSourceChart sourceData = {collectionSourceChartData} />}
+    <LanguageCountChart sourceData = {langCountData} loadingChart={loadingLanguageChart} onLanguageChange={fetchLanguageCountChartData} />
+      <DomainChart sourceData = {domainChartData} loadingChart={loadingChart} />
+      <CollectionSourceChart sourceData = {collectionSourceChartData} loadingChart={loadingChart} />
     </>
 
   );

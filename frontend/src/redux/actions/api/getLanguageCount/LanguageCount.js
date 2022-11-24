@@ -3,10 +3,11 @@ import ENDPOINTS from "../../../../config/apiendpoint";
 import C from "../../../constants";
  
  export default class FetchLanguageCountData extends API {
-   constructor(timeout = 2000) {
-     super("GET", timeout, false);
+   constructor(srcLanguage = "en", timeout = 2000) {
+     super("POST", timeout, false);
     //  this.progressObj1 = progressObj1;
      this.type = C.FETCH_LANGUAGE_COUNT_DATA;
+     this.srcLanguage = srcLanguage;
      this.endpoint = `${super.apiEndPoint()}${ENDPOINTS.getIndicGlossaryExplorerLanguageCount}`;
    }
  
@@ -22,7 +23,9 @@ import C from "../../../constants";
    }
  
    getBody() {
-     return this.progressObj1;
+     return {
+      srcLanguage : this.srcLanguage
+     };
    }
  
    getHeaders() {

@@ -1,6 +1,7 @@
 import {
     Box,
     Button,
+    CircularProgress,
     Paper,
     Typography,
   } from "@mui/material";
@@ -42,7 +43,7 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
     const dispatch = useDispatch();
     const classes = ChartStyles();
   
-    const {sourceData} = props;
+    const {sourceData, loadingChart} = props;
     const [data, setData] = useState([]);
     const [count, setCount] = useState(0);
     const [page, setPage] = useState(0);
@@ -166,7 +167,7 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
           /> */}
             
           <Box style={{ margin: "20px" }}>
-            <ResponsiveContainer width="100%" height={600}>
+            {!loadingChart ? (<ResponsiveContainer width="100%" height={600}>
               <BarChart
                 width={900}
                 height={400}
@@ -245,7 +246,15 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
                     })}
                 </Bar>
               </BarChart>
-            </ResponsiveContainer>
+            </ResponsiveContainer>) : (
+            <Box display="flex" justifyContent="center">
+              <CircularProgress
+                color="primary"
+                size={50}
+                style={{ margin: "20%" }}
+              />
+            </Box>
+          )}
           </Box>
         </Paper>
       </Box>

@@ -1,7 +1,13 @@
 import {
     Box,
     Button,
+    CircularProgress,
+    FormControl,
+    Grid,
+    InputLabel,
+    MenuItem,
     Paper,
+    Select,
     Typography,
   } from "@mui/material";
   import React, { useState } from "react";
@@ -42,16 +48,19 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
     const dispatch = useDispatch();
     const classes = ChartStyles();
   
-    const {sourceData} = props;
+    const {sourceData, loadingChart} = props;
     const [data, setData] = useState([]);
     const [count, setCount] = useState(0);
     const [page, setPage] = useState(0);
     const [selectedType, setSelectedType] = useState("");
     const [selectedTypeName, setSelectedTypeName] = useState("");
+    const [selectedSourceLang, setSelectedSourceLang] = useState('en');
     const [axisValue, setAxisValue] = useState({
       yAxis: "Count",
       xAxis: "Language",
     });
+
+    const allLanguages = useSelector((state) => state.getAllLanguages);
   
     // const chartData = useSelector((state) => state.getModels.data);
   
@@ -63,6 +72,11 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
     useEffect(() => {
     //   fetchChartData("model", "", "");
     }, []);
+
+    const handleSrcLangChange = (event) => {
+      setSelectedSourceLang(event.target.value);
+      props.onLanguageChange(event.target.value);
+  }
   
     // useEffect(() => {
     //   setData(chartData.data);
@@ -154,6 +168,39 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
               </Typography>
             </Box>
           </Box>
+          <Grid 
+            container
+            direction="row"
+            alignItems={'center'}
+            sx={{textAlign: 'left', margin: 5}}
+          >
+              <Typography variant='h6'>
+                  Number of parallel Glossary per language with 
+              </Typography>
+              <Box sx={{marginLeft: 5}}>
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
+                    <InputLabel id="demo-simple-select-helper-label">Source Language</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        value={selectedSourceLang}
+                        label="Source Language"
+                        onChange={handleSrcLangChange}
+                        sx={{
+                            textAlign: "left",
+                            border: '0px solid transparent'
+                        }}
+                    >
+                        {allLanguages && allLanguages.length > 0 && allLanguages.map((el, i) => {
+                            return <MenuItem value={el.code}>{el.label}</MenuItem>
+                        })}
+                    </Select>
+                </FormControl>
+              </Box>
+              {/* <Typography style={{ fontSize: "1.125rem", fontWeight: "400" }}>
+                {getCommaSaparatedNumber(sourceData?.totalCount)}
+              </Typography> */}
+            </Grid>
           {/* <CustomizedButton
             title="Reset"
             size="small"
@@ -166,7 +213,7 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
           /> */}
             
           <Box style={{ margin: "20px" }}>
-            <ResponsiveContainer width="100%" height={600}>
+            {!loadingChart ? (<ResponsiveContainer width="100%" height={600}>
               <BarChart
                 width={900}
                 height={400}
@@ -176,7 +223,7 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
                 maxBarSize={100}
               >
                 <XAxis
-                  dataKey="tgtLanguage"
+                  dataKey="label"
                   textAnchor={"end"}
                   tick={<CustomizedAxisTick />}
                   height={130}
@@ -245,7 +292,15 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
                     })}
                 </Bar>
               </BarChart>
-            </ResponsiveContainer>
+            </ResponsiveContainer>) : (
+            <Box display="flex" justifyContent="center">
+              <CircularProgress
+                color="primary"
+                size={50}
+                style={{ margin: "20%" }}
+              />
+            </Box>
+          )}
           </Box>
         </Paper>
       </Box>

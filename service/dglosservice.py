@@ -3,6 +3,7 @@ import logging
 import time
 import uuid
 import hashlib
+from flask import jsonify
 
 import pandas as pd
 from flask_restful import reqparse
@@ -72,26 +73,39 @@ class DGlosService:
             g= api_request.files['glossaryFile'].filename
             extension = g.split('.')[-1]
             if extension in ['xlsx','xls'] :
-                data_xls = pd.read_excel(f)
+                data_xls = pd.read_excel(f,keep_default_na=False)
             elif extension == 'csv' :
-                data_xls = pd.read_csv(f,encoding= 'utf-8')
+                data_xls = pd.read_csv(f,encoding= 'utf-8',keep_default_na=False)
             elif extension == 'tsv' :
-                data_xls = pd.read_csv(f,encoding= 'utf-8',sep='\t')
+                data_xls = pd.read_csv(f,encoding= 'utf-8',sep='\t',keep_default_na=False)
             data["glossary"] = data_xls.to_dict(orient='records')
 
             validation_response = validator.validate_glossary(data)
+            if type(validation_response) != list:
+                return {"status": "FAILED", "ERROR": validation_response}
             try:
-                if validation_response != None:
-                    raise Exception(validation_response)
+                clean_data = {'metadata':data["metadata"],'glossary':validation_response}
             except Exception as e:
                 log.exception("Something went wrong in uploaded file: " + str(e), e)
                 return {"status": "FAILED", "message": "ERROR: "+str(e)}, 400
+
+
             
-            upload_successful = self.create(data)
+
+            # try:
+            #     if validation_response != None:
+            #         raise Exception(validation_response)
+            # except Exception as e:
+            #     log.exception("Something went wrong in uploaded file: " + str(e), e)
+            #     return {"status": "FAILED", "message": "ERROR: "+str(e)}, 400
+            
+            upload_successful = self.create(clean_data)
+            total_count=len(data['glossary'])
+            passed_count=len(clean_data['glossary'])
             if upload_successful:
                 if upload_successful["status"] == "Success":
                     log.info(f"{req_id} | Upload Complete!")
-                    return {"status": "Success", "message": "Glossary Uploaded!"}
+                    return {"status": "Success", "message": f"Glossary Uploaded!{passed_count} ingested out of {total_count}"}
             return {"status": "FAILED", "message": "Glossary Upload FAILED!"}
         except Exception as e:
             log.exception("File upload failed!", e)

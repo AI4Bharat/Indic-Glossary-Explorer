@@ -71,11 +71,6 @@
         "active": true
       },
       {
-        "code": "kok",
-        "label": "Konkani",
-        "active": true
-      },
-      {
         "code": "mai",
         "label": "Maithili",
         "active": true
@@ -116,63 +111,13 @@
         "active": true
       },
       {
-        "code": "lus",
-        "label": "Lushai",
-        "active": true
-      },
-      {
-        "code": "njz",
-        "label": "Ngungwel",
-        "active": true
-      },
-      {
-        "code": "pnr",
-        "label": "Panim",
-        "active": true
-      },
-      {
-        "code": "kha",
-        "label": "Khasi",
-        "active": true
-      },
-      {
-        "code": "grt",
-        "label": "Garo",
-        "active": true
-      },
-      {
         "code": "sa",
         "label": "Sanskrit",
         "active": true
       },
       {
-        "code": "bho",
-        "label": "Bhojpuri",
-        "active": true
-      },
-      {
-        "code": "raj",
-        "label": "Rajasthani",
-        "active": true
-      },
-      {
         "code": "gom",
         "label": "Goan Konkani",
-        "active": true
-      },
-      {
-        "code": "awa",
-        "label": "Awadhi",
-        "active": true
-      },
-      {
-        "code": "hne",
-        "label": "Chhattisgarhi",
-        "active": true
-      },
-      {
-        "code": "mag",
-        "label": "Magahi",
         "active": true
       }
     ]

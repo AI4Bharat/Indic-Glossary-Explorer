@@ -20,23 +20,29 @@ class DGlosValidator:
             return "Glossary unavailable"
         if len(data['glossary']) == 0:
             return "Glossary data is empty"
+        for glos_key in glossary_keys: #Check whether all keys required are present
+            if not glos_key in data['glossary'][0]:
+                return "{key} not found in glossary ".format(key=glos_key)
+        valid_items=[]
+        
         for glos in data['glossary']: #for each dictionary of glossary data
-            for glos_key in glossary_keys: #Check whether all keys required are present
-                if not glos_key in glos:
-                    return "{key} not found in glossary".format(key=glos_key)
-            if glos['srcText'].isspace() or len(glos['srcText'])==0:
-                return "srcText can't be empty"
-            if glos['tgtText'].isspace() or len(glos['tgtText'])==0:
-                return "tgtText can't be empty"
-            if glos['srcLanguage'].isspace() or len(glos['srcLanguage'])==0 :
-                return "srcLanguage can't be empty"
-            if glos['tgtLanguage'].isspace() or len(glos['tgtLanguage'])==0:
-                return "tgtLanguage can't be empty"
+            
+            log.info(f"the dtatype is {type(glos['srcText'])}")
+            if type(glos['srcText']) is not str or len(glos['srcText'])==0:
+                continue
+            if type(glos['tgtText']) is not str or len(glos['tgtText'])==0:
+                continue
+            if type(glos['srcLanguage']) is not str or len(glos['srcLanguage'])==0 :
+                continue
+            if type(glos['tgtLanguage'])is not str or len(glos['tgtLanguage'])==0:
+                continue
             if(glos['srcLanguage'] == glos['tgtLanguage']):
-                return "Source and target languages cannot be the same"
+                continue
             if not glos['level'] in levels:
-                return "Level unavailable"
-        return None
+               continue
+            valid_items.append(glos)
+            
+        return valid_items
     def validate_filetype(self,filename):
         # if 'files' not in data.keys():
         #     return "No file data provided"

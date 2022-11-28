@@ -78,14 +78,15 @@ def create():
     data = request.get_json()
     data = add_headers(data, request, "userId")
     validation_response = validator.validate_glossary(data)
-    try:
-        if validation_response != None:
-            raise Exception(validation_response)
-        response = dglos_service.create(data)
-        return jsonify(response), 200
-    except Exception as e:
-        log.exception("Something went wrong: " + str(e), e)
-        return {"status": "FAILED", "message": "ERROR: "+str(e)}, 400
+    if type(validation_response) != list:
+        return jsonify({'message': 'Glossary Upload FAILED!','status':'FAILED','ERROR':validation_response}),400
+
+        # if validation_response != None:
+        #     raise Exception(validation_response)
+    clean_data={'metadata':data["metadata"],'glossary':validation_response}
+    response = dglos_service.create(clean_data)
+    return jsonify(response), 200
+    
 # REST endpoint for login
 @dglos_app.route(context_path + '/v1/glossary/file/upload', methods=["POST"])
 def upload():
@@ -97,10 +98,10 @@ def upload():
         if validator_response != None:
            raise Exception(validator_response)
         response = dglos_service.upload_file(request, data)
-        return jsonify(response), 200
+        return jsonify(response)
     except Exception as e:
         log.exception("Something went wrong: " + str(e), e)
-        return {"status": "FAILED", "message": "Something went wrong."+ str(e)}, 400
+        return {"status": "FAILED", "message": "Something went wrong."+ str(e)}
 # REST endpoint for logout
 @dglos_app.route(context_path + '/v1/sentence/phrases/search', methods=["POST","GET"])
 def search_phrases_for_sentence():

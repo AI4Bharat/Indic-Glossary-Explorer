@@ -146,7 +146,7 @@ const SearchAndViewGlossary = (props) => {
 
     const handleTransliterationSwitchToggle = (e, checked) => {
         setEnableTrasliteration(checked);
-        !checked && setText("");
+        setText("");
     }
 
     const onReset = () => {

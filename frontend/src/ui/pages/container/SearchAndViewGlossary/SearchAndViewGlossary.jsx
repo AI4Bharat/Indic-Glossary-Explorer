@@ -1,5 +1,6 @@
-import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, Grid, InputLabel, MenuItem, Select, Switch, FormControlLabel, TextField } from '@mui/material';
 import React, { createRef, useEffect, useRef, useState } from 'react';
+import { IndicTransliterate, getTransliterationLanguages } from "@ai4bharat/indic-transliterate"
 import searchGlossary from '../../../../redux/actions/api/SearchGlossary/SearchGlossary';
 import CustomButton from '../../component/common/Button';
 import OutlinedTextField from '../../component/common/OutlinedTextField';
@@ -11,13 +12,16 @@ import getLanguages from '../../../../redux/actions/api/getLanguages/getLanguage
 import getDomains from '../../../../redux/actions/api/getDomains/getDomains';
 
 const SearchAndViewGlossary = (props) => {
-    const {showTableInside} = props;
+    const { showTableInside } = props;
     const dispatch = useDispatch();
     const [text, setText] = useState("");
     const [selectedTargetLang, setSelectedTargetLang] = useState('');
     const [domain, setDomain] = useState('');
     const [showGlossaryResultTable, setShowGlossaryResultTable] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
+    const [enableTrasliteration, setEnableTrasliteration] = useState(false);
+    const [tansliterationLanguageList, setTansliterationLanguageList] = useState([]);
+    const [selectedTransliterationLang, setSelectedTransliterationLang] = useState("");
     const [snackbar, setSnackbarInfo] = useState({
         open: false,
         message: "",
@@ -40,31 +44,40 @@ const SearchAndViewGlossary = (props) => {
         const domainApiObj = new getDomains();
         dispatch(APITransport(domainApiObj));
 
+        getTransliterationLanguages()
+            .then(lang => {
+                setTansliterationLanguageList(lang)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
     }, []);
 
     const keyPress = (e) => {
         if (e.code === "Enter") {
-          if (!isPressed && isSearchInputActive) {
-            setIsPressed(true);
-            onSubmit();
-          }
+            if (!isPressed && isSearchInputActive) {
+                setIsPressed(true);
+                onSubmit();
+            }
         }
-      };
-    
-      const keyRelease = () => {
+    };
+
+    const keyRelease = () => {
         setIsPressed(false);
-      };
+    };
 
     useEffect(() => {
         window.addEventListener("keydown", keyPress);
         window.addEventListener("keyup", keyRelease);
         return () => {
-          window.removeEventListener("keydown", keyPress);
-          window.removeEventListener("keyup", keyRelease);
+            window.removeEventListener("keydown", keyPress);
+            window.removeEventListener("keyup", keyRelease);
         }
-      }, [keyPress, keyRelease]);
+    }, [keyPress, keyRelease]);
 
     const handleTextChange = (e) => {
+        // setText(val)
         setText(e.target.value);
     }
 
@@ -76,9 +89,13 @@ const SearchAndViewGlossary = (props) => {
         setDomain(event.target.value)
     }
 
+    const handleTransliterationLangChange = (event) => {
+        setSelectedTransliterationLang(event.target.value);
+    }
+
     const onSubmit = () => {
         setIsSearchInputActive(false);
-        searchInputRef.current.blur();
+        if(!enableTrasliteration) searchInputRef.current.blur();
         if (!selectedTargetLang) {
             return setSnackbarInfo({
                 open: true,
@@ -127,10 +144,16 @@ const SearchAndViewGlossary = (props) => {
         }
     }, [glossaryData])
 
+    const handleTransliterationSwitchToggle = (e, checked) => {
+        setEnableTrasliteration(checked);
+        !checked && setText("");
+    }
+
     const onReset = () => {
         setText("");
         setSelectedTargetLang("");
         setDomain("");
+        setSelectedTransliterationLang("");
         // const apiObj = new searchGlossary("");
         // dispatch(APITransport(apiObj));
         setShowGlossaryResultTable(false);
@@ -160,9 +183,10 @@ const SearchAndViewGlossary = (props) => {
                 justifyContent="center"
                 alignItems="center"
                 spacing={2}
+                marginTop={2}
             >
                 <Grid item
-                    sx={{ padding: 0, width: '25%' }}
+                    sx={{ padding: 0, width: '20%' }}
                 >
                     <FormControl sx={{ width: '100%' }}>
                         <InputLabel id="demo-simple-select-helper-label" required>Target Language</InputLabel>
@@ -174,7 +198,7 @@ const SearchAndViewGlossary = (props) => {
                             onChange={handleTrgLangChange}
                             sx={{
                                 textAlign: "left",
-                                backgroundColor: "#ffffff" 
+                                backgroundColor: "#ffffff"
                             }}
                         >
                             {allLanguages && allLanguages.length > 0 && allLanguages.map((el, i) => {
@@ -183,29 +207,83 @@ const SearchAndViewGlossary = (props) => {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item
-                    sx={{ padding: 0, width: '50%' }}
+                {enableTrasliteration && <Grid item
+                    sx={{ padding: 0, width: '20%' }}
                 >
                     <FormControl sx={{ width: '100%' }}>
-                        <OutlinedTextField
+                        <InputLabel id="demo-simple-select-helper-label" required>Transliteration Lang</InputLabel>
+                        <Select
                             labelId="demo-simple-select-helper-label"
                             id="demo-simple-select-helper"
-                            placeholder="Search term..."
-                            onChange={handleTextChange}
-                            onFocus={()=>setIsSearchInputActive(true)}
-                            onBlur={()=>setIsSearchInputActive(false)}
-                            inputRef={searchInputRef}
-                            value={text}
-                            fullWidth
+                            value={selectedTransliterationLang}
+                            label="Transliteration Language"
+                            onChange={handleTransliterationLangChange}
                             sx={{
+                                textAlign: "left",
                                 backgroundColor: "#ffffff"
                             }}
-                        />
+                        >
+                            {tansliterationLanguageList && tansliterationLanguageList.length > 0 && tansliterationLanguageList.map((el, i) => {
+                                return <MenuItem value={el.LangCode}>{el.DisplayName}</MenuItem>
+                            })}
+                        </Select>
+                    </FormControl>
+                </Grid>}
+                <Grid item
+                    sx={{ padding: 0, width: enableTrasliteration ? '40%' : '60%' }}
+                >
+                    <FormControl sx={{ width: '100%', textAlign: "center" }}>
+                        {enableTrasliteration && selectedTransliterationLang ?
+                            <IndicTransliterate
+                                lang={selectedTransliterationLang}
+                                value={text}
+                                onChangeText={(val)=>setText(val)}
+                                renderComponent={(props) => 
+                                    
+                                    <input
+                                        {...props}
+                                        type='text'
+                                        labelId="demo-simple-select-helper-label"
+                                        id="demo-simple-select-helper"
+                                        placeholder="Search term..."
+                                        style={{
+                                            backgroundColor: "#ffffff",
+                                            width: '100%',
+                                            height: '3.7rem',
+                                            // marginTop: 10,
+                                            resize: 'none',
+                                            borderRadius: 5,
+                                            fontSize: '1.1rem',
+                                            padding: 10,
+                                            outline: 'none',
+                                            border: '1px solid rgba(0,0,0,0.4)',
+                                            '&::active': {
+                                                border: '1px solid #2C2799'
+                                            }
+                                        }}
+                                    />
+                                }
+                            />
+                            : <OutlinedTextField
+                                labelId="demo-simple-select-helper-label"
+                                id="demo-simple-select-helper"
+                                placeholder="Search term..."
+                                onChange={handleTextChange}
+                                onFocus={() => setIsSearchInputActive(true)}
+                                onBlur={() => setIsSearchInputActive(false)}
+                                inputRef={searchInputRef}
+                                value={text}
+                                fullWidth
+                                sx={{
+                                    backgroundColor: "#ffffff"
+                                }}
+                            />
+                        }
                     </FormControl>
 
                 </Grid>
                 <Grid item
-                    sx={{ padding: 0, width: '25%' }}
+                    sx={{ padding: 0, width: '20%' }}
                 >
                     <FormControl sx={{ width: '100%' }}>
                         <InputLabel id="demo-simple-select-helper-label">Domain (Optional)</InputLabel>
@@ -226,18 +304,39 @@ const SearchAndViewGlossary = (props) => {
                         </Select>
                     </FormControl>
                 </Grid>
-                
+
+            </Grid>
+            <Grid
+                container
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                spacing={2}
+            >
+
+                <Grid item
+                    sx={{ padding: 0, paddingRight: 2, marginTop: 1, width: '80%', textAlign: "end" }}
+                >
+                    <FormControlLabel
+                        value={enableTrasliteration}
+                        control={<Switch color="primary" />}
+                        onChange={handleTransliterationSwitchToggle}
+                        label={"Transliteration"}
+                        labelPlacement="start"
+                    />
+                </Grid>
+
             </Grid>
             <Grid
                 container
                 flexDirection="row"
                 justifyContent="center"
                 alignItems="center"
-                sx={{ marginTop: showTableInside ? 2 : 0.5 }}
+                // sx={{ marginTop: showTableInside ? 0.5 : 0.5 }}
                 spacing={2}
             >
                 <Grid item
-                    sx={{ padding: 0, width: (selectedTargetLang || domain || text) ? '50%' : '100%' }}
+                    sx={{ padding: 0, width: (selectedTargetLang || domain || text || selectedTransliterationLang) ? '50%' : '100%' }}
                 >
                     <CustomButton
                         label="Search"
@@ -252,7 +351,7 @@ const SearchAndViewGlossary = (props) => {
                 </Grid>
 
                 {
-                    (selectedTargetLang || domain || text) && <Grid item
+                    (selectedTargetLang || domain || text || selectedTransliterationLang) && <Grid item
                         sx={{ padding: 0, width: '50%' }}
                     ><CustomButton
                             label="Reset"

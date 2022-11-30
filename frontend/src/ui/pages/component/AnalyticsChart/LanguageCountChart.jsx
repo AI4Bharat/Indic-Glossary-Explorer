@@ -164,7 +164,10 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
                 Total Count
               </Typography>
               <Typography style={{ fontSize: "1.125rem", fontWeight: "400" }}>
-                {getCommaSaparatedNumber(sourceData?.totalCount)}
+                {/* {getCommaSaparatedNumber(sourceData?.totalCount)} */}
+                {sourceData?.totalCount
+                ? new Intl.NumberFormat("en").format(sourceData?.totalCount)
+                : 0}
               </Typography>
             </Box>
           </Box>

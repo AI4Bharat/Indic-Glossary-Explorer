@@ -27,15 +27,18 @@ class DGlosValidator:
         
         for glos in data['glossary']: #for each dictionary of glossary data
             
-            log.info(f"the dtatype is {type(glos['srcText'])}")
-            if type(glos['srcText']) is not str or len(glos['srcText'])==0:
+            if type(glos['srcText']) is not str or len(glos['srcText'].strip())==0  :
                 continue
-            if type(glos['tgtText']) is not str or len(glos['tgtText'])==0:
+            if type(glos['tgtText']) is not str or len(glos['tgtText'].strip())==0:
                 continue
-            if type(glos['srcLanguage']) is not str or len(glos['srcLanguage'])==0 :
+            if type(glos['srcLanguage']) is not str or len(glos['srcLanguage'].strip())==0 :
                 continue
-            if type(glos['tgtLanguage'])is not str or len(glos['tgtLanguage'])==0:
+            if type(glos['tgtLanguage'])is not str or len(glos['tgtLanguage'].strip())==0:
                 continue
+            if len(glos['domain'].strip())==0:
+                glos['domain']='unknown'
+            if len(glos['collectionSource'].strip())==0:
+                glos['collectionSource']='unknown'
             if(glos['srcLanguage'] == glos['tgtLanguage']):
                 continue
             if not glos['level'] in levels:

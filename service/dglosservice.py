@@ -29,11 +29,13 @@ class DGlosService:
 
     def create(self, data):
         # validate
+        hash_object =DGlosService()
         req_id = data["metadata"]["requestId"]
         log.info(f"{req_id} | Uploading Glossary...")
         try:
             glossary = []
             for glossary_entry in data["glossary"]:
+                glossary_entry["hash"]= hash_object.create_hash(glossary_entry)
                 audit = {"createdTime": eval(str(time.time()).replace('.', '')[0:13]), "glossaryId": str(uuid.uuid4())}
                 glossary_entry["audit"] = audit
                 glossary.append(glossary_entry)
@@ -50,17 +52,14 @@ class DGlosService:
             return {"status": "FAILED", "message": "Glossary Upload FAILED!"}
 
 
-    # def create_hash(self, data):
-    #     source = data["srcText"]
-    #     target= data["tgtText"]
-    #     s_Lang = data["srcLang"]
-    #     t_Lang = data ["tgtLang"]
-    #     src_hash=str(hashlib.sha256(source.encode('utf-16')).hexdigest())
-    #     tgt_hash=str(hashlib.sha256(target.encode('utf-16')).hexdigest())
-    #     s_hash = (hashlib.sha256(s_Lang.encode('utf-16')).hexdigest())
-    #     t_hash = (hashlib.sha256(t_Lang.encode('utf-16')).hexdigest())
-    #     hash_id=  src_hash+tgt_hash+s_hash+t_hash
-    #     return (hash_id)
+    def create_hash(self,data):
+        source = data["srcText"]
+        target= data["tgtText"]
+        s_Lang = data["srcLanguage"]
+        t_Lang = data ["tgtLanguage"]
+        full=source+target+s_Lang+t_Lang
+        hash=(hashlib.md5(full.encode('utf-16')).hexdigest())
+        return (hash)
 
 
     def upload_file(self, api_request, data):
@@ -87,7 +86,7 @@ class DGlosService:
                 clean_data = {'metadata':data["metadata"],'glossary':validation_response}
             except Exception as e:
                 log.exception("Something went wrong in uploaded file: " + str(e), e)
-                return {"status": "FAILED", "message": "ERROR: "+str(e)}, 400
+                return {"status": "FAILED", "message": "error: "+str(e)}
 
 
             
@@ -105,7 +104,7 @@ class DGlosService:
             if upload_successful:
                 if upload_successful["status"] == "Success":
                     log.info(f"{req_id} | Upload Complete!")
-                    return {"status": "Success", "message": f"Glossary Uploaded!{passed_count} ingested out of {total_count}"}
+                    return {"status": "Success", "message": f"{passed_count} ingested out of {total_count}"}
             return {"status": "FAILED", "message": "Glossary Upload FAILED!"}
         except Exception as e:
             log.exception("File upload failed!", e)

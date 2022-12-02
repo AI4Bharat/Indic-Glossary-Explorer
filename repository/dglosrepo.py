@@ -48,8 +48,11 @@ class DGlosRepo:
 
     def insert_bulk(self, data):
         col = self.get_mongodb_connection()
-        col.insert_many(data)
-        return len(data)
+        try:
+            col.insert_many(data,ordered=False)
+            return len(data)
+        except Exception as e :
+            return "Found duplicates, but everything is ok"
 
     # Searches the object into mongo collection
     def search_db(self, query, exclude, offset, res_limit):
@@ -79,7 +82,7 @@ class DGlosRepo:
             es = self.get_es_client()
             index_obj = self.add_timestamp_field(index_obj)
             index_obj1=json.loads(json_util.dumps(index_obj))
-            es.index(index=base_index, id=index_obj1["audit"]["glossaryId"], body=index_obj)
+            es.index(index=base_index, id=index_obj1["hash"], body=index_obj)
         except Exception as e:
             log.exception("Indexing FAILED", e)
 

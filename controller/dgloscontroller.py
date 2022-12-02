@@ -79,7 +79,7 @@ def create():
     data = add_headers(data, request, "userId")
     validation_response = validator.validate_glossary(data)
     if type(validation_response) != list:
-        return jsonify({'message': 'Glossary Upload FAILED!','status':'FAILED','ERROR':validation_response}),400
+        return jsonify({'message': 'Glossary Upload FAILED!','status':'FAILED','error':validation_response}),400
 
         # if validation_response != None:
         #     raise Exception(validation_response)
@@ -98,6 +98,8 @@ def upload():
         if validator_response != None:
            raise Exception(validator_response)
         response = dglos_service.upload_file(request, data)
+        if response['status']=='FAILED':
+            return jsonify(response),400
         return jsonify(response)
     except Exception as e:
         log.exception("Something went wrong: " + str(e), e)

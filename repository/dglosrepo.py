@@ -9,7 +9,7 @@ from elasticsearch import Elasticsearch
 
 from config.dglosconfigs import db_cluster, db, dglos_collection, es_url, base_index
 
-log = logging.getLogger('file')
+log = logging.getLogger("file")
 
 mongo_instance = None
 es_instance = None
@@ -45,7 +45,7 @@ class DGlosRepo:
             return self.instantiate_es_client()
         else:
             return es_instance
-            
+
     # Method to ingest doc into mongo db
     def insert_bulk(self, data):
         col = self.get_mongodb_connection()
@@ -59,10 +59,14 @@ class DGlosRepo:
     def search_db(self, query, exclude, offset, res_limit):
         col = self.get_mongodb_connection()
         if offset is None and res_limit is None:
-            res = col.find(query, exclude).sort([('_id', 1)])
+            res = col.find(query, exclude).sort([("_id", 1)])
         else:
-            res = col.find(query, exclude).sort(
-                [('_id', -1)]).skip(offset).limit(res_limit)
+            res = (
+                col.find(query, exclude)
+                .sort([("_id", -1)])
+                .skip(offset)
+                .limit(res_limit)
+            )
         result = []
         for record in res:
             result.append(record)
@@ -94,15 +98,14 @@ class DGlosRepo:
         result = []
         query_dict = {"bool": {"must": []}}
         for key in query.keys():
-            query_dict['bool']['must'].append(
-                {"match": {str(key): query[key]}})
+            query_dict["bool"]["must"].append({"match": {str(key): query[key]}})
         try:
             es = self.get_es_client()
             resp = es.search(index=base_index, size=1000, query=query_dict)
-            hits = resp['hits']['total']['value']
+            hits = resp["hits"]["total"]["value"]
             log.info(f"Got {hits} Hits!")
             if hits > 0:
-                for hit in resp['hits']['hits']:
+                for hit in resp["hits"]["hits"]:
                     result.append(hit["_source"])
         except Exception as e:
             log.exception("Searching FAILED", e)
@@ -110,27 +113,33 @@ class DGlosRepo:
 
     # Method to generate timestamp in the format es expects per index object.
     def add_timestamp_field(self, index_obj):
-        epoch_short = eval(str(time.time()).replace('.', '')[0:10])
-        index_obj["@timestamp"] = datetime.fromtimestamp(
-            epoch_short).isoformat()
+        epoch_short = eval(str(time.time()).replace(".", "")[0:10])
+        index_obj["@timestamp"] = datetime.fromtimestamp(epoch_short).isoformat()
         return index_obj
 
-    # Method to get domain/collectionSource based count from the db 
+    # Method to get domain/collectionSource based count from the db
     def count_from_db(self, column):
         col = self.get_mongodb_connection()
-        value = "$"+column
-        count = col.aggregate([
-            {"$group": {"_id": {column: value}, "count": {"$sum": 1}}}
-        ])
+        value = "$" + column
+        count = col.aggregate(
+            [{"$group": {"_id": {column: value}, "count": {"$sum": 1}}}]
+        )
         return count
+
     # Method to get count by language pair from the db
     def count_by_lang(self, srcLanguage, tgtLanguage):
         col = self.get_mongodb_connection()
         src_value = "$" + srcLanguage
         tgt_value = "$" + tgtLanguage
-        count = col.aggregate([
-                               {"$group": {"_id": {"srcLanguage": src_value,
-                                                   "tgtLanguage": tgt_value}, "count": {"$sum": 1}}}
-                               ])
+        count = col.aggregate(
+            [
+                {
+                    "$group": {
+                        "_id": {"srcLanguage": src_value, "tgtLanguage": tgt_value},
+                        "count": {"$sum": 1},
+                    }
+                }
+            ]
+        )
         log.info(f"the count is {count}")
         return count

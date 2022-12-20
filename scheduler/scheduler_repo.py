@@ -74,7 +74,7 @@ def lang_count():
             totalcount += item["count"]
         final = {"languages": languages, "totalcount": totalcount}
         json_object = json.dumps(final)
-        with open("models/count_by_langaugepair.json", "w") as f:
+        with open("models/count_by_languagepair.json", "w") as f:
             f.write(json_object)
 
     except Exception as e:

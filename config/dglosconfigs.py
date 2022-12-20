@@ -1,6 +1,6 @@
 import os
 
-db_cluster = os.environ.get('MONGO_CLUSTER_URL', '')
+db_cluster = os.environ.get('MONGO_CLUSTER_URL', 'mongodb+srv://sriharimn:srihari@cluster0.1frkl.mongodb.net/')
 app_host = os.environ.get('DGLOS_APP_HOST', 'localhost')
 app_port = os.environ.get('DGLOS_APP_PORT', 5001)
 context_path = os.environ.get('DMU_GLOS_CONTEXT_PATH', '/glossary-explorer')
@@ -23,3 +23,4 @@ phrase_length_in_words = os.environ.get('DMU_GLOS_PHRASE_LENGTH_IN_WORDS', 100)
 discarded_response_data=["@timestamp","audit"]
 supported_languages = 'models/languages.json'
 supported_domains= 'models/domains.json'
+cron_interval = 300

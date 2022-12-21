@@ -18,20 +18,26 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import headerStyle from "../../../styles/header";
 import { useSelector } from 'react-redux';
 import { translate } from "../../../../config/localisation";
+import CustomButton from './Button';
+import { Grid, Icon } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 
-const Header = () => {
+const Header = (props) => {
 
     const navigate = useNavigate();
     const location = useLocation();
     const classes = headerStyle();
 
+    const { publicHeader } = props;
+
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElHelp, setAnchorElHelp] = React.useState(null);
 
-    const userData = useSelector((state)=>state.userLoginDetails.data);
+    const userData = useSelector((state) => state.userLoginDetails.data);
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
         console.log("userData --- ", userData);
     }, [userData])
 
@@ -39,7 +45,20 @@ const Header = () => {
         return location.pathname === id
     }
 
-    const pages = [
+    const pages = publicHeader ? [
+        {
+            name: "View Glossary",
+            onClick: () => onHeaderMenuClick("/"),
+            id: "/",
+            isActive: () => getActiveRoute("/")
+        },
+        {
+            name: "Analytics",
+            onClick: () => onHeaderMenuClick("/public-analytics"),
+            id: "/public-analytics",
+            isActive: () => getActiveRoute("/public-analytics")
+        }
+    ] : [
         {
             name: "View Glossary",
             onClick: () => onHeaderMenuClick("/view-glossary"),
@@ -51,8 +70,37 @@ const Header = () => {
             onClick: () => onHeaderMenuClick("/add-glossary"),
             id: "/add-glossary",
             isActive: () => getActiveRoute("/add-glossary")
+        },
+        {
+            name: "Analytics",
+            onClick: () => onHeaderMenuClick("/analytics"),
+            id: "/analytics",
+            isActive: () => getActiveRoute("/analytics")
         }
     ];
+
+    const helpMenuArr = [
+        {
+            id: "Codebase",
+            name: "Codebase",
+            onclick: ()=> window.open("https://github.com/AI4Bharat/Indic-Glossary-Explorer")
+        },
+        {
+            id: "Tutorial",
+            name: "Tutorial",
+            onclick: ()=> window.open("https://github.com/AI4Bharat/Indic-Glossary-Explorer/wiki")
+        },
+        {
+            id: "Introduction Video",
+            name: "Introduction Video",
+            onclick: ()=> window.open("https://www.youtube.com/watch?v=MPtezE6KDvk")
+        },
+        {
+            id: "API Specs",
+            name: "API Specs",
+            onclick: ()=> window.open("https://app.swaggerhub.com/apis/ai4bharat-iitm/indic-glossary-explorer/1.0.0")
+        },
+    ]
 
     const onHeaderMenuClick = (id) => {
         handleCloseNavMenu();
@@ -61,8 +109,17 @@ const Header = () => {
 
     const onLogoutClick = () => {
         localStorage.clear();
-        navigate("/"); 
+        handleCloseUserMenu();
+        navigate("/user/login");
     }
+
+    const handleOpenHelpMenu = (event) => {
+        setAnchorElHelp(event.currentTarget);
+    }
+
+    const handleCloseHelpMenu = () => {
+        setAnchorElHelp(null);
+    };
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -79,6 +136,123 @@ const Header = () => {
         setAnchorElUser(null);
     };
 
+    const onHelpMenuClick = (callback) => {
+        callback();
+        handleCloseHelpMenu();
+    }
+
+    const renderHelpButton = () => {
+        return (
+            <>
+                <CustomButton
+                    label={"Help"}
+                    onClick={handleOpenHelpMenu}
+                    sx={{ borderRadius: 2, padding: 3, fontSize: '1rem', marginRight: 2 }}
+                    size="large"
+                    aria-controls={anchorElHelp ? 'account-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={anchorElHelp ? 'true' : undefined}
+                />
+                <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorElHelp}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                    open={Boolean(anchorElHelp)}
+                    onClose={handleCloseHelpMenu}
+                    sx={{
+                        // display: { xs: 'block', md: 'block' },
+                    }}
+                >
+                    <Grid
+                        sx={{ padding: 0.5 }}
+                    >
+                        {
+                            helpMenuArr.map((menu, index) => {
+                                return (
+                                    <IconButton key={menu.id} onClick={()=>onHelpMenuClick(menu.onclick)} sx={{ p: 1, width: '100%', justifyContent: 'start' }}>
+                                        {/* <ExitToAppIcon /> */}
+                                        <Typography variant='button' sx={{ marginLeft: 1 }}>{menu.name}</Typography>
+                                    </IconButton>
+                                )
+                            })
+                        }
+                    </Grid>
+                </Menu>
+            </>
+        )
+    }
+
+    const renderAuthLinkButton = () => {
+        console.log("publicHeader --- ", publicHeader);
+        if (!publicHeader) {
+            // return <Tooltip title="Log out">
+            //     <IconButton onClick={onLogoutClick} sx={{ p: 0 }}>
+            //         <ExitToAppIcon />
+            //     </IconButton>
+            // </Tooltip>
+            return (
+                <>
+                    <IconButton
+                        onClick={handleOpenUserMenu}
+                        size="large"
+                        sx={{ borderRadius: 2, padding: 1 }}
+                        aria-controls={anchorElUser ? 'account-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={anchorElUser ? 'true' : undefined}
+                    >
+                        <Avatar sx={{}}>{JSON.parse(localStorage.getItem("userDetails"))?.username?.split("")[0]}</Avatar>
+                        <Typography variant='body1' sx={{ display: {md: "inline", xs:"none"}, marginLeft: 1, marginRight: 1, color: "rgb(39, 30, 79)" }}>
+                            {JSON.parse(localStorage.getItem("userDetails"))?.user?.split(" ")[0]}
+                        </Typography>
+                        <KeyboardArrowDownIcon />
+                    </IconButton>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorElUser}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                        }}
+                        open={Boolean(anchorElUser)}
+                        onClose={handleCloseUserMenu}
+                        sx={{
+                            // display: { xs: 'block', md: 'block' },
+                        }}
+                    >
+                        <Grid
+                            sx={{ padding: 0.5 }}
+                        >
+                            <IconButton onClick={onLogoutClick} sx={{ p: 1, width: '100%', justifyContent: 'start' }}>
+                                {/* <ExitToAppIcon /> */}
+                                <Typography variant='button' sx={{ marginLeft: 1 }}>Logout</Typography>
+                            </IconButton>
+                        </Grid>
+                    </Menu>
+                </>
+            )
+        } else {
+            return <CustomButton
+                label={"Login"}
+                onClick={() => navigate('/user/login')}
+                sx={{ borderRadius: 2, padding: 3, fontSize: '1rem' }}
+                size="large"
+            />
+        }
+    }
+
     return (
         <AppBar position="fixed"
             sx={{
@@ -86,7 +260,7 @@ const Header = () => {
             }}
         >
             <Container maxWidth="xl">
-                <Toolbar>
+                <Toolbar className={classes.toolbar}>
                     <Box
                         sx={{
                             display: { xs: 'none', md: 'flex' },
@@ -94,14 +268,14 @@ const Header = () => {
                         }}
                     >
                         <img
-                            src={"ai4bharat1.png"}
-                            width={"50rem"}
-                            height={"50rem"}
+                            src={"transparent-glossary-explorer-logo.png"}
+                            width={"70rem"}
+                            height={"70rem"}
                         />
-                        <Typography variant='h5' sx={{color: "#000000", marginLeft: 2}}>{translate("label.appName")}</Typography>
+                        {/* <Typography variant='h5' sx={{ color: "#000000", marginLeft: 2 }}>{translate("label.appName")}</Typography> */}
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
+                        {!publicHeader && <IconButton
                             size="large"
                             aria-label="account of current user"
                             aria-controls="menu-appbar"
@@ -112,7 +286,12 @@ const Header = () => {
                             }}
                         >
                             <MenuIcon />
-                        </IconButton>
+                        </IconButton>}
+                        <img
+                            src={"transparent-glossary-explorer-logo.png"}
+                            width={"50rem"}
+                            height={"50rem"}
+                        />
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
@@ -131,14 +310,14 @@ const Header = () => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
+                            {pages?.map((page) => (
                                 <MenuItem key={page.name} onClick={() => page.onClick()}>
                                     <Typography textAlign="center">{page.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                    {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                     <Typography
                         variant="h5"
                         noWrap
@@ -156,10 +335,14 @@ const Header = () => {
                         }}
                     >
                         LOGO
-                    </Typography>
+                    </Typography> */}
                     <Box sx={{ flexGrow: 1, placeContent: "center", display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                        {pages?.map((page) => (
+
                             <NavLink
+                                end
+                                hidden={page.hidden}
+                                key={page.name}
                                 to={page.id}
                                 className={({ isActive }) =>
                                     isActive ? classes.highlightedMenu : classes.headerMenu
@@ -172,11 +355,8 @@ const Header = () => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Log out">
-                            <IconButton onClick={onLogoutClick} sx={{ p: 0 }}>
-                                    <ExitToAppIcon />
-                            </IconButton>
-                        </Tooltip>
+                        {renderHelpButton()}
+                        {renderAuthLinkButton()}
                     </Box>
                 </Toolbar>
             </Container>

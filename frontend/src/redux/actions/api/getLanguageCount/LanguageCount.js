@@ -4,7 +4,7 @@ import C from "../../../constants";
  
  export default class FetchLanguageCountData extends API {
    constructor(srcLanguage = "en", timeout = 2000) {
-     super("POST", timeout, false);
+     super("GET", timeout, false);
     //  this.progressObj1 = progressObj1;
      this.type = C.FETCH_LANGUAGE_COUNT_DATA;
      this.srcLanguage = srcLanguage;

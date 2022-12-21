@@ -2,7 +2,7 @@ import logging
 import pymongo
 from config.dglosconfigs import db_cluster, db, user_collection, session_collection
 
-log = logging.getLogger('file')
+log = logging.getLogger("file")
 
 mongo_instance_user = None
 mongo_instance_session = None
@@ -48,9 +48,14 @@ class UserRepo:
     def search_users(self, query, exclude, offset, res_limit):
         col = self.get_user_connection()
         if offset is None and res_limit is None:
-            res = col.find(query, exclude).sort([('_id', 1)])
+            res = col.find(query, exclude).sort([("_id", 1)])
         else:
-            res = col.find(query, exclude).sort([('_id', -1)]).skip(offset).limit(res_limit)
+            res = (
+                col.find(query, exclude)
+                .sort([("_id", -1)])
+                .skip(offset)
+                .limit(res_limit)
+            )
         result = []
         for record in res:
             result.append(record)
@@ -67,7 +72,7 @@ class UserRepo:
 
     def session_search(self, query):
         col = self.get_session_connection()
-        res = col.find(query, {'_id': False}).sort([('_id', 1)])
+        res = col.find(query, {"_id": False}).sort([("_id", 1)])
         result = []
         for record in res:
             result.append(record)

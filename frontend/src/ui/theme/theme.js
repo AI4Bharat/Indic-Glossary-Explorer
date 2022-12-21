@@ -91,7 +91,7 @@ const themeDefault = createTheme({
       fontSize: "0.75rem",
       fontFamily: "'Roboto', sans-serif",
       fontWeight: "400",
-      color : "#3A3A3A"
+      color: "#3A3A3A"
     },
     subtitle1: {
       fontSize: "1.125rem",
@@ -111,6 +111,25 @@ const themeDefault = createTheme({
     },
   },
   components: {
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: '1.1rem'
+        },
+      }
+    },
+    MuiPopover: {
+      styleOverrides: {
+        root: {
+          background: "rgba(0,0,0,0.1)",
+          // backdropFilter: "blur(10px) !important",
+        },
+        paper: {
+          maxHeight: 450,
+          maxWidth: "min-content"
+        }
+      },
+    },
     MuiTableRow: {
       styleOverrides: {
         root: {
@@ -135,30 +154,30 @@ const themeDefault = createTheme({
     MuiDropzoneArea: {
       styleOverrides: {
         root: {
-        paddingTop: '5%',
-        top: "auto",
-        width: '98%', 
-        minHeight: '220px',
-        height: "45%",
-        borderColor: '#2C2799',
-        backgroundColor: '#F5F9FA',
-        border: '1px dashed #2C2799',
-        fontColor: '#2C2799',
-        marginTop: "3%",
-        marginLeft: '1%',
-        "& svg": { color: '#2C2799',marginTop:'-20px' },
-        "& p": {
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          fontSize: "17px",
-          paddingTop:'-50px',
-          color: '#2C2799',
+          paddingTop: '5%',
+          top: "auto",
+          width: '98%',
+          minHeight: '220px',
+          height: "45%",
+          borderColor: '#2C2799',
+          backgroundColor: '#F5F9FA',
+          border: '1px dashed #2C2799',
+          fontColor: '#2C2799',
+          marginTop: "3%",
+          marginLeft: '1%',
+          "& svg": { color: '#2C2799', marginTop: '-20px' },
+          "& p": {
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            fontSize: "17px",
+            paddingTop: '-50px',
+            color: '#2C2799',
 
-        }
-      },
+          }
+        },
       }
-      
+
 
     },
     MUIDataTablePagination: {
@@ -195,7 +214,7 @@ const themeDefault = createTheme({
     MuiMenuItem: {
       styleOverrides: {
         root: {
-            fontSize: "0.875rem",
+          fontSize: "0.875rem",
           "@media (max-width:670px)": {
             fontSize: "0.875rem",
           },
@@ -262,6 +281,12 @@ const themeDefault = createTheme({
     },
     MuiTableCell: {
       styleOverrides: {
+        root: {
+          textAlign: "center",
+        },
+        body: {
+          fontSize: "1rem"
+        },
         head: {
           padding: ".6rem .5rem .6rem 1.5rem",
           backgroundColor: "#F8F8FA !important",
@@ -269,6 +294,7 @@ const themeDefault = createTheme({
           letterSpacing: "0.74",
           fontWeight: "bold",
           minHeight: "700px",
+          textAlign: "center"
         },
       },
     },
@@ -286,20 +312,20 @@ const themeDefault = createTheme({
         paper: { minWidth: "360px", minHeight: "116px" },
       },
     },
-    MuiAvatar : {
-        styleOverrides : {
-            root : {
-                backgroundColor : "#271e4f",
-                color : "#FFFFFF"
-            }
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#271e4f",
+          color: "#FFFFFF"
         }
+      }
     },
-    MuiIconButton : {
-        styleOverrides : {
-            root : {
-                borderRadius : "5%"
-            }
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: "5%"
         }
+      }
     },
     MuiAppBar: {
       styleOverrides: {
@@ -382,7 +408,7 @@ const themeDefault = createTheme({
           letterSpacing: "0px",
           fontFamily: "Roboto",
           padding: "0",
-          textTransform : "none",
+          textTransform: "none",
           marginRight: "28px",
           opacity: 1,
           color: "#3A3A3A",
@@ -485,7 +511,7 @@ const themeDefault = createTheme({
     MuiSelect: {
       styleOverrides: {
         select: {
-          fontSize: "0.875rem",
+          fontSize: "1rem",
         }
       }
     },

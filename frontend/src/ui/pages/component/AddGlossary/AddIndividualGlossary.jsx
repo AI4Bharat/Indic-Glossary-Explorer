@@ -18,6 +18,7 @@ import APITransport from "../../../../redux/actions/apitransport/apitransport";
 import getDomains from '../../../../redux/actions/api/getDomains/getDomains';
 import glossaryLevel from '../../../../config/glossaryLevel';
 import addGlossary from '../../../../redux/actions/api/uploadGlossary/addGlossary';
+import axios from 'axios';
 
 const AddIndividualGlossary = (props) => {
     const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const AddIndividualGlossary = (props) => {
         open: false,
         message: "",
         variant: "success",
-      });
+    });
 
     const handleLevelChange = (event) => {
         setLevel(event.target.value);
@@ -58,10 +59,10 @@ const AddIndividualGlossary = (props) => {
 
     const handleSourceTextChange = (event) => {
         setSourceText(event.target.value)
-    } 
+    }
     const handleTargetTextChange = (event) => {
         settargetText(event.target.value)
-    } 
+    }
     const handleCollectionSourceTextChange = (event) => {
         setCollectionSource(event.target.value)
     }
@@ -78,8 +79,8 @@ const AddIndividualGlossary = (props) => {
     const allLanguages = useSelector((state) => state.getAllLanguages);
     const allDomains = useSelector((state) => state.getAllDomains);
 
-    const createGlossaryStatus = useSelector((state) => state.addGlossary);
-    const apiStatus = useSelector((state)=>state.apiStatus);
+    // const createGlossaryStatus = useSelector((state) => state.addGlossary);
+    // const apiStatus = useSelector((state) => state.apiStatus);
 
     useEffect(() => {
         const langApiObj = new getLanguages();
@@ -96,44 +97,41 @@ const AddIndividualGlossary = (props) => {
         }
     }, [allLanguages])
 
-    useEffect(()=>{
-        if(createGlossaryStatus.status && createGlossaryStatus.message){
-            setSnackbarInfo({
-                open: true,
-                message: createGlossaryStatus.message,
-                variant: "success",
-              })
-        }
-    }, [createGlossaryStatus])
-
-    useEffect(()=>{
-        if(apiStatus.error && apiStatus.message){
-          setSnackbarInfo({
-            open: true,
-            message: apiStatus.message,
-            variant: "error",
-          })
-        }
-      }, [apiStatus]);
-
     const onSubmit = () => {
         const apiObj = new addGlossary(selectedSourceLang, selectedTargetLang, SourceText, targetText, domain, collectionSource, level);
-        dispatch(APITransport(apiObj));
+        axios.post(apiObj.endpoint, apiObj.getBody(), apiObj.getHeaders())
+            .then(response => {
+                console.log("response --- ", response);
+                if (response.status == 200) {
+                    setSnackbarInfo({
+                        open: true,
+                        message: response.data.message,
+                        variant: "success",
+                    })
+                }
+            }).catch(err => {
+                console.log("err -- ", err);
+                setSnackbarInfo({
+                    open: true,
+                    message: err.response.data.message,
+                    variant: "error",
+                })
+            })
     }
 
     const renderSnackBar = () => {
         return (
-          <CustomizedSnackbars
-            open={snackbar.open}
-            handleClose={() =>
-              setSnackbarInfo({ open: false, message: "", variant: "" })
-            }
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            variant={snackbar.variant}
-            message={snackbar.message}
-          />
+            <CustomizedSnackbars
+                open={snackbar.open}
+                handleClose={() =>
+                    setSnackbarInfo({ open: false, message: "", variant: "" })
+                }
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                variant={snackbar.variant}
+                message={snackbar.message}
+            />
         );
-      };
+    };
 
     return (
         <Grid>
@@ -155,7 +153,7 @@ const AddIndividualGlossary = (props) => {
                             textAlign: "left"
                         }}
                     >
-                        {sourceLangOptions && sourceLangOptions.length > 0 && sourceLangOptions.map((el,i)=>{
+                        {sourceLangOptions && sourceLangOptions.length > 0 && sourceLangOptions.map((el, i) => {
                             return <MenuItem value={el.code}>{el.label}</MenuItem>
                         })}
                     </Select>
@@ -172,11 +170,34 @@ const AddIndividualGlossary = (props) => {
                             textAlign: "left"
                         }}
                     >
-                        {targLangOptions && targLangOptions.length > 0 && targLangOptions.map((el,i)=>{
+                        {targLangOptions && targLangOptions.length > 0 && targLangOptions.map((el, i) => {
                             return <MenuItem value={el.code}>{el.label}</MenuItem>
                         })}
                     </Select>
                 </FormControl>
+            </Grid>
+            <Grid
+                container
+                flexDirection="row"
+                justifyContent="space-around"
+                alignItems="center"
+                sx={{
+                    marginTop: 4
+                }}
+            >
+
+                <OutlinedTextField
+                    placeholder="Source Text"
+                    sx={{ width: 500 }}
+                    value={SourceText}
+                    onChange={handleSourceTextChange}
+                />
+                <OutlinedTextField
+                    placeholder="Target Text"
+                    sx={{ width: 500 }}
+                    value={targetText}
+                    onChange={handleTargetTextChange}
+                />
             </Grid>
             <Grid
                 container
@@ -230,35 +251,12 @@ const AddIndividualGlossary = (props) => {
                 justifyContent="space-around"
                 alignItems="center"
                 sx={{
-                    marginTop: 4
-                }}
-            >
-                
-                <OutlinedTextField
-                    placeholder="Source Text"
-                    sx={{ width: 500 }}
-                    value={SourceText}
-                    onChange={handleSourceTextChange}
-                />
-                <OutlinedTextField
-                    placeholder="Target Text"
-                    sx={{ width: 500 }}
-                    value={targetText}
-                    onChange={handleTargetTextChange}
-                />
-            </Grid>
-            <Grid
-                container
-                flexDirection="row"
-                justifyContent="space-around"
-                alignItems="center"
-                sx={{
                     marginTop: 4,
                     marginBottom: 4
                     // alignItems: "center"
                 }}
             >
-                 <OutlinedTextField
+                <OutlinedTextField
                     placeholder="Collection Source"
                     sx={{ width: 500 }}
                     value={collectionSource}

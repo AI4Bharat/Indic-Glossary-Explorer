@@ -6,6 +6,8 @@ const apiendpoint =  {
     createGlossary: "/glossary-explorer/v1/glossary/create",
     getLanguage: "/glossary-explorer/v1/lang",
     getDomain: "/glossary-explorer/v1/domain",
+    getIndicGlossaryExplorerDomainAndCollectionSource: "/glossary-explorer/v1/count",
+    getIndicGlossaryExplorerLanguageCount: "/glossary-explorer/v1/lang_count"
   };
   
   export default apiendpoint;

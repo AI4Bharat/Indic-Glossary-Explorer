@@ -1,0 +1,54 @@
+.section-bg {
+    background: url('../../assets/landingCardBackground.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding-bottom: 10px;
+    /* margin-top: 1rem; */
+  }
+
+  /* .about {
+    display: none;
+  } */
+#bannerUlcaImg{
+    height: 300px;
+}
+
+  .text-black {
+    color: #3A3A3A;
+}
+
+.ft-20 {
+    font-size: 1.25rem;
+    line-height: 2rem;
+  }
+
+  .dashboard .row .col-md-12 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+  .demo-btn {
+    background-color: rgb(44, 39, 153); /* Green */
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px 0px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-left: 5px;
+  }
+  
+  .demo-btn:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+    text-decoration: none;
+  }
+  
+  .aboutImg {
+    width: 85%;
+  }

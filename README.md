@@ -1,5 +1,15 @@
-# Indic Glossary Explorer
+***
+<p align="center">
+  <a href="https://glossary.ai4bharat.org"><img src="https://github.com/AI4Bharat/Indic-Glossary-Explorer/blob/master/docs/images/Indic-Glossary-Explorer-Logo.png" alt="Indic Glossary Explorer" width="900" height="220"></a>
+</p>
 
+<p align="center">
+    <a href="https://opensource.org/licenses/MIT" target="_blank">
+        <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT">
+    </a>
+</p>
+
+***
 
 ## Overview
 In general terms, glossary is defined as a list of terms in a special domain or area of usage, with accompanying definitions. In the translation context, glossary can be defined as a pair which is associated with a field of knowledge, source being in one language and the target being in another language.
@@ -8,11 +18,19 @@ Ex : `{Appellant, अपीलकर्ता}` can be a pair under the en-hi gl
 
 Such glossary helps the Translation/Annotations systems to make effective translation based on the context and domain.
 
+## Frontend
+The UI for the explorer is kept simple. We can search for a particular glossary term by providing a language (mandatory) and domain (optional).
+
+<p align="center">
+  <img src="https://github.com/AI4Bharat/Indic-Glossary-Explorer/blob/master/docs/images/glossary-explorer-ui.png"  width="1000" height="650">
+</p>
+
+The logged in version provides option to add a glossary. Both individual or batch upload is supported.
 
 
 ## Architecture
 <p align="center">
-  <img src="https://github.com/AI4Bharat/Glossary-App/blob/master/docs/Glossary-service.png?raw=true"  width="800" height="350">
+  <img src="https://github.com/AI4Bharat/Indic-Glossary-Explorer/blob/master/docs/images/Glossary-service.png"  width="800" height="350">
 </p>
 
 

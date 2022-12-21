@@ -16,17 +16,27 @@ export default function AppInfo() {
             <Grid container sx={{
                 marginLeft: 4,
                 marginTop: 4,
-                textAlign : "left"
+                textAlign: "left"
             }}>
 
                 <Hidden only="xs">
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}  >
-                        <img
-                            src={"ai4bharat.png"} 
-                            alt="logo" 
-                            width={85}
-                        />      
-                    </Grid> 
+                        <span style={{
+                            display: "inline-block",
+                            borderRadius: "70px",
+                            padding: "8px",
+                            backgroundColor: "#ffffff",
+                            contain: "content"
+                        }}>
+                            <img
+                                src={"glossary-explorer-logo.png"}
+                                alt="logo"
+                                width={100}
+
+                            />
+                        </span>
+
+                    </Grid>
                 </Hidden>
 
                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12}  >
@@ -34,18 +44,18 @@ export default function AppInfo() {
                         variant={"h2"}
                         className={classes.title}
                         sx={{
-                            marginTop : 10,
+                            marginTop: 10,
                             width: "98%"
                         }}
-                        // onClick={routeChange}
+                    // onClick={routeChange}
                     >{translate("label.appName")}</Typography>
                 </Grid>
                 <Hidden only="xs">
-                    <Typography 
-                        variant={"body1"} 
+                    <Typography
+                        variant={"body1"}
                         className={classes.body}
                         sx={{
-                            marginTop : 10
+                            marginTop: 10
                         }}
                     >
                         {translate("label.appInfo")}

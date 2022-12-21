@@ -20,7 +20,7 @@ export default class LoginAPI extends API {
         this.userData = res;
         console.log(res);
         localStorage.setItem("access_token", res.token);
-        localStorage.setItem("userDetails", res.user);
+        localStorage.setItem("userDetails", JSON.stringify(res.user));
         // localStorage.setItem()
     }
 }

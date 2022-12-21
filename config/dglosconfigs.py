@@ -1,4 +1,6 @@
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 db_cluster = os.environ.get(
     "MONGO_CLUSTER_URL",

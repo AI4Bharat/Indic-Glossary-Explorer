@@ -30,7 +30,10 @@ const Analytics = () => {
     setLoadingChart(true);
     setLoadingLanguageChart(true);
     fetchAllLanguages();
-    fetchLanguageCountChartData();
+
+    let apiObj = new FetchLanguageCountData("en");
+    dispatch(APITransport(apiObj))
+
     fetchDomainCollectionChartData();   
   },[])
 
@@ -56,23 +59,38 @@ const Analytics = () => {
   }
 
   const fetchLanguageCountChartData = (srcLanguage) => {
-    setLoadingLanguageChart(true);
-    let apiObj = new FetchLanguageCountData(srcLanguage);
-    dispatch(APITransport(apiObj))
+    const languageData = getSortedAndFilteredLangCountDataBySrcLang(srcLanguage)
+    languageData[0]?.languages?.sort((a, b) => b.count - a.count);
+    setLangCountData(languageData[0]);
+  }
+
+  const getSortedAndFilteredLangCountDataBySrcLang = (srcLang) => {
+    const modifiedLanguageChartData = [];
+    let totalCount = 0;
+    LanguageChartData?.languages?.map((el,i)=>{
+      if(el.srcLanguage === srcLang){
+        modifiedLanguageChartData.push(el);
+        totalCount = totalCount + el.count;
+      }
+    });
+
+    return [{languages: modifiedLanguageChartData, totalCount: totalCount}];
+
   }
 
   useEffect(()=>{
-    LanguageChartData[0]?.languages?.sort((a, b) => b.count - a.count);
+    const languageData = getSortedAndFilteredLangCountDataBySrcLang("en")
+    languageData[0]?.languages?.sort((a, b) => b.count - a.count);
     chartData[0]?.domains?.sort((a, b) => b.count - a.count);
     chartData[1]?.CollectionSources?.sort((a, b) => b.count - a.count);
-    setLangCountData(LanguageChartData[0]);
+    setLangCountData(languageData[0]);
     setDomainChartData(chartData[0]);
     setCollectionSourceChartData(chartData[1]);
   }, [chartData, LanguageChartData])
 
   return (
     <>
-    <LanguageCountChart sourceData = {langCountData} loadingChart={loadingLanguageChart} onLanguageChange={fetchLanguageCountChartData} />
+    <LanguageCountChart incomingData = {langCountData} loadingChart={loadingLanguageChart} onLanguageChange={fetchLanguageCountChartData} />
       <DomainChart sourceData = {domainChartData} loadingChart={loadingChart} />
       <CollectionSourceChart sourceData = {collectionSourceChartData} loadingChart={loadingChart} />
     </>

@@ -48,13 +48,14 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
     const dispatch = useDispatch();
     const classes = ChartStyles();
   
-    const {sourceData, loadingChart} = props;
+    const { incomingData, loadingChart } = props;
     const [data, setData] = useState([]);
     const [count, setCount] = useState(0);
     const [page, setPage] = useState(0);
     const [selectedType, setSelectedType] = useState("");
     const [selectedTypeName, setSelectedTypeName] = useState("");
     const [selectedSourceLang, setSelectedSourceLang] = useState('en');
+    const [sourceData, setSourceData] = useState();
     const [axisValue, setAxisValue] = useState({
       yAxis: "Count",
       xAxis: "Language",
@@ -69,9 +70,9 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
     //   dispatch(APITransport(apiObj));
     // };
   
-    useEffect(() => {
-    //   fetchChartData("model", "", "");
-    }, []);
+    useEffect(()=>{
+      setSourceData(incomingData);
+    }, [incomingData])
 
     const handleSrcLangChange = (event) => {
       setSelectedSourceLang(event.target.value);

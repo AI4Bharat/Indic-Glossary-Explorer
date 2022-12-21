@@ -10,7 +10,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 schedule_job = BackgroundScheduler()
 
 
-@schedule_job.scheduled_job("interval", id="data_count_domain", seconds=60)
+@schedule_job.scheduled_job("interval", id="data_count_domain", hours=6)
 def data_count():
     try:
         count = DGlosRepo()
@@ -48,7 +48,7 @@ def data_count():
         send_email(msg)
 
 
-@schedule_job.scheduled_job("interval", id="data_count_lang", seconds=60)
+@schedule_job.scheduled_job("interval", id="data_count_lang", hours=6)
 def lang_count():
     try:
         count = DGlosRepo()

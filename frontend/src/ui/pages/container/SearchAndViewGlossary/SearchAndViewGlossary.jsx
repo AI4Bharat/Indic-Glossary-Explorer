@@ -19,7 +19,7 @@ const SearchAndViewGlossary = (props) => {
     const [domain, setDomain] = useState('');
     const [showGlossaryResultTable, setShowGlossaryResultTable] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
-    const [enableTrasliteration, setEnableTrasliteration] = useState(false);
+    const [enableTrasliteration, setEnableTrasliteration] = useState(true);
     const [tansliterationLanguageList, setTansliterationLanguageList] = useState([]);
     const [selectedTransliterationLang, setSelectedTransliterationLang] = useState("");
     const [snackbar, setSnackbarInfo] = useState({
@@ -185,6 +185,28 @@ const SearchAndViewGlossary = (props) => {
                 spacing={2}
                 marginTop={2}
             >
+                {enableTrasliteration && <Grid item
+                    sx={{ padding: 0, width: '20%' }}
+                >
+                    <FormControl sx={{ width: '100%' }}>
+                        <InputLabel id="demo-simple-select-helper-label" required>Source Language</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-helper-label"
+                            id="demo-simple-select-helper"
+                            value={selectedTransliterationLang}
+                            label="Source Language"
+                            onChange={handleTransliterationLangChange}
+                            sx={{
+                                textAlign: "left",
+                                backgroundColor: "#ffffff"
+                            }}
+                        >
+                            {tansliterationLanguageList && tansliterationLanguageList.length > 0 && tansliterationLanguageList.map((el, i) => {
+                                return <MenuItem value={el.LangCode}>{el.DisplayName}</MenuItem>
+                            })}
+                        </Select>
+                    </FormControl>
+                </Grid>}
                 <Grid item
                     sx={{ padding: 0, width: '20%' }}
                 >
@@ -207,28 +229,7 @@ const SearchAndViewGlossary = (props) => {
                         </Select>
                     </FormControl>
                 </Grid>
-                {enableTrasliteration && <Grid item
-                    sx={{ padding: 0, width: '20%' }}
-                >
-                    <FormControl sx={{ width: '100%' }}>
-                        <InputLabel id="demo-simple-select-helper-label" required>Transliteration Lang</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-helper-label"
-                            id="demo-simple-select-helper"
-                            value={selectedTransliterationLang}
-                            label="Transliteration Language"
-                            onChange={handleTransliterationLangChange}
-                            sx={{
-                                textAlign: "left",
-                                backgroundColor: "#ffffff"
-                            }}
-                        >
-                            {tansliterationLanguageList && tansliterationLanguageList.length > 0 && tansliterationLanguageList.map((el, i) => {
-                                return <MenuItem value={el.LangCode}>{el.DisplayName}</MenuItem>
-                            })}
-                        </Select>
-                    </FormControl>
-                </Grid>}
+                
                 <Grid item
                     sx={{ padding: 0, width: enableTrasliteration ? '40%' : '60%' }}
                 >
@@ -319,7 +320,7 @@ const SearchAndViewGlossary = (props) => {
                 >
                     <FormControlLabel
                         value={enableTrasliteration}
-                        control={<Switch color="primary" />}
+                        control={<Switch color="primary" checked={enableTrasliteration} />}
                         onChange={handleTransliterationSwitchToggle}
                         label={"Transliteration"}
                         labelPlacement="start"

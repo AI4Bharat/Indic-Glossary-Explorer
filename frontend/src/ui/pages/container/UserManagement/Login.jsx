@@ -160,29 +160,13 @@ const Login = () => {
   const renderCardContent = () => (
     <CustomCard title={"Sign in to " + translate("label.appName")} cardContent={TextFields()}>
       <Grid container spacing={2}>
-        {/* <Grid item xs={12} sm={12} md={12} lg={12} xl={12} textAlign={"right"}>
-            <Link onClick={() => navigate("/forgot-password")}>
-              {translate("forgotPassword")}
-            </Link>
-          </Grid> */}
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
           <Button
             fullWidth
             onClick={onLoginClick}
-            // onClick={()=>navigate("/view-glossary")}
             label={"Login"}
           />
         </Grid>
-        {/* <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
-          <div className={classes.createLogin}>
-          <Typography  variant={"body2"} className={classes.Typo}>New to Shoonya ? </Typography>
-          <Typography variant={"body2"}>
-          <Link className={classes.link} onClick={() => navigate("invite/:inviteCode")}>
-              {translate("link.Createanaccount")}
-            </Link>
-            </Typography>
-            </div>
-          </Grid> */}
       </Grid>
     </CustomCard>
   );

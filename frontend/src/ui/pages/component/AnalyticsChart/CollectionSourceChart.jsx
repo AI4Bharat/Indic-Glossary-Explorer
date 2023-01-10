@@ -22,6 +22,7 @@ import {
 import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
 //   import FetchModelChartAPI from "../../../redux/actions/api/ULCA/FetchModelChart";
   import ChartStyles from "../../../styles/ChartStyles";
+import ResponsiveChartContainer from "../common/ResponsiveChartContainer";
   // import APITransport from "../../../redux/actions/apitransport/apitransport";
   // import CustomizedButton from "../common/CustomizedButton";
   
@@ -170,7 +171,7 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
           /> */}
             
             <Box style={{ margin: "20px" }}>
-            {!loadingChart ? (<ResponsiveContainer width="100%" height={600}>
+            {!loadingChart ? (<ResponsiveChartContainer>
               <BarChart
                 width={900}
                 height={400}
@@ -249,7 +250,7 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
                     })}
                 </Bar>
               </BarChart>
-            </ResponsiveContainer>) : (
+            </ResponsiveChartContainer>) : (
             <Box display="flex" justifyContent="center">
               <CircularProgress
                 color="primary"

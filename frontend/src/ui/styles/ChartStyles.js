@@ -26,7 +26,7 @@ const ChartStyles = makeStyles({
   },
 
   topBarInnerBox: {
-    width: "15%",
+    width: "-webkit-fill-available",
     display: "flex",
     flexDirection: "column",
     textAlign: "center",

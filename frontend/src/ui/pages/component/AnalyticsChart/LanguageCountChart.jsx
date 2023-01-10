@@ -27,6 +27,7 @@ import {
 import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
 //   import FetchModelChartAPI from "../../../redux/actions/api/ULCA/FetchModelChart";
   import ChartStyles from "../../../styles/ChartStyles";
+import ResponsiveChartContainer from "../common/ResponsiveChartContainer";
   // import APITransport from "../../../redux/actions/apitransport/apitransport";
   // import CustomizedButton from "../common/CustomizedButton";
   
@@ -176,13 +177,13 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
             container
             direction="row"
             alignItems={'center'}
-            sx={{textAlign: 'left', margin: 5}}
+            sx={{textAlign: 'left', margin: {md: 5, xs: 1}}}
           >
               <Typography variant='h6'>
                   Number of parallel Glossary per language with 
               </Typography>
-              <Box sx={{marginLeft: 5}}>
-              <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
+              <Box sx={{marginLeft: {md: 5, xs: 0}}}>
+              <FormControl variant="standard" sx={{ m: 1, minWidth: {md: 200, xs: "150%"} }}>
                     <InputLabel id="demo-simple-select-helper-label">Source Language</InputLabel>
                     <Select
                         labelId="demo-simple-select-standard-label"
@@ -217,7 +218,7 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
           /> */}
             
           <Box style={{ margin: "20px" }}>
-            {!loadingChart ? (<ResponsiveContainer width="100%" height={600}>
+            {!loadingChart ? (<ResponsiveChartContainer>
               <BarChart
                 width={900}
                 height={400}
@@ -296,7 +297,7 @@ import getCommaSaparatedNumber from "../../../../utils/getCommaSaparatedNumber";
                     })}
                 </Bar>
               </BarChart>
-            </ResponsiveContainer>) : (
+            </ResponsiveChartContainer>) : (
             <Box display="flex" justifyContent="center">
               <CircularProgress
                 color="primary"

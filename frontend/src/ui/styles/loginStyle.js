@@ -12,6 +12,8 @@ const LoginStyle = makeStyles({
         "@media (max-width:650px)": {
           background: "white",
           minHeight: "15vh",
+          height: "30vh",
+          display: "none"
         },
       }, 
 
@@ -71,6 +73,10 @@ const LoginStyle = makeStyles({
         alignItems: "center",
         flexDirection: "column",
         justifyContent: "center",
+        height: window.innerHeight,
+        "@media (min-width: 768px)": {
+          maxWidth:"60% !important",
+        },
       },
       containerForgotPassword:{
         marginTop: "2px",

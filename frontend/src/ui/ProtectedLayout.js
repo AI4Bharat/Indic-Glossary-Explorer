@@ -14,7 +14,7 @@ const Header = React.lazy(() => import("./pages/component/common/Header"));
 
 
 const Layout= (props) => {
-  const { type, index, userRoles, component,Backbutton, backPressNavigationPath } = props;
+  const { type, index, userRoles, component,Backbutton, backPressNavigationPath, screenTitle } = props;
   const [show, setShow] = useState(false);
   const [popUp, setPopup] = useState(true);
 //   const apiStatus = useSelector((state) => state.apiStatus);
@@ -59,6 +59,7 @@ const Layout= (props) => {
         <Suspense fallback={<div>Loading....</div>}>
           <Header
             publicHeader={false}
+            screenTitle={screenTitle}
             // type={type}
             // index={index}
             // className={classes.headerContainer}

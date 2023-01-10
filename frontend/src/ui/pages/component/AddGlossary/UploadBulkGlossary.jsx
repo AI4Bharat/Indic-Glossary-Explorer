@@ -98,14 +98,14 @@ const UploadBulkGlossary = (props) => {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      spacing={2}
+      // spacing={2}
     >
       {/* <OutlinedTextField
                 placeholder="Search..."
                 sx={{width: 500}}
             /> */}
       {/* <FileUploader handleChange={handleAddFile} name="file" types={['xls, xlsx']} classes={classes.dropZoneArea} /> */}
-      <Grid item xs={12} sm={5} lg={5} xl={5}>
+      <Grid xs={12} sm={5} lg={5} xl={5}>
         <DropzoneArea
           className={classes.DropZoneArea}
           showPreviewsInDropzone
@@ -126,10 +126,10 @@ const UploadBulkGlossary = (props) => {
         disabled={!file}
         onClick={onUploadClick}
         sx={{
-          width: "460px",
+          width: {md:"43%", xs: "100%"},
           padding: 4,
           borderRadius: 2,
-          marginLeft: 2,
+          // marginLeft: 2,
           marginTop: 5,
         }}
       />

@@ -132,7 +132,7 @@ const FileUploadStyles = makeStyles({
     dropZoneArea: {
         paddingTop: '5%',
           top: "auto",
-          width: '98%', 
+          width: '100%', 
           minHeight: '220px',
           height: "45%",
           borderColor: '#2C2799',
@@ -140,7 +140,7 @@ const FileUploadStyles = makeStyles({
           border: '1px dashed #2C2799',
           fontColor: '#2C2799',
           marginTop: "3%",
-          marginLeft: '1%',
+          // marginLeft: '1%',
         //   "& svg": { color: '#2C2799',marginTop:'-20px' },
           "& p": {
             textOverflow: "ellipsis",

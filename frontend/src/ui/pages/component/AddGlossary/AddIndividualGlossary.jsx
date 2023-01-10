@@ -141,7 +141,7 @@ const AddIndividualGlossary = (props) => {
                 justifyContent="space-around"
                 alignItems="center"
             >
-                <FormControl sx={{ m: 1, minWidth: 500 }}>
+                <FormControl sx={{ m: 1, minWidth: {md:500, xs: "100%"} }}>
                     <InputLabel id="demo-simple-select-helper-label">Source Language</InputLabel>
                     <Select
                         labelId="demo-simple-select-helper-label"
@@ -158,7 +158,7 @@ const AddIndividualGlossary = (props) => {
                         })}
                     </Select>
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 500 }}>
+                <FormControl sx={{ m: 1, minWidth: {md:500, xs: "100%"} }}>
                     <InputLabel id="demo-simple-select-helper-label">Target Language</InputLabel>
                     <Select
                         labelId="demo-simple-select-helper-label"
@@ -182,19 +182,19 @@ const AddIndividualGlossary = (props) => {
                 justifyContent="space-around"
                 alignItems="center"
                 sx={{
-                    marginTop: 4
+                    marginTop: {md:4, xs: 2}
                 }}
             >
 
                 <OutlinedTextField
                     placeholder="Source Text"
-                    sx={{ width: 500 }}
+                    sx={{ width: {md:500, xs: "100%"}, marginBottom: {md:0, xs: 3} }}
                     value={SourceText}
                     onChange={handleSourceTextChange}
                 />
                 <OutlinedTextField
                     placeholder="Target Text"
-                    sx={{ width: 500 }}
+                    sx={{ width: {md:500, xs: "100%"}}}
                     value={targetText}
                     onChange={handleTargetTextChange}
                 />
@@ -205,10 +205,10 @@ const AddIndividualGlossary = (props) => {
                 justifyContent="space-around"
                 alignItems="center"
                 sx={{
-                    marginTop: 4
+                    marginTop: {md:4, xs: 2}
                 }}
             >
-                <FormControl sx={{ m: 1, minWidth: 500 }}>
+                <FormControl sx={{ m: 1, minWidth: {md:500, xs: "100%"} }}>
                     <InputLabel id="demo-simple-select-helper-label">Domain</InputLabel>
                     <Select
                         labelId="demo-simple-select-helper-label"
@@ -225,7 +225,7 @@ const AddIndividualGlossary = (props) => {
                         })}
                     </Select>
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 500 }}>
+                <FormControl sx={{ m: 1, minWidth: {md:500, xs: "100%"} }}>
                     <InputLabel id="demo-simple-select-helper-label">Level</InputLabel>
                     <Select
                         labelId="demo-simple-select-helper-label"
@@ -251,14 +251,14 @@ const AddIndividualGlossary = (props) => {
                 justifyContent="space-around"
                 alignItems="center"
                 sx={{
-                    marginTop: 4,
+                    marginTop: {md:4, xs: 2},
                     marginBottom: 4
                     // alignItems: "center"
                 }}
             >
                 <OutlinedTextField
                     placeholder="Collection Source"
-                    sx={{ width: 500 }}
+                    sx={{ width: {md:500, xs: "100%"}, marginBottom: {md:0, xs: 3} }}
                     value={collectionSource}
                     onChange={handleCollectionSourceTextChange}
                 />
@@ -266,7 +266,7 @@ const AddIndividualGlossary = (props) => {
                     label={translate("button.submit")}
                     onClick={onSubmit}
                     sx={{
-                        width: 500,
+                        width: {md:500, xs: "100%"},
                         padding: 4,
                         borderRadius: 2,
                     }}

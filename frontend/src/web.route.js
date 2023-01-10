@@ -45,24 +45,24 @@ const App = () => {
         {/* <Route path="/" element={<Login />} /> */}
         <Route
           path="/"
-          element={<PublicLayout showIntroBanner={true} component={<SearchAndViewGlossary showTableInside={false} />} Backbutton={true} />}
+          element={<PublicLayout screenTitle="View Glossary" showIntroBanner={true} component={<SearchAndViewGlossary showTableInside={false} />} Backbutton={true} />}
         />
         <Route
           path="/public-analytics"
-          element={<PublicLayout showIntroBanner={false} belowIntroCardComponent={<Analytics />} Backbutton={true} />}
+          element={<PublicLayout screenTitle="Analytics" showIntroBanner={false} belowIntroCardComponent={<Analytics />} Backbutton={true} />}
         />
         <Route path="/user/login" element={<Login />} />
         <Route
           path="/view-glossary"
-          element={ProtectedRouteWrapper(<Layout component={<SearchAndViewGlossary showTableInside={true} />} Backbutton={true} />)}
+          element={ProtectedRouteWrapper(<Layout screenTitle="View Glossary" component={<SearchAndViewGlossary showTableInside={true} />} Backbutton={true} />)}
         />
         <Route
           path="/add-glossary"
-          element={ProtectedRouteWrapper(<Layout component={<UploadGlossary />} Backbutton={true} />)}
+          element={ProtectedRouteWrapper(<Layout screenTitle="Upload Glossary" component={<UploadGlossary />} Backbutton={true} />)}
         />
         <Route
           path="/analytics"
-          element={ProtectedRouteWrapper(<Layout component={<Analytics />} Backbutton={true} />)}
+          element={ProtectedRouteWrapper(<Layout screenTitle="Analytics" component={<Analytics />} Backbutton={true} />)}
         />
         <Route path="*" element={<h1>page not found 404</h1>} />
       </Routes>

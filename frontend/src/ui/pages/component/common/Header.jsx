@@ -19,8 +19,9 @@ import headerStyle from "../../../styles/header";
 import { useSelector } from 'react-redux';
 import { translate } from "../../../../config/localisation";
 import CustomButton from './Button';
-import { Grid, Icon } from '@mui/material';
+import { Divider, Drawer, Grid, Icon } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 
 const Header = (props) => {
@@ -29,7 +30,7 @@ const Header = (props) => {
     const location = useLocation();
     const classes = headerStyle();
 
-    const { publicHeader } = props;
+    const { publicHeader, screenTitle } = props;
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -83,22 +84,22 @@ const Header = (props) => {
         {
             id: "Codebase",
             name: "Codebase",
-            onclick: ()=> window.open("https://github.com/AI4Bharat/Indic-Glossary-Explorer")
+            onclick: () => window.open("https://github.com/AI4Bharat/Indic-Glossary-Explorer")
         },
         {
             id: "Tutorial",
             name: "Tutorial",
-            onclick: ()=> window.open("https://github.com/AI4Bharat/Indic-Glossary-Explorer/wiki")
+            onclick: () => window.open("https://github.com/AI4Bharat/Indic-Glossary-Explorer/wiki")
         },
         {
             id: "Introduction Video",
             name: "Introduction Video",
-            onclick: ()=> window.open("https://www.youtube.com/watch?v=MPtezE6KDvk")
+            onclick: () => window.open("https://www.youtube.com/watch?v=MPtezE6KDvk")
         },
         {
             id: "API Specs",
             name: "API Specs",
-            onclick: ()=> window.open("https://app.swaggerhub.com/apis/ai4bharat-iitm/indic-glossary-explorer/1.0.0")
+            onclick: () => window.open("https://app.swaggerhub.com/apis/ai4bharat-iitm/indic-glossary-explorer/1.0.0")
         },
     ]
 
@@ -177,7 +178,7 @@ const Header = (props) => {
                         {
                             helpMenuArr.map((menu, index) => {
                                 return (
-                                    <IconButton key={menu.id} onClick={()=>onHelpMenuClick(menu.onclick)} sx={{ p: 1, width: '100%', justifyContent: 'start' }}>
+                                    <IconButton key={menu.id} onClick={() => onHelpMenuClick(menu.onclick)} sx={{ p: 1, width: '100%', justifyContent: 'start' }}>
                                         {/* <ExitToAppIcon /> */}
                                         <Typography variant='button' sx={{ marginLeft: 1 }}>{menu.name}</Typography>
                                     </IconButton>
@@ -209,7 +210,7 @@ const Header = (props) => {
                         aria-expanded={anchorElUser ? 'true' : undefined}
                     >
                         <Avatar sx={{}}>{JSON.parse(localStorage.getItem("userDetails"))?.username?.split("")[0]}</Avatar>
-                        <Typography variant='body1' sx={{ display: {md: "inline", xs:"none"}, marginLeft: 1, marginRight: 1, color: "rgb(39, 30, 79)" }}>
+                        <Typography variant='body1' sx={{ display: { md: "inline", xs: "none" }, marginLeft: 1, marginRight: 1, color: "rgb(39, 30, 79)" }}>
                             {JSON.parse(localStorage.getItem("userDetails"))?.user?.split(" ")[0]}
                         </Typography>
                         <KeyboardArrowDownIcon />
@@ -253,6 +254,92 @@ const Header = (props) => {
         }
     }
 
+    const MobileHeader = (props) => {
+        return (
+            <>
+                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: "space-between" }} alignItems={"center"}>
+                    <img
+                        src={"transparent-glossary-explorer-logo.png"}
+                        width={"50rem"}
+                        height={"50rem"}
+                    />
+                    <Typography variant="inherit" sx={{color: "#000000"}}>{screenTitle}</Typography>
+                    <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleOpenNavMenu}
+                        sx={{
+                            color: "#000000"
+                        }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Drawer
+                        anchor={"right"}
+                        open={Boolean(anchorElNav)}
+                        onClose={handleCloseNavMenu}
+                    >
+                        <Grid
+                            container
+                            direction={"row"}
+                            alignItems={"start"}
+                            sx={{ padding: 2 }}
+                            height={"100%"}
+                            overflow={"auto"}
+                        >
+                            <Grid
+                                container
+                                alignItems={"center"}
+                                direction={"row"}
+                                justifyContent={"space-between"}
+                                marginBottom={2}
+                            >
+                                <Grid>
+                                    <IconButton onClick={handleCloseNavMenu}>
+                                        <ChevronLeftIcon fontSize='large' />{!publicHeader ? <Typography variant='h5'>
+                                        {JSON.parse(localStorage.getItem("userDetails"))?.user?.split(" ")[0]}
+                                    </Typography>
+                                        : null
+                                    }
+                                    </IconButton>
+                                </Grid>
+                                <img
+                                    src={"transparent-glossary-explorer-logo.png"}
+                                    width={"50rem"}
+                                    height={"50rem"}
+                                />
+                            </Grid>
+
+                            <Divider sx={{ width: "100%" }} />
+                            {pages?.map((page) => (
+                                <MenuItem key={page.name} onClick={() => page.onClick()} sx={{ p: 1, width: '100%', justifyContent: 'start', marginLeft: 2 }}>
+                                    <Typography variant='button'>{page.name}</Typography>
+                                </MenuItem>
+                            ))}
+                            <Divider sx={{ width: "100%" }} />
+                            {helpMenuArr.map((menu, index) => {
+                                return (
+                                    <MenuItem key={menu.id} onClick={() => onHelpMenuClick(menu.onclick)} sx={{ p: 1, width: '100%', justifyContent: 'start', marginLeft: 2 }}>
+                                        <Typography variant='button'>{menu.name}</Typography>
+                                    </MenuItem>
+                                )
+                            })}
+                            <Divider sx={{ width: "100%" }} />
+                            {!publicHeader ?
+                                <MenuItem onClick={onLogoutClick} sx={{ p: 1, width: '100%', justifyContent: 'start', marginLeft: 2 }}>
+                                    <Typography variant='button'>Logout</Typography>
+                                </MenuItem> : <MenuItem onClick={() => navigate('/user/login')} sx={{ p: 1, width: '100%', justifyContent: 'start', marginLeft: 2 }}>
+                                    <Typography variant='button'>Login</Typography>
+                                </MenuItem>}
+                        </Grid>
+                    </Drawer>
+                </Box>
+            </>
+        )
+    }
+
     return (
         <AppBar position="fixed"
             sx={{
@@ -272,70 +359,8 @@ const Header = (props) => {
                             width={"70rem"}
                             height={"70rem"}
                         />
-                        {/* <Typography variant='h5' sx={{ color: "#000000", marginLeft: 2 }}>{translate("label.appName")}</Typography> */}
                     </Box>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        {!publicHeader && <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            sx={{
-                                color: "#000000"
-                            }}
-                        >
-                            <MenuIcon />
-                        </IconButton>}
-                        <img
-                            src={"transparent-glossary-explorer-logo.png"}
-                            width={"50rem"}
-                            height={"50rem"}
-                        />
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
-                            sx={{
-                                display: { xs: 'block', md: 'none' },
-                            }}
-                        >
-                            {pages?.map((page) => (
-                                <MenuItem key={page.name} onClick={() => page.onClick()}>
-                                    <Typography textAlign="center">{page.name}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
-                    {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href=""
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        LOGO
-                    </Typography> */}
+                    {MobileHeader()}
                     <Box sx={{ flexGrow: 1, placeContent: "center", display: { xs: 'none', md: 'flex' } }}>
                         {pages?.map((page) => (
 
@@ -354,7 +379,7 @@ const Header = (props) => {
                         ))}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
                         {renderHelpButton()}
                         {renderAuthLinkButton()}
                     </Box>

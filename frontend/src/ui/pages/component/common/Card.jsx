@@ -13,16 +13,26 @@ const CustomCard = ({ title, children, cardContent }) => {
     <Grid container alignItems="center" justifyContent="center">
       <Card elevation={3} style={{ border: "none", boxShadow: "none" }}>
         <CardContent>
-          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12} 
+            sx={{ display: { md: "none", xs: "flex" }, justifyContent: "center" }}
+          >
+            <img
+              src={"glossary-explorer-logo.png"}
+              alt="logo"
+              width={100}
+
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{placeContent: "center"}}>
             <Typography
               style={{ marginBottom: "15px" }}
-              textAlign={"Left"}
+              textAlign={{xs: "Center", md: "Left"}}
               variant="h3"
             >
               {title}
             </Typography>
           </Grid>
-
+          
           {/* <Divider /> */}
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             {cardContent}

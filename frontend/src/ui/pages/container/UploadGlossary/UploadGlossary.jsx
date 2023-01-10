@@ -14,7 +14,9 @@ const UploadGlossary = (props) => {
             <FormControl
                 sx={{
                     flexDirection: "row",
-                    placeItems: "center"
+                    alignItems: "center",
+                    display: "flex",
+                    flexWrap: "wrap"
                 }}
             >
                 <Typography variant='subtitle1' sx={{marginRight : 5, fontWeight: "600"}}>Select Type : </Typography>
@@ -23,13 +25,17 @@ const UploadGlossary = (props) => {
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
                     defaultValue="File Upload"
+                    sx={{
+                        display: "flex",
+                        flexWrap: "wrap"
+                    }}
                 >
                     <FormControlLabel value="Add Individual" control={<Radio />} label="Add Individual" onClick={()=>handleTypeChange("Add Individual")} />
                     <FormControlLabel value="File Upload" control={<Radio />} label="File Upload" onClick={()=>handleTypeChange("File Upload")} />
                 </RadioGroup>
             </FormControl>
 
-            <Grid sx={{marginTop: 10}}>
+            <Grid sx={{marginTop: {md:10, xs: 3}}}>
                 {uploadType == "Add Individual" && <AddIndividualGlossary />}
                 {uploadType == "File Upload" && <UploadBulkGlossary />}
             </Grid>

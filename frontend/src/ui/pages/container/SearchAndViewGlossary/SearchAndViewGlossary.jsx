@@ -1,4 +1,4 @@
-import { FormControl, Grid, InputLabel, MenuItem, Select, Switch, FormControlLabel, TextField, Tooltip } from '@mui/material';
+import { FormControl, Grid, InputLabel, MenuItem, Select, Switch, FormControlLabel, TextField, Tooltip, Typography } from '@mui/material';
 import React, { createRef, useEffect, useRef, useState } from 'react';
 import { IndicTransliterate, getTransliterationLanguages } from "@ai4bharat/indic-transliterate"
 import searchGlossary from '../../../../redux/actions/api/SearchGlossary/SearchGlossary';
@@ -189,7 +189,9 @@ const SearchAndViewGlossary = (props) => {
                     sx={{ padding: 0, width: { xs: '100%', md: '20%' } }}
                 >
                     <FormControl sx={{ width: '100%' }}>
-                        <Tooltip title="Please select a Source Language for transliteration. For English, please disable the Transliteration option">
+                        <InputLabel id="demo-simple-select-helper-label" required>Source Language</InputLabel>
+                        <Tooltip title={!selectedTransliterationLang ? "Please select a Source Language for transliteration. For English, please disable the Transliteration option" : ""} placement='left'>
+                            
                             <Select
                                 labelId="demo-simple-select-helper-label"
                                 id="demo-simple-select-helper"
@@ -206,8 +208,10 @@ const SearchAndViewGlossary = (props) => {
                                 })}
                             </Select>
                         </Tooltip>
-                        <InputLabel id="demo-simple-select-helper-label" required>Source Language</InputLabel>
-
+                        
+                        {!selectedTransliterationLang && <Typography variant='caption' sx={{ display: { md: "none", xs: "inline" } }}>
+                            Please select a Source Language for transliteration. For English, please disable the Transliteration option
+                        </Typography>}
                     </FormControl>
                 </Grid>}
                 <Grid item

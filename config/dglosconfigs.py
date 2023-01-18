@@ -14,6 +14,7 @@ dglos_collection = os.environ.get("DMU_GLOS_GLOSSARY_COL", "glossary")
 es_url = os.environ.get("DMU_GLOS_ES_URL", "http://127.0.0.1:9200")
 base_index = os.environ.get("DMU_GLOS_BASE_INDEX", "glossary-base-index")
 session_collection = os.environ.get("DMU_GLOS_GLOSSARY_SES_COL", "sessions")
+review_collection = os.environ.get("DMU_GLOS_GLOSSARY_REV_COL", "reviews")
 session_timeout_in_ms = os.environ.get("DMU_DUS_SESSION_TIMEOUT_IN_MS", 86400000)
 allowed_file_types = ["xls", "xlsx", "csv", "tsv"]
 local_storage_path = os.environ.get(

@@ -224,4 +224,4 @@ def update():
     action = data["action"]
     # Update the upvote and downvote for the item
     review.update_vote(hash, action)
-    return jsonify({"message": "Review updated {}".format(hash)})
+    return jsonify({"message": "Review updated"})

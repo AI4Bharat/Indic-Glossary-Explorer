@@ -222,6 +222,6 @@ def update():
     data = request.get_json()
     hash = data["item_id"]
     action = data["action"]
-    # Update the likes and dislikes for the item
+    # Update the upvote and downvote for the item
     review.update_vote(hash, action)
-    return jsonify({"message": "Successfully updated your review for item {}".format(hash)})
+    return jsonify({"message": "Review updated {}".format(hash)})

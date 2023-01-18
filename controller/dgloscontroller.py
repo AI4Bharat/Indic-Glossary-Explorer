@@ -214,3 +214,14 @@ def langpaircount():
     with open("models/count_by_languagepair.json", "r") as f:
         data = json.load(f)
     return jsonify(data), 200
+
+@dglos_app.route(context_path + "/v1/review", methods=["POST"])
+def update():
+    review = DGlosRepo()
+    # Get the item_id and action from the request body
+    data = request.get_json()
+    hash = data["item_id"]
+    action = data["action"]
+    # Update the upvote and downvote for the item
+    review.update_vote(hash, action)
+    return jsonify({"message": "Review updated {}".format(hash)})

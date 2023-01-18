@@ -7,12 +7,14 @@ from datetime import datetime
 import pymongo
 from elasticsearch import Elasticsearch
 
-from config.dglosconfigs import db_cluster, db, dglos_collection, es_url, base_index
+from config.dglosconfigs import db_cluster, db, dglos_collection, es_url, base_index,review_collection
+from repository.userrepo import UserRepo
 
 log = logging.getLogger("file")
 
 mongo_instance = None
 es_instance = None
+mongo_review_instance = None
 
 
 class DGlosRepo:
@@ -24,7 +26,8 @@ class DGlosRepo:
         global mongo_instance
         client = pymongo.MongoClient(db_cluster)
         mongo_instance = client[db][dglos_collection]
-        return mongo_instance
+        mongo_review_instance=client[db][review_collection]
+        return [mongo_instance,mongo_review_instance]
 
     # Method to instantiate the elasticsearch client.
     def instantiate_es_client(self):
@@ -35,9 +38,16 @@ class DGlosRepo:
     def get_mongodb_connection(self):
         global mongo_instance
         if not mongo_instance:
-            return self.mongodb_conn_instantiate()
+            return self.mongodb_conn_instantiate()[0]
         else:
             return mongo_instance
+    
+    def get_mongodb_connection_review(self):
+        global mongo_review_instance
+        if not mongo_review_instance:
+            return self.mongodb_conn_instantiate()[1]
+        else:
+            return mongo_review_instance
 
     def get_es_client(self):
         global es_instance
@@ -129,6 +139,7 @@ class DGlosRepo:
     # Method to get count by language pair from the db
     def count_by_lang(self, srcLanguage, tgtLanguage):
         col = self.get_mongodb_connection()
+        log.info(f"the collection is {col}")
         src_value = "$" + srcLanguage
         tgt_value = "$" + tgtLanguage
         count = col.aggregate(
@@ -143,3 +154,23 @@ class DGlosRepo:
         )
         log.info(f"the count is {count}")
         return count
+
+
+    def update_vote(self ,hash, action):
+        # Check if the item already exists in the collection
+        col = self.get_mongodb_connection_review()
+        item = col.find_one({"gloss_id": hash})
+        if item:
+            print(item)
+            # Update the existing item with the new action
+            if action == "upVote":
+                col.update_one({"gloss_id": hash}, {"$inc": {"count": 1}})
+            elif action == "downVote":
+                col.update_one({"gloss_id": hash}, {"$inc": {"count": -1}})
+        else:
+            # Create a new item in the collection with the initial action
+            print("true........")
+            if action == "upVote":
+                col.insert_one({"gloss_id": hash, "count": 1})
+            elif action == "downVote":
+                col.insert_one({"gloss_id": hash, "count": -1})

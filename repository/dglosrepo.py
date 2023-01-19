@@ -163,14 +163,14 @@ class DGlosRepo:
         if item:
             print(item)
             # Update the existing item with the new action
-            if action == "upVote":
+            if action == 1:
                 col.update_one({"gloss_id": hash}, {"$inc": {"count": 1}})
-            elif action == "downVote":
+            elif action == -1:
                 col.update_one({"gloss_id": hash}, {"$inc": {"count": -1}})
         else:
             # Create a new item in the collection with the initial action
             print("true........")
-            if action == "upVote":
+            if action == 1:
                 col.insert_one({"gloss_id": hash, "count": 1})
-            elif action == "downVote":
+            elif action == -1:
                 col.insert_one({"gloss_id": hash, "count": -1})

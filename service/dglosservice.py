@@ -46,6 +46,7 @@ class DGlosService:
             glossary = []
             for glossary_entry in data["glossary"]:
                 glossary_entry["hash"] = hash_object.create_hash(glossary_entry)
+                #glossary_entry["count"] = 0
                 audit = {
                     "createdTime": eval(str(time.time()).replace(".", "")[0:13]),
                     "glossaryId": str(uuid.uuid4()),

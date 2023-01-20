@@ -225,3 +225,32 @@ def update():
     # Update the upvote and downvote for the item
     review.update_vote(hash, action)
     return jsonify({"message": "Review updated"})
+
+@dglos_app.route(context_path + "/v1/suggest", methods=["POST"])
+def suggest():
+    dglos_service, validator ,suggest = DGlosService(), DGlosValidator(),DGlosRepo()
+    data = request.get_json()
+    new_data = data["new"]
+    hash = data["hash"]
+    data = add_headers(new_data, request, "userId")
+    validation_response = validator.validate_glossary(data)
+    if type(validation_response) != list:
+        return (
+            jsonify(
+                {
+                    "message": "Glossary Upload FAILED!",
+                    "status": "FAILED",
+                    "error": validation_response,
+                }
+            ),
+            400,
+        )
+    clean_data = {"metadata": data["metadata"], "glossary": validation_response}
+    dglos_service.create(clean_data)
+    suggest.update_count(hash)
+    return jsonify({"message": "Suggestion recieved"})
+    
+    
+
+
+

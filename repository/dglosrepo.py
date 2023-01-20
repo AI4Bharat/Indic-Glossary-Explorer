@@ -174,3 +174,10 @@ class DGlosRepo:
                 col.insert_one({"gloss_id": hash, "count": 1})
             elif action == -1:
                 col.insert_one({"gloss_id": hash, "count": -1})
+
+    #function to decrement the review count by 1 for the glossary which recieved suggestion 
+    def update_count(self,hash):
+        col = self.get_mongodb_connection_review()
+        item = col.find_one({"hash": hash})
+        if item :
+            col.update_one({"hash":hash},{"$inc":{"count":-1}})

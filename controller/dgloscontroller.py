@@ -248,6 +248,7 @@ def suggest():
     clean_data = {"metadata": data["metadata"], "glossary": validation_response}
     dglos_service.create(clean_data)
     suggest.update_count(hash)
+    suggest.update_count_es(hash)
     return jsonify({"message": "Suggestion recieved"})
     
     

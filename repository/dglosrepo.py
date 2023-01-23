@@ -139,7 +139,6 @@ class DGlosRepo:
     # Method to get count by language pair from the db
     def count_by_lang(self, srcLanguage, tgtLanguage):
         col = self.get_mongodb_connection()
-        log.info(f"the collection is {col}")
         src_value = "$" + srcLanguage
         tgt_value = "$" + tgtLanguage
         count = col.aggregate(
@@ -152,7 +151,6 @@ class DGlosRepo:
                 }
             ]
         )
-        log.info(f"the count is {count}")
         return count
 
 
@@ -177,7 +175,16 @@ class DGlosRepo:
 
     #function to decrement the review count by 1 for the glossary which recieved suggestion 
     def update_count(self,hash):
-        col = self.get_mongodb_connection_review()
+        col = self.get_mongodb_connection()
         item = col.find_one({"hash": hash})
         if item :
             col.update_one({"hash":hash},{"$inc":{"count":-1}})
+    
+
+    def update_count_es(self, hash):
+        try:
+            es = self.get_es_client()
+            q = {"query":{"match":{"hash.keyword":hash}},"script":{"source":"ctx._source.count=-1","lang":"painless"}}
+            es.update_by_query(index="glossary-base-index",body=q)
+        except Exception as e:
+            log.exception("Count Updation FAILED", e)

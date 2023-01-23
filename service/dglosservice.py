@@ -46,7 +46,7 @@ class DGlosService:
             glossary = []
             for glossary_entry in data["glossary"]:
                 glossary_entry["hash"] = hash_object.create_hash(glossary_entry)
-                #glossary_entry["count"] = 0
+                glossary_entry["count"] = 0
                 audit = {
                     "createdTime": eval(str(time.time()).replace(".", "")[0:13]),
                     "glossaryId": str(uuid.uuid4()),
@@ -123,7 +123,6 @@ class DGlosService:
 
     # This method is used to search the glossaries from elastic search db
     def search_glossary(self, data, search_query_dict):
-        log.info(f"the data is {data}")
         req_id, result = data["metadata"]["requestId"], []
         for input in data["inputs"]:
             log.info(f"{req_id} | Searching Glossary for phrases in: {input}")
@@ -138,7 +137,6 @@ class DGlosService:
                 )
 
             result.append({"input": input, "glossaryPhrases": glossary_phrases})
-            log.info(f"the result  is {result}")
         return result
 
     # Searches for all glossary phrases of a fixed length within a given sentence

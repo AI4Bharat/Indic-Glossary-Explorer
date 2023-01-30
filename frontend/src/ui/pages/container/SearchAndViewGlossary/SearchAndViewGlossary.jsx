@@ -161,6 +161,20 @@ const SearchAndViewGlossary = (props) => {
         dispatch(APITransport(apiObj));
     }
 
+    const onDeleteGlossary = (success, message) => {
+        setSnackbarInfo({
+            open: true,
+            message: message,
+            variant: success ? "success" : "error"
+        })
+
+        if(success){
+            setTimeout(() => {
+                onSubmit();
+            }, 2000);
+        }
+    }
+
     const renderSnackBar = () => {
         return (
             <CustomizedSnackbars
@@ -171,6 +185,7 @@ const SearchAndViewGlossary = (props) => {
                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                 variant={snackbar.variant}
                 message={snackbar.message}
+                hide={4000}
             />
         );
     };
@@ -373,7 +388,7 @@ const SearchAndViewGlossary = (props) => {
                         /></Grid>
                 }
             </Grid>
-            {showTableInside && showGlossaryResultTable && glossaryData && glossaryData.length > 0 && <ViewGlossary glossaryData={glossaryData[0]?.glossaryPhrases} inputText={glossaryData[0]?.input} />}
+            {showTableInside && showGlossaryResultTable && glossaryData && glossaryData.length > 0 && <ViewGlossary glossaryData={glossaryData[0]?.glossaryPhrases} inputText={glossaryData[0]?.input} onDeleteGlossary={onDeleteGlossary} />}
             {renderSnackBar()}
         </div>
 

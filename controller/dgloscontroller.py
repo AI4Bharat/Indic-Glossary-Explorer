@@ -259,8 +259,9 @@ def delete_glossary():
     dglosrepo = DGlosRepo()
     data = request.get_json()
     hash = data["hash"]
-    dglosrepo.delete_db(hash)
-    dglosrepo.delete_es(hash)
+    if type(hash) != None:
+        dglosrepo.delete_db(hash)
+        dglosrepo.delete_es(hash)
     return jsonify({"message": "Glossary deleted"})
 
 

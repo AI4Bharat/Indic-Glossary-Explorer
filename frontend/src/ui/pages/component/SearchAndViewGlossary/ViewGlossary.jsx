@@ -1,9 +1,11 @@
 // ViewGlossary
 
-import { Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, IconButton, Tooltip, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import MUIDataTable from "mui-datatables";
 import glossaryLevel from '../../../../config/glossaryLevel';
+import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteGlossary from '../../../../redux/actions/api/DeleteGlossary/DeleteGlossary';
 
 const cellHeaderPropStyle = {
     style: {justifyContent: 'center', textAlign: "left", padding: "16px" }
@@ -15,9 +17,25 @@ const cellPropStyle = {
 
 const ViewGlossary = (props) => {
 
-    const { glossaryData, inputText, publicLayout } = props;
+    const { glossaryData, inputText, publicLayout, onDeleteGlossary } = props;
 
     console.log("glossaryData --- ", glossaryData);
+
+    const deleteGlossary = (gloss_hash) => {
+        let apiObj = new DeleteGlossary(gloss_hash);
+        fetch(apiObj.apiEndPoint(), {
+            method: "POST",
+            headers: apiObj.getHeaders().headers,
+            body: JSON.stringify(apiObj.getBody())
+        })
+        .then(res=>res.json())
+        .then(response=>{
+            onDeleteGlossary(true, response.message);
+        })
+        .catch(err=>{
+            onDeleteGlossary(false, "Glossary deletion failed.");
+        })
+    }
 
     const options = {
         textLabels: {
@@ -137,26 +155,47 @@ const ViewGlossary = (props) => {
                 setCellProps: () => (cellPropStyle)
             }
         },
-        // {
-        //     name: "Actions",
-        //     label: "Actions",
-        //     options: {
-        //         filter: false,
-        //         sort: false,
-        //     }
-        // }
+        {
+            name: "Action",
+            label: "Actions",
+            options: {
+              filter: false,
+              sort: false,
+              align: "center",
+              display: publicLayout ? "excluded" : true,
+              setCellHeaderProps: () => (cellHeaderPropStyle),
+              setCellProps: () => (cellPropStyle),
+            //   customBodyRender: (value, tableMeta) => {
+            //     console.log("tableMeta ------ ", tableMeta);
+            //     return (
+            //       <Box sx={{ display: "flex" }}>
+            //           <Button>Action</Button>
+            //       </Box>
+            //     );
+            //   },
+            },
+          },
     ];
 
     const tableData = glossaryData && glossaryData.length > 0 ? glossaryData.map((el,i)=>{
         return [
             el.srcText,
             el.tgtText,
-            // el.srcLanguage,
-            // el.tgtLanguage,
             el.domain,
             el.collectionSource,
             el.level,
-            glossaryLevel.filter((level)=>level.key == el.level)[0].name
+            glossaryLevel.filter((level)=>level.key == el.level)[0].name,
+            <Box sx={{ display: "flex" }}>
+                <Tooltip title="Delete">
+                    <IconButton 
+                        onClick={()=>deleteGlossary(el?.hash)}
+                        color="error"
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                </Tooltip>
+                
+            </Box>
         ]
     }) : []
 

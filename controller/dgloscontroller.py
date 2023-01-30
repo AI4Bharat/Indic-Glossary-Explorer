@@ -215,6 +215,7 @@ def langpaircount():
         data = json.load(f)
     return jsonify(data), 200
 
+# REST endpoint to update the review count 
 @dglos_app.route(context_path + "/v1/review", methods=["POST"])
 def update():
     review = DGlosRepo()
@@ -226,6 +227,7 @@ def update():
     review.update_vote(hash, action)
     return jsonify({"message": "Review updated"})
 
+#REST endpoint to suggest a new glossary for an existing one  and decrement count for the earlier one
 @dglos_app.route(context_path + "/v1/suggest", methods=["POST"])
 def suggest():
     dglos_service, validator ,suggest = DGlosService(), DGlosValidator(),DGlosRepo()
@@ -250,6 +252,18 @@ def suggest():
     suggest.update_count(hash)
     suggest.update_count_es(hash)
     return jsonify({"message": "Suggestion recieved"})
+
+# REST endpoint to delete the glossary 
+@dglos_app.route(context_path + "/v1/delete", methods=["POST"])
+def delete_glossary():
+    dglosrepo = DGlosRepo()
+    data = request.get_json()
+    hash = data["hash"]
+    dglosrepo.delete_db(hash)
+    dglosrepo.delete_es(hash)
+    return jsonify({"message": "Glossary deleted"})
+
+
     
     
 

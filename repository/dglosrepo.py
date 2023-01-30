@@ -180,11 +180,43 @@ class DGlosRepo:
         if item :
             col.update_one({"hash":hash},{"$inc":{"count":-1}})
     
-
+    #function to decrement the review count by 1 for the glossary which recieved suggestion
     def update_count_es(self, hash):
         try:
             es = self.get_es_client()
-            q = {"query":{"match":{"hash.keyword":hash}},"script":{"source":"ctx._source.count=-1","lang":"painless"}}
+            q = {
+                "query": {
+                    "match": {
+                        "hash.keyword":hash
+                    }
+                },
+                "script": {
+                    "source": "ctx._source.count=-1",
+                    "lang": "painless"
+                }
+            }
             es.update_by_query(index="glossary-base-index",body=q)
         except Exception as e:
             log.exception("Count Updation FAILED", e)
+
+    #function to delete the glossary from mongodb
+    def delete_db(self, hash):
+        col = self.get_mongodb_connection()
+        item = col.find_one({"hash": hash})
+        if item :
+            col.delete_one({"hash":hash})
+
+    #function to delete the glossary from elasticsearch
+    def delete_es(self, hash):
+        try:
+            es = self.get_es_client()
+            q = {
+                "query": {
+                    "term": {
+                        "hash.keyword":hash
+                    }
+                }  
+            }
+            es.delete_by_query(index="glossary-base-index",body=q)
+        except Exception as e:
+            log.exception("Glossary Deletion FAILED", e)

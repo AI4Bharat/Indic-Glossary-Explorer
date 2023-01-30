@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import { useNavigate, useLocation, NavLink, Link } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -258,12 +258,16 @@ const Header = (props) => {
         return (
             <>
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: "space-between" }} alignItems={"center"}>
-                    <img
-                        src={"transparent-glossary-explorer-logo.png"}
-                        width={"50rem"}
-                        height={"50rem"}
-                    />
-                    <Typography variant="inherit" sx={{color: "#000000"}}>{screenTitle}</Typography>
+                    <Link to={pages[0].id}>
+                        <img
+                            src={"transparent-glossary-explorer-logo.png"}
+                            style={{ cursor: "pointer" }}
+                            width={"50rem"}
+                            height={"50rem"}
+                        />
+                    </Link>
+
+                    <Typography variant="inherit" sx={{ color: "#000000" }}>{screenTitle}</Typography>
                     <IconButton
                         size="large"
                         aria-label="account of current user"
@@ -299,17 +303,21 @@ const Header = (props) => {
                                 <Grid>
                                     <IconButton onClick={handleCloseNavMenu}>
                                         <ChevronLeftIcon fontSize='large' />{!publicHeader ? <Typography variant='h5'>
-                                        {JSON.parse(localStorage.getItem("userDetails"))?.user?.split(" ")[0]}
-                                    </Typography>
-                                        : null
-                                    }
+                                            {JSON.parse(localStorage.getItem("userDetails"))?.user?.split(" ")[0]}
+                                        </Typography>
+                                            : null
+                                        }
                                     </IconButton>
                                 </Grid>
-                                <img
-                                    src={"transparent-glossary-explorer-logo.png"}
-                                    width={"50rem"}
-                                    height={"50rem"}
-                                />
+                                <Link to={pages[0].id}>
+                                    <img
+                                        src={"transparent-glossary-explorer-logo.png"}
+                                        style={{ cursor: "pointer" }}
+                                        width={"50rem"}
+                                        height={"50rem"}
+                                    />
+                                </Link>
+
                             </Grid>
 
                             <Divider sx={{ width: "100%" }} />
@@ -354,11 +362,15 @@ const Header = (props) => {
                             alignItems: 'center'
                         }}
                     >
-                        <img
-                            src={"transparent-glossary-explorer-logo.png"}
-                            width={"70rem"}
-                            height={"70rem"}
-                        />
+                        <Link to={pages[0].id}>
+                            <img
+                                src={"transparent-glossary-explorer-logo.png"}
+                                style={{ cursor: "pointer" }}
+                                width={"70rem"}
+                                height={"70rem"}
+                            />
+                        </Link>
+
                     </Box>
                     {MobileHeader()}
                     <Box sx={{ flexGrow: 1, placeContent: "center", display: { xs: 'none', md: 'flex' } }}>

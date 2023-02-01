@@ -1,6 +1,6 @@
 // ViewGlossary
 
-import { Box, Button, Grid, IconButton, Tooltip, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Tooltip, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import MUIDataTable from "mui-datatables";
 import glossaryLevel from '../../../../config/glossaryLevel';
@@ -19,6 +19,9 @@ const ViewGlossary = (props) => {
 
     const { glossaryData, inputText, publicLayout, onDeleteGlossary } = props;
 
+    const [deleteObj, setDeleteObj] = useState();
+    const [showDeleteConfirmBox, setShowDeleteConfirmBox] = useState(false);
+
     console.log("glossaryData --- ", glossaryData);
 
     const deleteGlossary = (gloss_hash) => {
@@ -31,10 +34,43 @@ const ViewGlossary = (props) => {
         .then(res=>res.json())
         .then(response=>{
             onDeleteGlossary(true, response.message);
+            closeConfirmDeleteDialogue()
         })
         .catch(err=>{
             onDeleteGlossary(false, "Glossary deletion failed.");
+            closeConfirmDeleteDialogue()
         })
+    }
+
+    const closeConfirmDeleteDialogue = () => {
+        setShowDeleteConfirmBox(false);
+        setDeleteObj();
+    }
+
+    const renderConfirmDeleteDialogue = () => {
+        return(
+<Dialog
+        open={showDeleteConfirmBox}
+        onClose={closeConfirmDeleteDialogue}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+        {deleteObj?.srcText} : {deleteObj?.tgtText}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Do you want to delete this glossary?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeConfirmDeleteDialogue}>Cancel</Button>
+          <Button onClick={()=>deleteGlossary(deleteObj?.hash)} autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+        )
     }
 
     const options = {
@@ -188,7 +224,11 @@ const ViewGlossary = (props) => {
             <Box sx={{ display: "flex" }}>
                 <Tooltip title="Delete">
                     <IconButton 
-                        onClick={()=>deleteGlossary(el?.hash)}
+                        onClick={()=>{
+                            setDeleteObj(el);
+                            setShowDeleteConfirmBox(true)
+                            // deleteGlossary(el?.hash)
+                        }}
                         color="error"
                     >
                         <DeleteIcon />
@@ -210,6 +250,7 @@ const ViewGlossary = (props) => {
                     columns={columns}
                     options={options}
             />
+            {renderConfirmDeleteDialogue()}
         </Grid>
     )
 }

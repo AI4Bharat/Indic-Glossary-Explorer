@@ -90,7 +90,7 @@ const Analytics = () => {
 
   return (
     <>
-    <LanguageCountChart incomingData = {langCountData} loadingChart={loadingLanguageChart} onLanguageChange={fetchLanguageCountChartData} />
+    <LanguageCountChart incomingData = {langCountData} totalCount = {LanguageChartData?.totalcount} loadingChart={loadingLanguageChart} onLanguageChange={fetchLanguageCountChartData} />
       <DomainChart sourceData = {domainChartData} loadingChart={loadingChart} />
       <CollectionSourceChart sourceData = {collectionSourceChartData} loadingChart={loadingChart} />
     </>

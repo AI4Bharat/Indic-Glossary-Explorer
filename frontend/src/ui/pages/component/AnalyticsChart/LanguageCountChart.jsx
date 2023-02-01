@@ -49,7 +49,7 @@ import ResponsiveChartContainer from "../common/ResponsiveChartContainer";
     const dispatch = useDispatch();
     const classes = ChartStyles();
   
-    const { incomingData, loadingChart } = props;
+    const { incomingData, totalCount, loadingChart } = props;
     const [data, setData] = useState([]);
     const [count, setCount] = useState(0);
     const [page, setPage] = useState(0);
@@ -166,10 +166,7 @@ import ResponsiveChartContainer from "../common/ResponsiveChartContainer";
                 Total Count
               </Typography>
               <Typography style={{ fontSize: "1.125rem", fontWeight: "400" }}>
-                {/* {getCommaSaparatedNumber(sourceData?.totalCount)} */}
-                {sourceData?.totalCount
-                ? new Intl.NumberFormat("en").format(sourceData?.totalCount)
-                : 0}
+                {totalCount}
               </Typography>
             </Box>
           </Box>
@@ -202,6 +199,11 @@ import ResponsiveChartContainer from "../common/ResponsiveChartContainer";
                     </Select>
                 </FormControl>
               </Box>
+              <Typography variant='h6'>
+                  ({sourceData?.totalCount
+                ? new Intl.NumberFormat("en").format(sourceData?.totalCount)
+                : 0})
+              </Typography>
               {/* <Typography style={{ fontSize: "1.125rem", fontWeight: "400" }}>
                 {getCommaSaparatedNumber(sourceData?.totalCount)}
               </Typography> */}

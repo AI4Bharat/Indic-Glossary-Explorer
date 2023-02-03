@@ -8,11 +8,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteGlossary from '../../../../redux/actions/api/DeleteGlossary/DeleteGlossary';
 
 const cellHeaderPropStyle = {
-    style: {justifyContent: 'center', textAlign: "left", padding: "16px" }
+    style: { justifyContent: 'center', textAlign: "left", padding: "16px" }
 }
 
 const cellPropStyle = {
-    style: {justifyContent: 'center', textAlign: "left" }
+    style: { justifyContent: 'center', textAlign: "left" }
 }
 
 const ViewGlossary = (props) => {
@@ -31,15 +31,15 @@ const ViewGlossary = (props) => {
             headers: apiObj.getHeaders().headers,
             body: JSON.stringify(apiObj.getBody())
         })
-        .then(res=>res.json())
-        .then(response=>{
-            onDeleteGlossary(true, response.message);
-            closeConfirmDeleteDialogue()
-        })
-        .catch(err=>{
-            onDeleteGlossary(false, "Glossary deletion failed.");
-            closeConfirmDeleteDialogue()
-        })
+            .then(res => res.json())
+            .then(response => {
+                onDeleteGlossary(true, response.message);
+                closeConfirmDeleteDialogue()
+            })
+            .catch(err => {
+                onDeleteGlossary(false, "Glossary deletion failed.");
+                closeConfirmDeleteDialogue()
+            })
     }
 
     const closeConfirmDeleteDialogue = () => {
@@ -48,42 +48,42 @@ const ViewGlossary = (props) => {
     }
 
     const renderConfirmDeleteDialogue = () => {
-        return(
-<Dialog
-        open={showDeleteConfirmBox}
-        onClose={closeConfirmDeleteDialogue}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-        {deleteObj?.srcText} : {deleteObj?.tgtText}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Do you want to delete this glossary?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeConfirmDeleteDialogue}>Cancel</Button>
-          <Button onClick={()=>deleteGlossary(deleteObj?.hash)} autoFocus>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
+        return (
+            <Dialog
+                open={showDeleteConfirmBox}
+                onClose={closeConfirmDeleteDialogue}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {deleteObj?.srcText} : {deleteObj?.tgtText}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Do you want to delete this glossary?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={closeConfirmDeleteDialogue}>Cancel</Button>
+                    <Button onClick={() => deleteGlossary(deleteObj?.hash)} autoFocus>
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
         )
     }
 
     const options = {
         textLabels: {
-          body: {
-            noMatch: "No records",
-          },
-          toolbar: {
-            search: "Search",
-            viewColumns: "View Column",
-          },
-          pagination: { rowsPerPage: "Rows per page" },
-          options: { sortDirection: "desc" },
+            body: {
+                noMatch: "No records",
+            },
+            toolbar: {
+                search: "Search",
+                viewColumns: "View Column",
+            },
+            pagination: { rowsPerPage: "Rows per page" },
+            options: { sortDirection: "desc" },
         },
         // customToolbar: fetchHeaderButton,
         displaySelectToolbar: false,
@@ -99,7 +99,7 @@ const ViewGlossary = (props) => {
         selectableRows: "none",
         search: true,
         jumpToPage: true,
-      };
+    };
 
     const columns = [
         {
@@ -108,7 +108,7 @@ const ViewGlossary = (props) => {
             options: {
                 filter: false,
                 sort: false,
-                align : "left",
+                align: "left",
                 setCellHeaderProps: () => (cellHeaderPropStyle),
                 setCellProps: () => (cellPropStyle)
             }
@@ -119,7 +119,7 @@ const ViewGlossary = (props) => {
             options: {
                 filter: false,
                 sort: false,
-                align : "left",
+                align: "left",
                 setCellHeaderProps: () => (cellHeaderPropStyle),
                 setCellProps: () => (cellPropStyle)
             }
@@ -152,7 +152,7 @@ const ViewGlossary = (props) => {
             options: {
                 filter: false,
                 sort: false,
-                align : "center",
+                align: "center",
                 setCellHeaderProps: () => (cellHeaderPropStyle),
                 setCellProps: () => (cellPropStyle)
             }
@@ -163,7 +163,7 @@ const ViewGlossary = (props) => {
             options: {
                 filter: false,
                 sort: false,
-                align : "center",
+                align: "center",
                 setCellHeaderProps: () => (cellHeaderPropStyle),
                 setCellProps: () => (cellPropStyle)
             }
@@ -174,7 +174,7 @@ const ViewGlossary = (props) => {
             options: {
                 filter: false,
                 sort: false,
-                align : "center",
+                align: "center",
                 display: 'none',
                 setCellHeaderProps: () => (cellHeaderPropStyle),
                 setCellProps: () => (cellPropStyle)
@@ -186,7 +186,7 @@ const ViewGlossary = (props) => {
             options: {
                 filter: false,
                 sort: false,
-                align : "center",
+                align: "center",
                 setCellHeaderProps: () => (cellHeaderPropStyle),
                 setCellProps: () => (cellPropStyle)
             }
@@ -195,36 +195,36 @@ const ViewGlossary = (props) => {
             name: "Action",
             label: "Actions",
             options: {
-              filter: false,
-              sort: false,
-              align: "center",
-              display: publicLayout ? "excluded" : true,
-              setCellHeaderProps: () => (cellHeaderPropStyle),
-              setCellProps: () => (cellPropStyle),
-            //   customBodyRender: (value, tableMeta) => {
-            //     console.log("tableMeta ------ ", tableMeta);
-            //     return (
-            //       <Box sx={{ display: "flex" }}>
-            //           <Button>Action</Button>
-            //       </Box>
-            //     );
-            //   },
+                filter: false,
+                sort: false,
+                align: "center",
+                display: publicLayout ? "excluded" : true,
+                setCellHeaderProps: () => (cellHeaderPropStyle),
+                setCellProps: () => (cellPropStyle),
+                //   customBodyRender: (value, tableMeta) => {
+                //     console.log("tableMeta ------ ", tableMeta);
+                //     return (
+                //       <Box sx={{ display: "flex" }}>
+                //           <Button>Action</Button>
+                //       </Box>
+                //     );
+                //   },
             },
-          },
+        },
     ];
 
-    const tableData = glossaryData && glossaryData.length > 0 ? glossaryData.map((el,i)=>{
+    const tableData = glossaryData && glossaryData.length > 0 ? glossaryData.map((el, i) => {
         return [
             el.srcText,
             el.tgtText,
             el.domain,
             el.collectionSource,
             el.level,
-            glossaryLevel.filter((level)=>level.key == el.level)[0].name,
+            glossaryLevel.filter((level) => level.key == el.level)[0].name,
             <Box sx={{ display: "flex" }}>
                 <Tooltip title="Delete">
-                    <IconButton 
-                        onClick={()=>{
+                    <IconButton
+                        onClick={() => {
                             setDeleteObj(el);
                             setShowDeleteConfirmBox(true)
                             // deleteGlossary(el?.hash)
@@ -234,21 +234,21 @@ const ViewGlossary = (props) => {
                         <DeleteIcon />
                     </IconButton>
                 </Tooltip>
-                
+
             </Box>
         ]
     }) : []
 
     return (
-        <Grid 
+        <Grid
             sx={{
                 marginTop: publicLayout ? 2 : 10
             }}
         >
-             <MUIDataTable
-                    data={tableData}
-                    columns={columns}
-                    options={options}
+            <MUIDataTable
+                data={tableData}
+                columns={columns}
+                options={options}
             />
             {renderConfirmDeleteDialogue()}
         </Grid>

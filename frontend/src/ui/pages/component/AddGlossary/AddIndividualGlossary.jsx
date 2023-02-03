@@ -19,9 +19,11 @@ import getDomains from '../../../../redux/actions/api/getDomains/getDomains';
 import glossaryLevel from '../../../../config/glossaryLevel';
 import addGlossary from '../../../../redux/actions/api/uploadGlossary/addGlossary';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const AddIndividualGlossary = (props) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const allLevels = glossaryLevel;
 
     const [selectedSourceLang, setSelectedSourceLang] = useState('');
@@ -107,7 +109,8 @@ const AddIndividualGlossary = (props) => {
                         open: true,
                         message: response.data.message,
                         variant: "success",
-                    })
+                    });
+                    navigate("/view-glossary");
                 }
             }).catch(err => {
                 console.log("err -- ", err);

@@ -22,6 +22,7 @@ import CustomButton from './Button';
 import { Divider, Drawer, Grid, Icon } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 
 const Header = (props) => {
@@ -145,15 +146,24 @@ const Header = (props) => {
     const renderHelpButton = () => {
         return (
             <>
-                <CustomButton
-                    label={"Help"}
+                <Tooltip title={"Help"}>
+                    <IconButton
+                        onClick={handleOpenHelpMenu}
+                        sx={{ borderRadius: 2, padding: 1, fontSize: '1rem', marginRight: 2 }}
+                    >
+                    <HelpOutlineIcon fontSize='large' />
+                </IconButton>
+                </Tooltip>
+                
+                {/* <CustomButton
+                    
                     onClick={handleOpenHelpMenu}
-                    sx={{ borderRadius: 2, padding: 3, fontSize: '1rem', marginRight: 2 }}
+                    
                     size="large"
                     aria-controls={anchorElHelp ? 'account-menu' : undefined}
                     aria-haspopup="true"
                     aria-expanded={anchorElHelp ? 'true' : undefined}
-                />
+                /> */}
                 <Menu
                     id="menu-appbar"
                     anchorEl={anchorElHelp}

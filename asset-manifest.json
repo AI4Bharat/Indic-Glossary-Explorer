@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/static/css/main.6da698ad.css",
-    "main.js": "/static/js/main.b9ceb5f9.js",
-    "static/js/242.15f8b3c6.chunk.js": "/static/js/242.15f8b3c6.chunk.js",
+    "main.js": "/static/js/main.8d072978.js",
+    "static/js/242.cd1d7f45.chunk.js": "/static/js/242.cd1d7f45.chunk.js",
     "static/js/787.22edae46.chunk.js": "/static/js/787.22edae46.chunk.js",
-    "static/js/882.81d43e40.chunk.js": "/static/js/882.81d43e40.chunk.js",
+    "static/js/235.c86e87df.chunk.js": "/static/js/235.c86e87df.chunk.js",
     "static/media/landingCardRightSideImage.png": "/static/media/landingCardRightSideImage.18f7c23aad650d1b5c0f.png",
     "static/media/logo.svg": "/static/media/logo.2968ade084e575085d672ccac19c6b74.svg",
     "index.html": "/index.html",
     "main.6da698ad.css.map": "/static/css/main.6da698ad.css.map",
-    "main.b9ceb5f9.js.map": "/static/js/main.b9ceb5f9.js.map",
-    "242.15f8b3c6.chunk.js.map": "/static/js/242.15f8b3c6.chunk.js.map",
+    "main.8d072978.js.map": "/static/js/main.8d072978.js.map",
+    "242.cd1d7f45.chunk.js.map": "/static/js/242.cd1d7f45.chunk.js.map",
     "787.22edae46.chunk.js.map": "/static/js/787.22edae46.chunk.js.map",
-    "882.81d43e40.chunk.js.map": "/static/js/882.81d43e40.chunk.js.map"
+    "235.c86e87df.chunk.js.map": "/static/js/235.c86e87df.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6da698ad.css",
-    "static/js/main.b9ceb5f9.js"
+    "static/js/main.8d072978.js"
   ]
 }

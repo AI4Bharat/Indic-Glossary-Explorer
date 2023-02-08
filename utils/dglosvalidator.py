@@ -53,6 +53,8 @@ class DGlosValidator:
                 glos["collectionSource"] = "unknown"
             if glos["srcLanguage"] == glos["tgtLanguage"]:
                 continue
+            if glos["srcText"] == glos["tgtText"]:
+                continue
             if not glos["level"] in levels:
                 continue
             valid_items.append(glos)

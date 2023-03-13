@@ -1,0 +1,173 @@
+{
+    "languages": [
+        {
+            "count": 9269,
+            "label": "English",
+            "srcLanguage": "ml",
+            "tgtLanguage": "en"
+        },
+        {
+            "count": 158457,
+            "label": "Bodo",
+            "srcLanguage": "en",
+            "tgtLanguage": "brx"
+        },
+        {
+            "count": 8624,
+            "label": "Dogri",
+            "srcLanguage": "en",
+            "tgtLanguage": "doi"
+        },
+        {
+            "count": 168343,
+            "label": "Gujarati",
+            "srcLanguage": "en",
+            "tgtLanguage": "gu"
+        },
+        {
+            "count": 852320,
+            "label": "Hindi",
+            "srcLanguage": "en",
+            "tgtLanguage": "hi"
+        },
+        {
+            "count": 69673,
+            "label": "Kashmiri",
+            "srcLanguage": "en",
+            "tgtLanguage": "ks"
+        },
+        {
+            "count": 8297,
+            "label": "Maithili",
+            "srcLanguage": "en",
+            "tgtLanguage": "mai"
+        },
+        {
+            "count": 98092,
+            "label": "Malayalam",
+            "srcLanguage": "en",
+            "tgtLanguage": "ml"
+        },
+        {
+            "count": 7183,
+            "label": "Manipuri",
+            "srcLanguage": "en",
+            "tgtLanguage": "mni"
+        },
+        {
+            "count": 106787,
+            "label": "Marathi",
+            "srcLanguage": "en",
+            "tgtLanguage": "mr"
+        },
+        {
+            "count": 65794,
+            "label": "Nepali",
+            "srcLanguage": "en",
+            "tgtLanguage": "ne"
+        },
+        {
+            "count": 130801,
+            "label": "Odia",
+            "srcLanguage": "en",
+            "tgtLanguage": "or"
+        },
+        {
+            "count": 152081,
+            "label": "Punjabi",
+            "srcLanguage": "en",
+            "tgtLanguage": "pa"
+        },
+        {
+            "count": 4797,
+            "label": "Sindhi",
+            "srcLanguage": "en",
+            "tgtLanguage": "sd"
+        },
+        {
+            "count": 316976,
+            "label": "Tamil",
+            "srcLanguage": "en",
+            "tgtLanguage": "ta"
+        },
+        {
+            "count": 92839,
+            "label": "Telugu",
+            "srcLanguage": "en",
+            "tgtLanguage": "te"
+        },
+        {
+            "count": 79253,
+            "label": "Urdu",
+            "srcLanguage": "en",
+            "tgtLanguage": "ur"
+        },
+        {
+            "count": 113,
+            "label": "Tamil",
+            "srcLanguage": "hi",
+            "tgtLanguage": "ta"
+        },
+        {
+            "count": 13340,
+            "label": "Telugu",
+            "srcLanguage": "hi",
+            "tgtLanguage": "te"
+        },
+        {
+            "count": 3133,
+            "label": "Urdu",
+            "srcLanguage": "hi",
+            "tgtLanguage": "ur"
+        },
+        {
+            "count": 130422,
+            "label": "English",
+            "srcLanguage": "hi",
+            "tgtLanguage": "en"
+        },
+        {
+            "count": 111155,
+            "label": "Hindi",
+            "srcLanguage": "sa",
+            "tgtLanguage": "hi"
+        },
+        {
+            "count": 102855,
+            "label": "Bengali",
+            "srcLanguage": "en",
+            "tgtLanguage": "bn"
+        },
+        {
+            "count": 130042,
+            "label": "Sanskrit",
+            "srcLanguage": "en",
+            "tgtLanguage": "sa"
+        },
+        {
+            "count": 4868,
+            "label": "Hindi",
+            "srcLanguage": "ta",
+            "tgtLanguage": "hi"
+        },
+        {
+            "count": 75255,
+            "label": "Assamese",
+            "srcLanguage": "en",
+            "tgtLanguage": "as"
+        },
+        {
+            "count": 156769,
+            "label": "Kannada",
+            "srcLanguage": "en",
+            "tgtLanguage": "ka"
+        },
+        {
+            "count": 87300,
+            "label": "Goan Konkani",
+            "srcLanguage": "en",
+            "tgtLanguage": "gom"
+        }
+    ],
+    "totalcount": 3144838
+}

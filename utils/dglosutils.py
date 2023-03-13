@@ -4,7 +4,7 @@ import bcrypt as bcrypt
 import logging
 from repository.dglosrepo import DGlosRepo
 
-log = logging.getLogger('file')
+log = logging.getLogger("file")
 dds_repo = DGlosRepo()
 list_of_tc_keys, t_and_c_data = [], {}
 
@@ -28,6 +28,4 @@ class DGlosUtils:
 
     def camel_case(self, str):
         s = sub(r"(_|-)+", " ", str).title().replace(" ", "")
-        return ''.join([s[0].lower(), s[1:]])
-
-
+        return "".join([s[0].lower(), s[1:]])

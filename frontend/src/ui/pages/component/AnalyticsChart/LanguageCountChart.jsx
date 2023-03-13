@@ -166,7 +166,9 @@ import ResponsiveChartContainer from "../common/ResponsiveChartContainer";
                 Total Count
               </Typography>
               <Typography style={{ fontSize: "1.125rem", fontWeight: "400" }}>
-                {totalCount}
+                {totalCount
+                ? new Intl.NumberFormat("en").format(totalCount)
+                : 0}
               </Typography>
             </Box>
           </Box>

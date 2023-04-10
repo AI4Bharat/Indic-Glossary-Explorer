@@ -27,10 +27,10 @@ dictConfig(
         },
         "handlers": {
             "info": {
-                "class": "logging.FileHandler",
-                "level": "DEBUG",
+                "class": "logging.handlers.RotatingFileHandler",
                 "formatter": "default",
                 "filename": "info.log",
+                "maxBytes":20000
             },
             "console": {
                 "class": "logging.StreamHandler",

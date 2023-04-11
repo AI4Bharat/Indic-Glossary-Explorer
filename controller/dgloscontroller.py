@@ -115,8 +115,7 @@ def create():
 @dglos_app.route(context_path + "/v1/glossary/file/upload", methods=["POST"])
 def upload():
     dglos_service, validator = DGlosService(), DGlosValidator()
-    # data = request.get_json()
-    data = request.form.get('glossaryFile')
+    data = request.get_json()
     data = add_headers(data, request, "userId")
     validator_response = validator.validate_filetype(
         request.files["glossaryFile"].filename

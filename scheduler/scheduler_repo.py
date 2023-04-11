@@ -1,16 +1,18 @@
-from flask import json
+from flask import json 
+import logging
 import os
 import sys
 from repository.dglosrepo import DGlosRepo
 from config.dglosconfigs import dglos_collection, supported_languages
 from utils.email_notifier import generate_email_notification, send_email
+log = logging.getLogger("file")
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
 schedule_job = BackgroundScheduler()
 
 
-@schedule_job.scheduled_job("interval", id="data_count_domain", hours=6)
+@schedule_job.scheduled_job("interval", id="data_count_domain", seconds=60)
 def data_count():
     try:
         count = DGlosRepo()
@@ -48,7 +50,7 @@ def data_count():
         send_email(msg)
 
 
-@schedule_job.scheduled_job("interval", id="data_count_lang", hours=6)
+@schedule_job.scheduled_job("interval", id="data_count_lang", seconds=60)
 def lang_count():
     try:
         count = DGlosRepo()
@@ -73,6 +75,7 @@ def lang_count():
             languages.append(temp)
             totalcount += item["count"]
         final = {"languages": languages, "totalcount": totalcount}
+        log.info(f"the final is {final}")
         json_object = json.dumps(final)
         with open("models/count_by_languagepair.json", "w") as f:
             f.write(json_object)

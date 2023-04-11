@@ -30,7 +30,9 @@ dictConfig(
                 "class": "logging.handlers.RotatingFileHandler",
                 "formatter": "default",
                 "filename": "info.log",
-                "maxBytes":20000
+                "maxBytes":1024 * 1024 * 2,
+                "backupCount":2
+
             },
             "console": {
                 "class": "logging.StreamHandler",

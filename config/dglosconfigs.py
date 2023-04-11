@@ -3,10 +3,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 db_cluster = os.environ.get(
-    "MONGO_CLUSTER_URL",
+    "MONGO_CLUSTER_URL","mongodb://ai4bharat-glossary-db:HGOqSkkTIaEjjPUsdcIdBQoaBZdTFnzU6dGa8hHTmLwXiQGz4klIabUmioKIFRhYwYxzNwfistqOlPh5KdisaQ%3D%3D@ai4bharat-glossary-db.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@ai4bharat-glossary-db@"
 )
 app_host = os.environ.get("DGLOS_APP_HOST", "localhost")
-app_port = os.environ.get("DGLOS_APP_PORT", 5001)
+app_port = os.environ.get("DGLOS_APP_PORT", 5002)
 context_path = os.environ.get("DMU_GLOS_CONTEXT_PATH", "/glossary-explorer")
 db = os.environ.get("DMU_GLOS_DB", "dmu-glossary")
 user_collection = os.environ.get("DMU_GLOS_USER_COL", "users")

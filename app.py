@@ -26,7 +26,7 @@ dictConfig(
             }
         },
         "handlers": {
-            "info": {
+            "info":  {
                 "class": "logging.FileHandler",
                 "level": "DEBUG",
                 "formatter": "default",

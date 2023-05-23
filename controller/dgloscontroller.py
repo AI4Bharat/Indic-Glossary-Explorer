@@ -185,7 +185,7 @@ dictConfig(
                 "formatter": "default",
                 "filename": "info.log",
                 "maxBytes":1024 * 1024 *10 ,
-                "backupCount" : 5
+                "backupCount" : 2
             },
             "console": {
                 "class": "logging.StreamHandler",
